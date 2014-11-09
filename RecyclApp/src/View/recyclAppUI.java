@@ -6,6 +6,8 @@
 
 package View;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Vincent
@@ -19,8 +21,6 @@ public class recyclAppUI extends javax.swing.JFrame {
         initComponents();
         plan = new Plan();
         this.add(plan);
-        plan.drawGrille();
-        plan.repaint();
     }
 
     /**
@@ -83,7 +83,7 @@ public class recyclAppUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        this.controller.checkIfClickOk();
+        this.controller.addStation();
     }//GEN-LAST:event_jButton1MouseClicked
     public void passControler(Controller.RecyclApp controller){
         this.controller = controller;
