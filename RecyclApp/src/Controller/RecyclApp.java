@@ -5,9 +5,10 @@
  */
 package Controller;
 
-import Model.ComposanteUsine;
+import Model.*;
+import View.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import View.recyclAppUI;
 import recyclappl.gui.MainWindow;
 
    
@@ -21,34 +22,26 @@ public class RecyclApp implements ViewListener{
     static RecyclApp app;
     static private MainWindow window;
     
-    ArrayList <ComposanteUsine> listeComposanteUsine;
+    ArrayList <PlantComponant> plantComponantsList;
+    Basket basket;
+    PlantEntrance plantEntrance;
+    PlantExit plantExit;
     /**
      * @param args the command line arguments
      */
     public RecyclApp() {
-        //ui = new recyclAppUI();
-        //ui.setVisible(true);
-        listeComposanteUsine = new ArrayList<ComposanteUsine>();
+        window = new MainWindow();
+        window.setVisible(true);
+        this.plantComponantsList = new ArrayList<PlantComponant>();
+        this.basket = new Basket();
+        this.plantEntrance = new PlantEntrance();
+        this.plantExit = new PlantExit();
     }
     
     public static void main(String[] args) {
-        window = new MainWindow();
-        window.setVisible(true);
+   
         app = new RecyclApp();
-        
         window.addListener(app);
-        //ui.passControler(app);
-        //recyclappl.gui.MainWindow mainWindow = new recyclappl.gui.MainWindow();
-        //mainWindow.setVisible(true);
-    }
-    
-    public void checkIfClickOk(){
-        ui.changeLabel();
-    }
-    
-    private void doAction()
-    {
-        
     }
 
     @Override
@@ -57,4 +50,11 @@ public class RecyclApp implements ViewListener{
         System.out.println("EVENT CALLED");
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void addStation() {
+        System.out.println("test");
+    }
+
+   
 }

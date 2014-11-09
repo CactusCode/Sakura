@@ -5,37 +5,38 @@
  */
 package Model;
 
+import java.awt.geom.Point2D;
+
 /**
  *
  * @author Pascal
  */
-public class ComposanteUsine
+public class PlantComponant
 {   
-    private float positionX;
-    private float positionY;
+    private Point2D position;
     private float maximalCapacity;
     private String name;
     private String description;
 
-    public ComposanteUsine()
+    public PlantComponant()
     {
         
     }
     
     //Name accessors
-    public void setName(String _value)
+    public void setName(String _name)
     {
-        
+        this.name = _name;
     }
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
     //Description accessors
-    public void setDescription(String _value)
+    public void setDescription(String _description)
     {
-        
+        this.description = _description;
     }
     public String getDescription()
     {
@@ -43,32 +44,21 @@ public class ComposanteUsine
     }
     
     //positionX accessors
-    public void setPositionX(float _value)
+    public void setPosition(Point2D _position)
     {
-        positionX = _value;
+        this.position = _position;
     }
-    public float getPositionX()
+    public Point2D getPosition()
     {
-        return positionX;
-    }
-    
-    //positionY accessors
-    public void setPositionY(float _value)
-    {
-        positionY = _value;
-    }
-    public float getPositionY()
-    {
-        return positionY;
-    }
-    
+        return this.position;
+    } 
     //maximalCapacity acccessors
-    public void setMaximalCapacity(float _value)
+    public void setMaximalCapacity(float _capacity)
     {
-        maximalCapacity = _value;
+        this.maximalCapacity = _capacity;
     }
     public float getMaximalCapacity()
     {
-        return maximalCapacity;
+        return this.maximalCapacity;
     }
 }

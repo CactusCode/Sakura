@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+
+package Model;
 
 /**
  *
- * @author Pascal
+ * @author Vincent
  */
-public interface ViewListener
+public class PlantExit extends PlantComponant
 {
-    public void addStation();  
+    public PlantExit ()
+    {
+        this.setDescription("Sortie Usine");
+  
+    }
 }
