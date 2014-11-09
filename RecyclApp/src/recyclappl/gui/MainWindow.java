@@ -6,12 +6,18 @@
 
 package recyclappl.gui;
 
+import java.awt.List;
+import java.util.ArrayList;
+import Controller;
+
 /**
  *
  * @author pandi_000
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    //List<ViewListener> listeners = new ArrayList<ViewListener>();
+    
+    
     /**
      * Creates new form MainWindow
      */
