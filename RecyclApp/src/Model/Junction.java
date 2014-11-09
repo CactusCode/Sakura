@@ -14,10 +14,12 @@ import java.util.ArrayList;
  */
 public class Junction extends ComposanteUsine
 {
-    private ArrayList(point2D _position) list;
-    public Junction()
+   //ArrayList<String> List;// = new ArrayList<String>();
+    private static List ConvoyeursEntree = new ArrayList<Junction>();
+    
+    public Junction(float Entree, float sortie)
     {
-        
+       
     }
     public void getPosition()
     {
