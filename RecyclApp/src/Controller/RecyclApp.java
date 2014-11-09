@@ -31,6 +31,8 @@ public class RecyclApp {
     public static void main(String[] args) {
         app = new RecyclApp();
         ui.passControler(app);
+        recyclappl.gui.MainWindow mainWindow = new recyclappl.gui.MainWindow();
+        mainWindow.setVisible(true);
     }
     
     public void checkIfClickOk(){
