@@ -8,35 +8,53 @@ package Controller;
 import Model.ComposanteUsine;
 import java.util.ArrayList;
 import View.recyclAppUI;
+import recyclappl.gui.MainWindow;
 
    
 /**
  *
  * @author Pascal
  */
-public class RecyclApp {
+public class RecyclApp implements ViewListener{
     
     static recyclAppUI ui;
     static RecyclApp app;
+    static private MainWindow window;
+    
     ArrayList <ComposanteUsine> listeComposanteUsine;
     /**
      * @param args the command line arguments
      */
     public RecyclApp() {
-        ui = new recyclAppUI();
-        ui.setVisible(true);
+        //ui = new recyclAppUI();
+        //ui.setVisible(true);
         listeComposanteUsine = new ArrayList<ComposanteUsine>();
     }
     
     public static void main(String[] args) {
+        window = new MainWindow();
+        window.setVisible(true);
         app = new RecyclApp();
-        ui.passControler(app);
-        recyclappl.gui.MainWindow mainWindow = new recyclappl.gui.MainWindow();
-        mainWindow.setVisible(true);
+        
+        window.addListener(app);
+        //ui.passControler(app);
+        //recyclappl.gui.MainWindow mainWindow = new recyclappl.gui.MainWindow();
+        //mainWindow.setVisible(true);
     }
     
     public void checkIfClickOk(){
         ui.changeLabel();
     }
     
+    private void doAction()
+    {
+        
+    }
+
+    @Override
+    public void respondToAction()
+    {
+        System.out.println("EVENT CALLED");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

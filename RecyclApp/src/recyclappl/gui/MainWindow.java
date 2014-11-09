@@ -6,25 +6,49 @@
 
 package recyclappl.gui;
 
-import java.awt.List;
 import java.util.ArrayList;
-import Controller;
+import Controller.ViewListener;
 
 /**
  *
  * @author pandi_000
  */
 public class MainWindow extends javax.swing.JFrame {
-    //List<ViewListener> listeners = new ArrayList<ViewListener>();
-    
+    ArrayList<ViewListener> listeners;
     
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
+        listeners = new ArrayList<>();
     }
 
+    public void addListener(ViewListener _newListener)
+    {
+        listeners.add(_newListener);
+    }
+    
+    private void buttonClicked()
+    {
+        for (int i = 0; i < listeners.size(); i++)
+        {
+            listeners.get(i).respondToAction();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -303,7 +327,8 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonStationActionPerformed
-        System.exit(0);        // TODO add your handling code here:
+        buttonClicked();
+//System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_ButtonStationActionPerformed
 
     private void ButtonEntreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntreeActionPerformed
