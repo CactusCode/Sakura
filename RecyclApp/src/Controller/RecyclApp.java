@@ -28,13 +28,12 @@ public class RecyclApp implements ViewListener{
     PlantEntrance plantEntrance;
     PlantExit plantExit;
     /**
-     * @param args the command line arguments
      */
     public RecyclApp() {
         window = new MainWindow();
         window.setVisible(true);
         
-        this.plantComponantsList = new ArrayList<PlantComponant>();
+        this.plantComponantsList = new ArrayList<>();
         this.basket = new Basket();
         this.plantEntrance = new PlantEntrance();
         this.plantExit = new PlantExit();
@@ -86,10 +85,8 @@ public class RecyclApp implements ViewListener{
        
     }
     public boolean positionAvailable(Point2D _position){
-        for(int i = 0;i<this.plantComponantsList.size();i++)
-        {
-            if(this.plantComponantsList.get(i).getPosition()==_position)
-            {
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+            if (plantComponantsList1.getPosition() == _position) {
                 return false;
             }
         }

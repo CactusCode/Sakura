@@ -25,11 +25,11 @@ public class Basket {
         }
     }
     
-    private ArrayList<MaterialQty> basketContents;
+    private final ArrayList<MaterialQty> basketContents;
     
     public Basket()
     {
-        basketContents = new ArrayList<MaterialQty>();
+        basketContents = new ArrayList<>();
     }
     public ArrayList<MaterialQty> getBasketContents()
     {
@@ -41,11 +41,9 @@ public class Basket {
     }
     public float getPourcentageInBasketForMaterialType(Material.MaterialType _type)
     {
-        for(int i=0;i<this.basketContents.size();i++)
-        {
-            if(this.basketContents.get(i).material.materialType==_type)
-            {
-                return this.basketContents.get(i).quantity;
+        for (MaterialQty basketContent : this.basketContents) {
+            if (basketContent.material.materialType == _type) {
+                return basketContent.quantity;
             }
         }
         return 0;

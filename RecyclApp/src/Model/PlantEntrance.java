@@ -17,6 +17,5 @@ public class PlantEntrance extends PlantComponant{
     public PlantEntrance ()
     {
         this.setDescription("Entrée Usine");
-  
     }
 }

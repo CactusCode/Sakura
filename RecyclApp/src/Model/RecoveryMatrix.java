@@ -27,10 +27,10 @@ public class RecoveryMatrix
             this.pourcentage = _pourcentage;
         }
     }   
-    private ArrayList<MatrixLine> matrix;
+    private final ArrayList<MatrixLine> matrix;
     public RecoveryMatrix()
     {
-        this.matrix = new ArrayList<MatrixLine>();
+        this.matrix = new ArrayList<>();
     }
     public void addLineToMatrix(MatrixLine _line)
     {
@@ -38,23 +38,19 @@ public class RecoveryMatrix
     }
     public void setPourcentageForMaterialType(Material.MaterialType _type, float _pourcentage)
     {
-        for(int i=0; i<this.matrix.size();i++)
-        {
-            if(this.matrix.get(i).type==_type)
-            {
-                this.matrix.get(i).pourcentage = _pourcentage;
-            }
-        }
+       for (MatrixLine matrix1 : this.matrix) {
+           if (matrix1.type == _type) {
+               matrix1.pourcentage = _pourcentage;
+           }
+       }
     }
     public void setExitNumberForMaterialType(Material.MaterialType _type, int _exitNumber)
     {
-        for(int i=0; i<this.matrix.size();i++)
-        {
-            if(this.matrix.get(i).type==_type)
-            {
-                this.matrix.get(i).exitNumber = _exitNumber;
-            }
-        }
+       for (MatrixLine matrix1 : this.matrix) {
+           if (matrix1.type == _type) {
+               matrix1.exitNumber = _exitNumber;
+           }
+       }
     }
     public ArrayList<MatrixLine> getMatrix()
     {
