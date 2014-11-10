@@ -358,9 +358,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         switch (this.planStatus) {
             case waitingForStationPosition: 
-                for (int i = 0;i<this.listeners.size();i++) {
-                    listeners.get(i).addStation(evt.getPoint());
-                }
+                    for (ViewListener listener : this.listeners) {
+                        listener.addStation(evt.getPoint());
+                    }
                 this.planStatus = PlanStatus.notWaiting;
                      break;
             case notWaiting: 
