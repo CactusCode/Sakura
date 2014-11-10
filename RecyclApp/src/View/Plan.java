@@ -14,13 +14,13 @@ import java.awt.Graphics;
  * @author Vincent
  */
 public class Plan extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form Plan
      */
     public Plan() {
         initComponents();
-      
+        
     }
 
     /**

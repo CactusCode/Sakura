@@ -16,10 +16,10 @@ public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
     
-    public Station(Point2D _position)
-    {
-        this.setPosition(_position);
+    public Station()
+    {    
         this.setDescription("Station");
         this.recoveryMatrix = new RecoveryMatrix();
     }
+    
 }

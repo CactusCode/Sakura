@@ -7,6 +7,7 @@ package Controller;
 
 import Model.*;
 import View.*;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import recyclappl.gui.MainWindow;
@@ -18,9 +19,9 @@ import recyclappl.gui.MainWindow;
  */
 public class RecyclApp implements ViewListener{
     
-    static recyclAppUI ui;
+   
     static RecyclApp app;
-    static private MainWindow window;
+    static MainWindow window;
     
     ArrayList <PlantComponant> plantComponantsList;
     Basket basket;
@@ -32,6 +33,7 @@ public class RecyclApp implements ViewListener{
     public RecyclApp() {
         window = new MainWindow();
         window.setVisible(true);
+        
         this.plantComponantsList = new ArrayList<PlantComponant>();
         this.basket = new Basket();
         this.plantEntrance = new PlantEntrance();
@@ -42,19 +44,30 @@ public class RecyclApp implements ViewListener{
    
         app = new RecyclApp();
         window.addListener(app);
+        
     }
+
 
     @Override
-    public void respondToAction()
-    {
-        System.out.println("EVENT CALLED");
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addStation(Point _position) {
+        if(positionAvailable(_position))
+        {   
+            Station station = new Station();
+            station.setPosition(_position);
+            this.plantComponantsList.add(station);
+            window.messageToUser("Station Ajoutée");         
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
-
-    @Override
-    public void addStation() {
-        System.out.println("test");
+    public boolean positionAvailable(Point2D _position){
+        for(int i = 0;i<this.plantComponantsList.size();i++)
+        {
+            if(this.plantComponantsList.get(i).getPosition()==_position)
+            {
+                return false;
+            }
+        }
+        return true;
     }
-
    
 }
