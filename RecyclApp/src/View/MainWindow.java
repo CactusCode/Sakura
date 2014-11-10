@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package recyclappl.gui;
+package View;
 
 import Controller.ViewListener;
 import java.awt.Point;
