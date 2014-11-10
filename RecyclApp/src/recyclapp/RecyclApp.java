@@ -62,7 +62,7 @@ public class RecyclApp implements ViewListener{
     
 
     @Override
-    public void placeExit(Point _position) {
+    public void placeExit(Point _po) {
         if(positionAvailable(_position))
         {   
            
