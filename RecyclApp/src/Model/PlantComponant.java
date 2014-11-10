@@ -5,7 +5,7 @@
  */
 package Model;
 
-import java.awt.geom.Point2D;
+import java.awt.Point;
 
 /**
  *
@@ -13,7 +13,7 @@ import java.awt.geom.Point2D;
  */
 public class PlantComponant
 {   
-    private Point2D position;
+    private Point position;
     private float maximalCapacity;
     private String name;
     private String description;
@@ -44,11 +44,11 @@ public class PlantComponant
     }
     
     //positionX accessors
-    public void setPosition(Point2D _position)
+    public void setPosition(Point _position)
     {
         this.position = _position;
     }
-    public Point2D getPosition()
+    public Point getPosition()
     {
         return this.position;
     } 
