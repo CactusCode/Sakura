@@ -40,12 +40,6 @@ public class MainWindow extends javax.swing.JFrame {
         listeners.add(_newListener);
     }
     
-    private void addStation(Point _point)
-    {
-         for (int i = 0;i<this.listeners.size();i++) {
-             listeners.get(i).addStation(_point);
-         }
-    }
     public void messageToUser(String _message)
     {
         jLabel1.setText(_message);
@@ -364,7 +358,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         switch (this.planStatus) {
             case waitingForStationPosition: 
-                this.addStation(evt.getPoint());
+                
+                for (int i = 0;i<this.listeners.size();i++) {
+                    listeners.get(i).addStation(evt.getPoint());
+                }
+             
                 this.planStatus = PlanStatus.notWaiting;
                      break;
               
