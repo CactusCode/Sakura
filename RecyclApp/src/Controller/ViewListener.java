@@ -14,4 +14,6 @@ import java.awt.Point;
 public interface ViewListener
 {
     public void addStation(Point _point);
+    public void placeExit(Point _point);
+    public void placeEntrance (Point _point);
 }

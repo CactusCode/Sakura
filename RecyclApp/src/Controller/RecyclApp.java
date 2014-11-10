@@ -59,6 +59,32 @@ public class RecyclApp implements ViewListener{
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
+    
+
+    @Override
+    public void placeExit(Point _position) {
+        if(positionAvailable(_position))
+        {   
+           
+            this.plantExit.setPosition(_position);
+         
+            window.messageToUser("Sortie positionnée");         
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");   
+    }
+
+    @Override
+    public void placeEntrance(Point _position) {
+         if(positionAvailable(_position))
+        {   
+           
+            this.plantEntrance.setPosition(_position);
+         
+            window.messageToUser("Entrée positionnée");         
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!"); 
+       
+    }
     public boolean positionAvailable(Point2D _position){
         for(int i = 0;i<this.plantComponantsList.size();i++)
         {
@@ -69,5 +95,4 @@ public class RecyclApp implements ViewListener{
         }
         return true;
     }
-   
 }
