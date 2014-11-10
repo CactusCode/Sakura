@@ -15,11 +15,17 @@ import java.awt.geom.Point2D;
 public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
+    private int numberOfExits;
     
     public Station()
     {    
         this.setDescription("Station");
         this.recoveryMatrix = new RecoveryMatrix();
+        this.numberOfExits = 0;
+    }
+    public void setNumberOfExits(int _numberOfExits)
+    {
+        this.numberOfExits = _numberOfExits;
     }
     
 }
