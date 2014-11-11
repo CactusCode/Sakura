@@ -7,7 +7,6 @@
 package View;
 
 import Controller.ViewListener;
-import Model.Station;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         listeners = new ArrayList<ViewListener>();
         planStatus = PlanStatus.notWaiting;
+
     }
 
     public void addListener(ViewListener _newListener)
@@ -50,8 +50,8 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
      public void addStationToPlan(Point _position) {
-         Graphics g = this.plan.getGraphics();
-        this.plan.paintStation(_position,g);
+        Graphics g = this.plan1.getGraphics();
+        this.plan1.paintStation(_position,g);
     }
   
     /**
@@ -90,9 +90,10 @@ public class MainWindow extends javax.swing.JFrame {
         ScrollPaneMatrice = new javax.swing.JScrollPane();
         MatriceRecup = new javax.swing.JTable();
         LabelMatrice = new javax.swing.JLabel();
-        plan = new View.Plan();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        plan1 = new View.Plan();
+        grille1 = new View.Grille();
         Menu = new javax.swing.JMenuBar();
         MenuFichier = new javax.swing.JMenu();
         MenuEnregistrer = new javax.swing.JMenuItem();
@@ -125,6 +126,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar5.add(jMenu11);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         ButtonStation.setText("Station");
         ButtonStation.setMaximumSize(new java.awt.Dimension(85, 23));
@@ -239,29 +241,40 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        plan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                planMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout planLayout = new javax.swing.GroupLayout(plan);
-        plan.setLayout(planLayout);
-        planLayout.setHorizontalGroup(
-            planLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 871, Short.MAX_VALUE)
-        );
-        planLayout.setVerticalGroup(
-            planLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
-        );
-
         jButton1.setText("Grille On/Off");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        plan1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                plan1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout grille1Layout = new javax.swing.GroupLayout(grille1);
+        grille1.setLayout(grille1Layout);
+        grille1Layout.setHorizontalGroup(
+            grille1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        grille1Layout.setVerticalGroup(
+            grille1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 512, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout plan1Layout = new javax.swing.GroupLayout(plan1);
+        plan1.setLayout(plan1Layout);
+        plan1Layout.setHorizontalGroup(
+            plan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(grille1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        plan1Layout.setVerticalGroup(
+            plan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(grille1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         MenuFichier.setText("Fichier");
 
@@ -286,27 +299,27 @@ public class MainWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(ButtonStation, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(ButtonConvoyeur)
-                        .addGap(47, 47, 47)
-                        .addComponent(ButtonJonction, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(ButtonEntree, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(jButton1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(plan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(plan1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ButtonStation, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(ButtonConvoyeur)
+                                .addGap(47, 47, 47)
+                                .addComponent(ButtonJonction, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(ButtonEntree, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                                .addComponent(jButton1)))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(LabelInterface)
@@ -315,20 +328,20 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(ButtonAnnuler))
                     .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ButtonAnnuler)
                             .addComponent(ButtonRefaire)
                             .addComponent(LabelInterface))
                         .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ButtonStation, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ButtonConvoyeur, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,9 +349,9 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(ButtonEntree, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(plan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(plan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -375,20 +388,20 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonAnnulerActionPerformed
 
-    private void planMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planMouseClicked
-        switch(planStatus){
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Graphics g = this.grille1.getGraphics();
+        this.grille1.paintGrid(g);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
+       switch(planStatus){
             case waitingForStationPosition : 
                 for (ViewListener listener : listeners) {
                     listener.addStation(evt.getPoint());
                 }
                 this.planStatus = PlanStatus.notWaiting;
         }
-    }//GEN-LAST:event_planMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Graphics g = this.plan.getGraphics();
-        this.plan.paintGrid(g);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_plan1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -442,6 +455,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldNom;
     private javax.swing.JTextField TextFieldPositionX;
     private javax.swing.JTextField TextFieldPositionY;
+    private View.Grille grille1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu10;
@@ -456,6 +470,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuBar jMenuBar4;
     private javax.swing.JMenuBar jMenuBar5;
-    private View.Plan plan;
+    private View.Plan plan1;
     // End of variables declaration//GEN-END:variables
 }

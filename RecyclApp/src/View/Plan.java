@@ -20,41 +20,17 @@ import javax.swing.JPanel;
  */
 public class Plan extends JPanel
 {
-    private final int composantH = 10;
-    private final int composantW = 10;
-    public boolean grilleActive;
+    private final int composantH = 12;
+    private final int composantW = 12;
+  
     public Plan()
     {
-        System.out.println("je suis le bon plan");
-        this.grilleActive = false;
-    }
-    
-    public void paintGrid(Graphics g)
-    {
-        if(!this.grilleActive)
-        {
-            this.grilleActive = true;
-            super.paintComponents(g);
-            g.setColor(Color.GRAY);
-            for (int i = 0; i <= this.getWidth(); i+=10)
-            {
-                g.drawLine(i, 0, i, this.getHeight());
-            }
-            for (int i = 0; i <= this.getWidth(); i+=10)
-            {
-                g.drawLine(0, i, this.getWidth(), i);
-            }
-        }
-        else {
-            this.grilleActive = false;
-            repaint();
-        }
-            
-    }
-    public void paintStation(Point _position, Graphics g){
-        g.setColor(Color.red);
-        g.drawOval((int)_position.getX(), (int)_position.getY(),  composantH, composantW);
         
+    }
+    public void paintStation(Point _position, Graphics g)
+    {
+        g.setColor(Color.red);
+        g.drawOval((int)_position.getX()-composantW/2, (int)_position.getY()-composantH/2,  composantH, composantW);    
     }
     
 }
