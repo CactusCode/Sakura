@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,6 +20,8 @@ import javax.swing.JPanel;
  */
 public class Plan extends JPanel
 {
+    private final int composantH = 10;
+    private final int composantW = 10;
     public boolean grilleActive;
     public Plan()
     {
@@ -47,6 +50,11 @@ public class Plan extends JPanel
             repaint();
         }
             
+    }
+    public void paintStation(Point _position, Graphics g){
+        g.setColor(Color.red);
+        g.drawOval((int)_position.getX(), (int)_position.getY(),  composantH, composantW);
+        
     }
     
 }

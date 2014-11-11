@@ -49,8 +49,9 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1.setText(_message);
     }
     
-     public void addStationToPlan(Station station) {
-        
+     public void addStationToPlan(Point _position) {
+         Graphics g = this.plan.getGraphics();
+        this.plan.paintStation(_position,g);
     }
   
     /**
