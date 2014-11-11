@@ -14,15 +14,44 @@ import java.util.ArrayList;
  */
 public class Junction extends ComposanteUsine
 {
-   //ArrayList<String> List;// = new ArrayList<String>();
-    private static List ConvoyeursEntree = new ArrayList<Junction>();
+   private ArrayList<String> inputArray;
+   private String outputConvoyeur;
+    //private static List ConvoyeursEntree = new ArrayList<Junction>();
     
-    public Junction(float Entree, float sortie)
+    public Junction()
     {
-       
+        inputArray = new ArrayList<String>();
+        outputConvoyeur = "";
     }
-    public void getPosition()
+    public Junction(ArrayList<String> listConvoyeurs, String OneExitConvoyeur)
     {
+        //inputArray = listConvoyeurs;
+        // copier élément par élément ou simplement copier la structure ?
+       for(int i = 0; i < listConvoyeurs.size(); i++)
+       {
+           inputArray.add(listConvoyeurs.get(i));
+       }
+       outputConvoyeur = OneExitConvoyeur;
     }
     
+    public ArrayList<String> getInput()
+    {
+        return inputArray;
+    }
+    
+    public String getOutput()
+    {
+        return outputConvoyeur;
+    }
+    
+    public void setInput(ArrayList<String> _listConvoyeur)
+    {   
+        inputArray = _listConvoyeur;
+    }
+    
+    public void setOutput(String _exit)
+    {   
+        outputConvoyeur = _exit;
+    }
+
 }

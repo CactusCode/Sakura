@@ -12,6 +12,7 @@ package Model;
  */
 public class Convoyeur extends ComposanteUsine 
 {
+    private float point;
     public Convoyeur(float positionX, float positionY)
     {
         this.getPositionX();
@@ -47,6 +48,9 @@ public class Convoyeur extends ComposanteUsine
     {
         this.setMaximalCapacity(_max);
     }
-
     
+    public float PositionGrille(float positionX, float positionY)
+    {
+        return point;
+    }
 }
