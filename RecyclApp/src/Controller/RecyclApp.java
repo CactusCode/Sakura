@@ -54,7 +54,8 @@ public class RecyclApp implements ViewListener{
             Station station = new Station();
             station.setPosition(_position);
             this.plantComponantsList.add(station);
-            window.messageToUser("Station Ajoutée");         
+            window.messageToUser("Station Ajoutée");
+            window.addStationToPlan(station);
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }

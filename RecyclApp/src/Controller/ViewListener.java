@@ -6,7 +6,6 @@
 package Controller;
 
 import java.awt.Point;
-
 /**
  *
  * @author Pascal

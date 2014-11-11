@@ -19,26 +19,34 @@ import javax.swing.JPanel;
  */
 public class Plan extends JPanel
 {
-    private int WIDTH = 870;
-    private int HEIGHT = 551;
-    
+    public boolean grilleActive;
     public Plan()
     {
         System.out.println("je suis le bon plan");
-        setBounds(25, 92, WIDTH, HEIGHT);
+        this.grilleActive = false;
     }
     
-    public void paintComponent(Graphics g)
+    public void paintGrid(Graphics g)
     {
-        super.paintComponents(g);
-        g.setColor(Color.GRAY);
-        for (int i = 0; i < WIDTH; i+=10)
+        if(!this.grilleActive)
         {
-            g.drawLine(i, 0, i, HEIGHT);
+            this.grilleActive = true;
+            super.paintComponents(g);
+            g.setColor(Color.GRAY);
+            for (int i = 0; i <= this.getWidth(); i+=10)
+            {
+                g.drawLine(i, 0, i, this.getHeight());
+            }
+            for (int i = 0; i <= this.getWidth(); i+=10)
+            {
+                g.drawLine(0, i, this.getWidth(), i);
+            }
         }
-        for (int i = 0; i < HEIGHT; i+=10)
-        {
-            g.drawLine(0, i, WIDTH, i);
+        else {
+            this.grilleActive = false;
+            repaint();
         }
+            
     }
+    
 }
