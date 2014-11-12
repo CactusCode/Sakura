@@ -65,9 +65,7 @@ public class RecyclApp implements ViewListener{
     public void placeExit(Point _position) {
         if(positionAvailable(_position))
         {   
-           
             this.plantExit.setPosition(_position);
-         
             window.messageToUser("Sortie positionnée");         
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");   
@@ -77,9 +75,7 @@ public class RecyclApp implements ViewListener{
     public void placeEntrance(Point _position) {
          if(positionAvailable(_position))
         {   
-           
             this.plantEntrance.setPosition(_position);
-         
             window.messageToUser("Entrée positionnée");         
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!"); 

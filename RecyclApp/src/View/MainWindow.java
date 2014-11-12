@@ -34,7 +34,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        listeners = new ArrayList<ViewListener>();
+        listeners = new ArrayList<>();
         planStatus = PlanStatus.notWaiting;
 
     }
@@ -389,6 +389,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonAnnulerActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         Graphics g = this.grille1.getGraphics();
         this.grille1.paintGrid(g);
     }//GEN-LAST:event_jButton1ActionPerformed
