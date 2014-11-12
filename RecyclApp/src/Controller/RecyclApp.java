@@ -89,4 +89,23 @@ public class RecyclApp implements ViewListener{
         }
         return true;
     }
+    
+    public void placeJonction(){
+    }
+    
+    public void editionStation(){
+    
+    }
+    
+    public void placeConvoyer(){
+    
+    }
+    
+    public void setDisplay(){
+    
+    }
+    
+    public void doCalculs(){
+    
+    }
 }
