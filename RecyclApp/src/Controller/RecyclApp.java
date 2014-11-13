@@ -79,6 +79,9 @@ public class RecyclApp{
         else window.messageToUser("Il existe déjà un élément à cet endroit!"); 
        
     }
+    public void addConvoyeur(Point _start,Point _end){
+    
+    }
     public boolean positionAvailable(Point2D _position){
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
             if (plantComponantsList1.getPosition() == _position) {

@@ -23,14 +23,14 @@ public class MainWindow extends javax.swing.JFrame {
         window = new MainWindow();
         window.setVisible(true);
         app = new RecyclApp(window);
-    
     }
    
      public enum PlanStatus
     {
         notWaiting,
         waitingForStationPosition,
-        waitingForConvoyeurPosition,
+        waitingForConvoyeurPositionStart,
+        waitingForConvoyeyrPositionEnd,
         waitingForJonctionPosition
     }
     
@@ -374,8 +374,9 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonEntreeActionPerformed
 
     private void ButtonConvoyeurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConvoyeurActionPerformed
-
-        System.exit(0);// TODO add your handling code here:
+        this.jLabel1.setText("Choisissez une composante du plan comme point de départ");
+        this.planStatus = PlanStatus.waitingForConvoyeurPositionStart;
+     
     }//GEN-LAST:event_ButtonConvoyeurActionPerformed
 
     private void TextFieldNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNomActionPerformed
@@ -397,11 +398,22 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
+       Point start = null;
        switch(planStatus){
             case waitingForStationPosition : 
                     app.addStation(evt.getPoint());
                     this.planStatus = PlanStatus.notWaiting;
-            case notWaiting : 
+                    break;
+            case waitingForConvoyeurPositionStart :
+                    start = evt.getPoint();
+                    this.jLabel1.setText("Choisissez une composante du plan comme point d'arrivé");
+                    this.planStatus = PlanStatus.waitingForConvoyeyrPositionEnd;
+                    break;
+            case waitingForConvoyeyrPositionEnd :
+                    app.addConvoyeur(start,evt.getPoint());
+                    break;
+            case notWaiting :
+                    break;
         }
     }//GEN-LAST:event_plan1MouseClicked
 
