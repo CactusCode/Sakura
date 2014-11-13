@@ -29,6 +29,7 @@ public class RecyclApp{
     PlantEntrance plantEntrance;
     PlantExit plantExit;
     /**
+     * @param _window
      */
     public RecyclApp(MainWindow _window) {
         window = new MainWindow();
@@ -85,30 +86,11 @@ public class RecyclApp{
     }
     public boolean positionAvailable(Point2D _position){
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
-            if (plantComponantsList1.getPosition() == _position) {
+            if (Math.abs(plantComponantsList1.getPosition().x-_position.getX())<=10 && Math.abs(plantComponantsList1.getPosition().y-_position.getY())<=10) {
                 return false;
             }
         }
         return true;
-    }
-    
-    public void placeJonction(){
-    }
-    
-    public void editionStation(){
-    
-    }
-    
-    public void placeConvoyer(){
-    
-    }
-    
-    public void setDisplay(){
-    
-    }
-    
-    public void doCalculs(){
-    
     }
 
     public void getContextInfo(Point _position) {
@@ -122,11 +104,7 @@ public class RecyclApp{
     }
 
     private boolean occupiedPosition(PlantComponant _componant, Point _position) {
-        if (Math.abs(_componant.getPosition().x-_position.x)<=5 && Math.abs(_componant.getPosition().y-_position.y)<=5)
-        {
-        return true;    
-        } 
-        return false;
+        return Math.abs(_componant.getPosition().x-_position.getX())<=5 && Math.abs(_componant.getPosition().y-_position.getY())<=5;
     }
 
  
