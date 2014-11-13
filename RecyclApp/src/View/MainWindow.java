@@ -6,6 +6,7 @@
 
 package View;
 
+import Controller.RecyclApp;
 import Controller.ViewListener;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -16,7 +17,18 @@ import java.util.ArrayList;
  * @author pandi_000
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    static RecyclApp app;
+    static MainWindow window;
+    
+    
+    public static void main(String[] args) {
+        window = new MainWindow();
+        window.setVisible(true);
+        
+        
+        app = new RecyclApp(window);
+        
+    }
    
      public enum PlanStatus
     {
@@ -36,6 +48,8 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         listeners = new ArrayList<>();
         planStatus = PlanStatus.notWaiting;
+        
+
 
     }
 
@@ -397,9 +411,8 @@ public class MainWindow extends javax.swing.JFrame {
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
        switch(planStatus){
             case waitingForStationPosition : 
-                for (ViewListener listener : listeners) {
-                    listener.addStation(evt.getPoint());
-                }
+                    app.addStation(evt.getPoint());
+                
                 this.planStatus = PlanStatus.notWaiting;
         }
     }//GEN-LAST:event_plan1MouseClicked
@@ -407,32 +420,7 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        /*try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>*/
-        
-        
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonAnnuler;
