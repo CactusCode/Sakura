@@ -28,6 +28,8 @@ public class MainWindow extends javax.swing.JFrame {
     
     public void setContextInfo(String description, Point position) {
         this.TextFieldNom.setText("Description :"+description);
+        this.TextFieldPositionX.setText("Position x :"+position.getX());
+        this.TextFieldPositionY.setText("Position y :"+position.getY());
     }
      public enum PlanStatus
     {
@@ -191,6 +193,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         TextFieldPositionX.setBackground(new java.awt.Color(240, 240, 240));
         TextFieldPositionX.setText("Position x: ");
+        TextFieldPositionX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextFieldPositionXActionPerformed(evt);
+            }
+        });
 
         TextFieldPositionY.setBackground(new java.awt.Color(240, 240, 240));
         TextFieldPositionY.setText("Position y:");
@@ -288,6 +295,11 @@ public class MainWindow extends javax.swing.JFrame {
         MenuFichier.add(MenuEnregistrer);
 
         MenuQuitter.setText("Quitter");
+        MenuQuitter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuQuitterActionPerformed(evt);
+            }
+        });
         MenuFichier.add(MenuQuitter);
 
         Menu.add(MenuFichier);
@@ -421,6 +433,14 @@ public class MainWindow extends javax.swing.JFrame {
                     break;
         }
     }//GEN-LAST:event_plan1MouseClicked
+
+    private void TextFieldPositionXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldPositionXActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldPositionXActionPerformed
+
+    private void MenuQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitterActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_MenuQuitterActionPerformed
 
     /**
      * @param args the command line arguments
