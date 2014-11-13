@@ -17,6 +17,7 @@ import java.util.ArrayList;
  *
  * @author Pascal
  */
+
 public class RecyclApp{
     
    
@@ -109,4 +110,24 @@ public class RecyclApp{
     public void doCalculs(){
     
     }
+
+    public void getContextInfo(Point _position) {
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+            if(occupiedPosition(plantComponantsList1, _position))
+            {
+                window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition());
+            }
+        }
+        
+    }
+
+    private boolean occupiedPosition(PlantComponant _componant, Point _position) {
+        if (Math.abs(_componant.getPosition().x-_position.x)<=5 && Math.abs(_componant.getPosition().y-_position.y)<=5)
+        {
+        return true;    
+        } 
+        return false;
+    }
+
+ 
 }

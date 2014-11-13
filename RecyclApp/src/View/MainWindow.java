@@ -24,7 +24,11 @@ public class MainWindow extends javax.swing.JFrame {
         window.setVisible(true);
         app = new RecyclApp(window);
     }
-   
+
+    
+    public void setContextInfo(String description, Point position) {
+        this.TextFieldNom.setText("Description :"+description);
+    }
      public enum PlanStatus
     {
         notWaiting,
@@ -177,7 +181,7 @@ public class MainWindow extends javax.swing.JFrame {
         PanelInterface.setPreferredSize(new java.awt.Dimension(613, 275));
 
         TextFieldNom.setBackground(new java.awt.Color(240, 240, 240));
-        TextFieldNom.setText("Nom:");
+        TextFieldNom.setText("Description :");
         TextFieldNom.setToolTipText("Nom:");
         TextFieldNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,7 +241,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -413,6 +417,7 @@ public class MainWindow extends javax.swing.JFrame {
                     app.addConvoyeur(start,evt.getPoint());
                     break;
             case notWaiting :
+                    app.getContextInfo(evt.getPoint());
                     break;
         }
     }//GEN-LAST:event_plan1MouseClicked

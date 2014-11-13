@@ -321,7 +321,7 @@
                   <Component id="TextFieldPositionX" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="TextFieldPositionY" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="215" max="32767" attributes="0"/>
+                  <EmptySpace pref="197" max="32767" attributes="0"/>
                   <Component id="LabelMatrice" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="ScrollPaneMatrice" min="-2" pref="193" max="-2" attributes="0"/>
@@ -335,7 +335,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f0" green="f0" red="f0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nom:"/>
+            <Property name="text" type="java.lang.String" value="Description :"/>
             <Property name="toolTipText" type="java.lang.String" value="Nom:"/>
           </Properties>
           <Events>
