@@ -5,10 +5,12 @@
  */
 package Controller;
 
-import Model.ComposanteUsine;
+import Model.*;
+import View.*;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import View.recyclAppUI;
-import recyclappl.gui.MainWindow;
+
 
    
 /**
@@ -17,44 +19,77 @@ import recyclappl.gui.MainWindow;
  */
 public class RecyclApp implements ViewListener{
     
-    static recyclAppUI ui;
+   
     static RecyclApp app;
-    static private MainWindow window;
+    static MainWindow window;
     
-    ArrayList <ComposanteUsine> listeComposanteUsine;
+    ArrayList <PlantComponant> plantComponantsList;
+    Basket basket;
+    PlantEntrance plantEntrance;
+    PlantExit plantExit;
     /**
-     * @param args the command line arguments
      */
     public RecyclApp() {
-        //ui = new recyclAppUI();
-        //ui.setVisible(true);
-        listeComposanteUsine = new ArrayList<ComposanteUsine>();
+        window = new MainWindow();
+        window.setVisible(true);
+        
+        this.plantComponantsList = new ArrayList<>();
+        this.basket = new Basket();
+        this.plantEntrance = new PlantEntrance();
+        this.plantExit = new PlantExit();
     }
     
     public static void main(String[] args) {
-        window = new MainWindow();
-        window.setVisible(true);
+   
         app = new RecyclApp();
-        
         window.addListener(app);
-        //ui.passControler(app);
-        //recyclappl.gui.MainWindow mainWindow = new recyclappl.gui.MainWindow();
-        //mainWindow.setVisible(true);
-    }
-    
-    public void checkIfClickOk(){
-        ui.changeLabel();
-    }
-    
-    private void doAction()
-    {
         
     }
 
+
     @Override
-    public void respondToAction()
-    {
-        System.out.println("EVENT CALLED");
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addStation(Point _position) {
+        if(positionAvailable(_position))
+        {   
+            Station station = new Station();
+            station.setPosition(_position);
+            this.plantComponantsList.add(station);
+            window.messageToUser("Station Ajoutée");         
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");
+    }
+    
+
+    @Override
+    public void placeExit(Point _position) {
+        if(positionAvailable(_position))
+        {   
+           
+            this.plantExit.setPosition(_position);
+         
+            window.messageToUser("Sortie positionnée");         
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");   
+    }
+
+    @Override
+    public void placeEntrance(Point _position) {
+         if(positionAvailable(_position))
+        {   
+           
+            this.plantEntrance.setPosition(_position);
+         
+            window.messageToUser("Entrée positionnée");         
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!"); 
+       
+    }
+    public boolean positionAvailable(Point2D _position){
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+            if (plantComponantsList1.getPosition() == _position) {
+                return false;
+            }
+        }
+        return true;
     }
 }

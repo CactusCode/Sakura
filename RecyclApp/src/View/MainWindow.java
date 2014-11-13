@@ -4,24 +4,35 @@
  * and open the template in the editor.
  */
 
-package recyclappl.gui;
+package View;
 
-import java.util.ArrayList;
 import Controller.ViewListener;
+import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
  * @author pandi_000
  */
 public class MainWindow extends javax.swing.JFrame {
+     public enum PlanStatus
+    {
+        notWaiting,
+        waitingForStationPosition,
+        waitingForConvoyeurPosition,
+        waitingForJonctionPosition
+    }
+    
     ArrayList<ViewListener> listeners;
+    private PlanStatus planStatus;
     
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
-        listeners = new ArrayList<>();
+        listeners = new ArrayList<ViewListener>();
+        planStatus = PlanStatus.notWaiting;
     }
 
     public void addListener(ViewListener _newListener)
@@ -29,26 +40,11 @@ public class MainWindow extends javax.swing.JFrame {
         listeners.add(_newListener);
     }
     
-    private void buttonClicked()
+    public void messageToUser(String _message)
     {
-        for (int i = 0; i < listeners.size(); i++)
-        {
-            listeners.get(i).respondToAction();
-        }
+        jLabel1.setText(_message);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +82,7 @@ public class MainWindow extends javax.swing.JFrame {
         ScrollPaneMatrice = new javax.swing.JScrollPane();
         MatriceRecup = new javax.swing.JTable();
         LabelMatrice = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
         MenuFichier = new javax.swing.JMenu();
         MenuEnregistrer = new javax.swing.JMenuItem();
@@ -166,16 +163,21 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setPreferredSize(new java.awt.Dimension(613, 613));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 878, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 549, Short.MAX_VALUE)
         );
 
         PanelInterface.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -211,7 +213,6 @@ public class MainWindow extends javax.swing.JFrame {
         MatriceRecup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ScrollPaneMatrice.setViewportView(MatriceRecup);
         MatriceRecup.getAccessibleContext().setAccessibleDescription("");
-        MatriceRecup.getAccessibleContext().setAccessibleParent(null);
 
         LabelMatrice.setText("Matrice de récupération");
 
@@ -241,7 +242,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -282,10 +283,11 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(ButtonEntree, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
                         .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(252, 252, 252))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(LabelInterface)
@@ -307,13 +309,13 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(ButtonConvoyeur, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ButtonJonction, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ButtonEntree, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addGap(15, 15, 15))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ButtonAnnuler)
                         .addComponent(ButtonRefaire)
                         .addComponent(LabelInterface)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                     .addComponent(PanelInterface, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE))
@@ -321,14 +323,13 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         ButtonStation.getAccessibleContext().setAccessibleDescription("");
-        ButtonStation.getAccessibleContext().setAccessibleParent(null);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonStationActionPerformed
-        buttonClicked();
-//System.exit(0);        // TODO add your handling code here:
+        this.jLabel1.setText("Choisissez une place sur le plan pour la station");
+        this.planStatus = PlanStatus.waitingForStationPosition;
     }//GEN-LAST:event_ButtonStationActionPerformed
 
     private void ButtonEntreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntreeActionPerformed
@@ -352,6 +353,21 @@ public class MainWindow extends javax.swing.JFrame {
     private void ButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAnnulerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonAnnulerActionPerformed
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+
+        switch (this.planStatus) {
+            case waitingForStationPosition: 
+                    for (ViewListener listener : this.listeners) {
+                        listener.addStation(evt.getPoint());
+                    }
+                this.planStatus = PlanStatus.notWaiting;
+                     break;
+            case notWaiting: 
+                     break;
+        }
+            
+    }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -379,15 +395,8 @@ public class MainWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>*/
-        recyclappl.gui.MainWindow mainWindow = new recyclappl.gui.MainWindow();
-        mainWindow.setVisible(true);
         
-        /* Create and display the form */
-        /*java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
-        });*/
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -412,6 +421,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldNom;
     private javax.swing.JTextField TextFieldPositionX;
     private javax.swing.JTextField TextFieldPositionY;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu3;

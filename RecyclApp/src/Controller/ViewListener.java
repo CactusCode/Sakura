@@ -5,11 +5,15 @@
  */
 package Controller;
 
+import java.awt.Point;
+
 /**
  *
  * @author Pascal
  */
 public interface ViewListener
 {
-    public void respondToAction();
+    public void addStation(Point _point);
+    public void placeExit(Point _point);
+    public void placeEntrance (Point _point);
 }
