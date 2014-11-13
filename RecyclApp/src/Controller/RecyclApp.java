@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Pascal
  */
-public class RecyclApp implements ViewListener{
+public class RecyclApp{
     
    
     static RecyclApp app;
@@ -45,7 +45,7 @@ public class RecyclApp implements ViewListener{
     }
 
 
-    @Override
+   
     public void addStation(Point _position) {
         if(positionAvailable(_position))
         {   
@@ -59,7 +59,7 @@ public class RecyclApp implements ViewListener{
     }
     
 
-    @Override
+    
     public void placeExit(Point _position) {
         if(positionAvailable(_position))
         {   
@@ -69,7 +69,7 @@ public class RecyclApp implements ViewListener{
         else window.messageToUser("Il existe déjà un élément à cet endroit!");   
     }
 
-    @Override
+
     public void placeEntrance(Point _position) {
          if(positionAvailable(_position))
         {   
