@@ -24,8 +24,6 @@ public class MainWindow extends javax.swing.JFrame {
     public static void main(String[] args) {
         window = new MainWindow();
         window.setVisible(true);
-        
-        
         app = new RecyclApp(window);
         
     }
@@ -48,9 +46,6 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         listeners = new ArrayList<>();
         planStatus = PlanStatus.notWaiting;
-        
-
-
     }
 
     public void addListener(ViewListener _newListener)
@@ -412,8 +407,7 @@ public class MainWindow extends javax.swing.JFrame {
        switch(planStatus){
             case waitingForStationPosition : 
                     app.addStation(evt.getPoint());
-                
-                this.planStatus = PlanStatus.notWaiting;
+                    this.planStatus = PlanStatus.notWaiting;
         }
     }//GEN-LAST:event_plan1MouseClicked
 

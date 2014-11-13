@@ -6,51 +6,30 @@
 
 package Model;
 
+import java.awt.Point;
+
 /**
  *
  * @author Vale
  */
-public class Convoyeur extends ComposanteUsine 
+public class Convoyeur extends PlantComponant 
 {
-    private float point;
-    public Convoyeur(float positionX, float positionY)
-    {
-        this.getPositionX();
-        this.getPositionY();
-    }
+  
+    private PlantComponant startPoint;
+    private PlantComponant endPoint;
     
-    public float getPosX()
+    public Convoyeur(PlantComponant _start,PlantComponant _end)
     {
-        return this.getPositionX();
-    }
+       this.startPoint = _start;
+       this.endPoint = _end;
+    }   
     
-    public void setPoX(float _value)
+    public Point getStartPosition()
     {
-        this.setPositionX(_value);
+        return this.startPoint.getPosition();
     }
-    
-    public float getPosY()
+     public Point getEndPosition()
     {
-        return this.getPositionY();
-    }
-    
-    public void setPoxY(float _value)
-    {
-        this.setPositionY(_value);
-    }
-    
-    public float getMax()
-    {
-        return this.getMaximalCapacity();
-    }
-    
-    public void setMax(float _max)
-    {
-        this.setMaximalCapacity(_max);
-    }
-    
-    public float PositionGrille(float positionX, float positionY)
-    {
-        return point;
+        return this.endPoint.getPosition();
     }
 }

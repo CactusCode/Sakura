@@ -29,7 +29,7 @@ public class RecyclApp implements ViewListener{
     PlantExit plantExit;
     /**
      */
-    public RecyclApp() {
+    public RecyclApp(MainWindow _window) {
         window = new MainWindow();
         window.setVisible(true);
         
@@ -41,9 +41,7 @@ public class RecyclApp implements ViewListener{
     
     public static void main(String[] args) {
    
-        app = new RecyclApp();
-        window.addListener(app);
-        
+    
     }
 
 

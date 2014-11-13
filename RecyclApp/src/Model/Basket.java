@@ -35,7 +35,7 @@ public class Basket {
     {
         return this.basketContents;
     }
-    public void addContentToBasketWithMaterialAndQuantity(Material _material, Float _quantity)
+    public void addContentToBasketWithMaterialAndQuantity(Material _material, float _quantity)
     {
         this.basketContents.add(new MaterialQty(_material, _quantity));
     }

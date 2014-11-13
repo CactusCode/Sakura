@@ -12,46 +12,30 @@ import java.util.ArrayList;
  *
  * @author Vale
  */
-public class Junction extends ComposanteUsine
+public class Junction extends PlantComponant
 {
-   private ArrayList<String> inputArray;
-   private String outputConvoyeur;
-    //private static List ConvoyeursEntree = new ArrayList<Junction>();
-    
+   private ArrayList<Convoyeur> inputConvoyeurs;
+   private Convoyeur outputConvoyeur;
+  
     public Junction()
     {
-        inputArray = new ArrayList<String>();
-        outputConvoyeur = "";
+        this.setDescription("Jonction");
+        this.inputConvoyeurs = new ArrayList<>();
     }
-    public Junction(ArrayList<String> listConvoyeurs, String OneExitConvoyeur)
+    public void addInputConvoyeur(Convoyeur _input)
     {
-        //inputArray = listConvoyeurs;
-        // copier élément par élément ou simplement copier la structure ?
-       for(int i = 0; i < listConvoyeurs.size(); i++)
-       {
-           inputArray.add(listConvoyeurs.get(i));
-       }
-       outputConvoyeur = OneExitConvoyeur;
+        this.inputConvoyeurs.add(_input);
     }
-    
-    public ArrayList<String> getInput()
+    public void addOutputConvoyeur(Convoyeur _output)
     {
-        return inputArray;
+        this.outputConvoyeur = _output;
     }
-    
-    public String getOutput()
+    public ArrayList<Convoyeur> getInputConvoyeurList()
     {
-        return outputConvoyeur;
+        return this.inputConvoyeurs;
     }
-    
-    public void setInput(ArrayList<String> _listConvoyeur)
-    {   
-        inputArray = _listConvoyeur;
+    public Convoyeur getOutputConvoyeur()
+    {
+        return this.outputConvoyeur;
     }
-    
-    public void setOutput(String _exit)
-    {   
-        outputConvoyeur = _exit;
-    }
-
 }

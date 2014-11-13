@@ -19,7 +19,7 @@ public class Material {
     }
     
     MaterialType materialType;
-    Float weight;
+    float weight;
     
     public Material(MaterialType _type,float _weight)
     {

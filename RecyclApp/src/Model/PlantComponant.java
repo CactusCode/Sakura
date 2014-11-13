@@ -22,7 +22,7 @@ public class PlantComponant
     {
         
     }
-    
+  
     //Name accessors
     public void setName(String _name)
     {
