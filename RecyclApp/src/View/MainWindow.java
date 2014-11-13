@@ -35,7 +35,7 @@ public class MainWindow extends javax.swing.JFrame {
         waitingForJonctionPosition
     }
     
-    ArrayList<ViewListener> listeners;
+   
     private PlanStatus planStatus;
     
     /**
@@ -43,14 +43,10 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        listeners = new ArrayList<>();
         planStatus = PlanStatus.notWaiting;
     }
 
-    public void addListener(ViewListener _newListener)
-    {
-        listeners.add(_newListener);
-    }
+  
     
     public void messageToUser(String _message)
     {
