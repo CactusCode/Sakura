@@ -12,7 +12,7 @@ import java.awt.Point;
  *
  * @author Vale
  */
-public class Convoyeur extends PlantComponant 
+public class Convoyeur 
 {
   
     private final PlantComponant startPoint;

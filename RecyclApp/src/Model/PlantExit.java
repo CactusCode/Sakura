@@ -6,6 +6,8 @@
 
 package Model;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Vincent
@@ -16,5 +18,10 @@ public class PlantExit extends PlantComponant
     {
         this.setDescription("Sortie Usine");
   
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,18 +5,19 @@
  */
 package Model;
 
+import java.awt.Graphics;
 import java.awt.Point;
 
 /**
  *
  * @author Pascal
  */
-public class PlantComponant
+public abstract class PlantComponant
 {   
-    private Point position;
-    private float maximalCapacity;
-    private String name;
-    private String description;
+    protected Point position;
+    protected float maximalCapacity;
+    protected String name;
+    protected String description;
 
     public PlantComponant()
     {
@@ -61,4 +62,6 @@ public class PlantComponant
     {
         return this.maximalCapacity;
     }
+    
+    public abstract void draw(Graphics g);
 }

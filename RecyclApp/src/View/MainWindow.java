@@ -17,12 +17,14 @@ import java.awt.Point;
 public class MainWindow extends javax.swing.JFrame {
     static RecyclApp app;
     static MainWindow window;
+    static Grid grid;
 
     
     public static void main(String[] args) {
         window = new MainWindow();
         window.setVisible(true);
         app = new RecyclApp(window);
+        grid = new Grid();
     }
 
     
@@ -57,7 +59,7 @@ public class MainWindow extends javax.swing.JFrame {
     
      public void addStationToPlan(Point _position) {
         Graphics g = this.plan1.getGraphics();
-        this.plan1.paintStation(_position,g);
+        app.paintPanel(plan1, g);
     }
   
     /**
@@ -99,7 +101,6 @@ public class MainWindow extends javax.swing.JFrame {
         grilleOnOff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
-        grille1 = new View.Grille();
         jButton2 = new javax.swing.JButton();
         Menu = new javax.swing.JMenuBar();
         MenuFichier = new javax.swing.JMenu();
@@ -249,7 +250,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -262,32 +263,22 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        plan1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         plan1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 plan1MouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout grille1Layout = new javax.swing.GroupLayout(grille1);
-        grille1.setLayout(grille1Layout);
-        grille1Layout.setHorizontalGroup(
-            grille1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        grille1Layout.setVerticalGroup(
-            grille1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout plan1Layout = new javax.swing.GroupLayout(plan1);
         plan1.setLayout(plan1Layout);
         plan1Layout.setHorizontalGroup(
             plan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(grille1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 995, Short.MAX_VALUE)
         );
         plan1Layout.setVerticalGroup(
             plan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(grille1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 562, Short.MAX_VALUE)
         );
 
         jButton2.setText("Magnetique On/Off");
@@ -340,7 +331,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38)
                                 .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                                 .addComponent(grilleOnOff)))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -414,9 +405,9 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonAnnulerActionPerformed
 
     private void grilleOnOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grilleOnOffActionPerformed
-
-        Graphics g = this.grille1.getGraphics();
-        this.grille1.paintGrid(g);
+grid.change();
+        Graphics g = this.plan1.getGraphics();
+        app.paintPanel(plan1, g);
     }//GEN-LAST:event_grilleOnOffActionPerformed
 
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
@@ -475,7 +466,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField TextFieldNom;
     private javax.swing.JTextField TextFieldPositionX;
     private javax.swing.JTextField TextFieldPositionY;
-    private View.Grille grille1;
     private javax.swing.JButton grilleOnOff;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

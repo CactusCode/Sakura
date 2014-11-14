@@ -7,6 +7,7 @@ package Controller;
 
 import Model.*;
 import View.*;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class RecyclApp{
         this.basket = new Basket();
         this.plantEntrance = new PlantEntrance();
         this.plantExit = new PlantExit();
+    }
+    
+    public void paintPanel(Plan _plan, Graphics g)
+    {
+        _plan.paintPanel(plantComponantsList, g);
     }
     
     public static void main(String[] args) {

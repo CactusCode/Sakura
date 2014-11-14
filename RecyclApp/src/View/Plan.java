@@ -5,9 +5,16 @@
  */
 package View;
 
+import Controller.RecyclApp;
+import Model.PlantComponant;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Point;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -18,15 +25,35 @@ public class Plan extends JPanel
 {
     private final int composantH = 12;
     private final int composantW = 12;
+    
+        public boolean grilleActive;
   
+        private MainWindow parent;
+        
     public Plan()
     {
         
     }
-    public void paintStation(Point _position, Graphics g)
+    
+    public void setParent(MainWindow _parent)
     {
-        g.setColor(Color.red);
-        g.drawOval((int)_position.getX()-composantW/2, (int)_position.getY()-composantH/2,  composantH, composantW);    
+        parent = _parent;
     }
+    
+    public void paintPanel(ArrayList<PlantComponant> _components, Graphics g)
+    {
+        paintComponent(g);
+        
+        g.setColor(Color.BLACK);
+        g.drawRect(0, 0, this.getWidth()-1, this.getHeight()-1);
+        
+        MainWindow.grid.draw(g, getWidth(), getHeight());
+        
+        for (int i = 0; i < _components.size(); i++)
+        {
+            _components.get(i).draw(g);
+        }     
+    }
+    
     
 }

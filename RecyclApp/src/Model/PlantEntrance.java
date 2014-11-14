@@ -6,6 +6,7 @@
 
 package Model;
 
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 
 /**
@@ -17,5 +18,10 @@ public class PlantEntrance extends PlantComponant{
     public PlantEntrance ()
     {
         this.setDescription("Entrée Usine");
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

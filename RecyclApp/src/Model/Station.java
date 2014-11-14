@@ -6,6 +6,9 @@
 
 package Model;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 
 /**
  *
@@ -15,6 +18,7 @@ public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
     private int numberOfExits;
+    private int drawSize = 10;
     
     public Station()
     {    
@@ -25,6 +29,13 @@ public class Station extends PlantComponant
     public void setNumberOfExits(int _numberOfExits)
     {
         this.numberOfExits = _numberOfExits;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(Color.red);
+        g.drawOval((int)(position.getX()-drawSize/2), (int)(position.getY()-drawSize/2), drawSize, drawSize);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
