@@ -15,8 +15,8 @@ import java.awt.Point;
 public class Convoyeur extends PlantComponant 
 {
   
-    private PlantComponant startPoint;
-    private PlantComponant endPoint;
+    private final PlantComponant startPoint;
+    private final PlantComponant endPoint;
     
     public Convoyeur(PlantComponant _start,PlantComponant _end)
     {

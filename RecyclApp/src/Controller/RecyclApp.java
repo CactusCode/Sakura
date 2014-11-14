@@ -84,15 +84,7 @@ public class RecyclApp{
     public void addConvoyeur(Point _start,Point _end){
     
     }
-    public boolean positionAvailable(Point2D _position){
-        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
-            if (Math.abs(plantComponantsList1.getPosition().x-_position.getX())<=10 && Math.abs(plantComponantsList1.getPosition().y-_position.getY())<=10) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    
     public void getContextInfo(Point _position) {
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
             if(occupiedPosition(plantComponantsList1, _position))
@@ -102,9 +94,17 @@ public class RecyclApp{
         }
         
     }
-
     private boolean occupiedPosition(PlantComponant _componant, Point _position) {
         return Math.abs(_componant.getPosition().x-_position.getX())<=5 && Math.abs(_componant.getPosition().y-_position.getY())<=5;
+    }
+    
+    public boolean positionAvailable(Point2D _position){
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+            if (Math.abs(plantComponantsList1.getPosition().x-_position.getX())<=10 && Math.abs(plantComponantsList1.getPosition().y-_position.getY())<=10) {
+                return false;
+            }
+        }
+        return true;
     }
 
  

@@ -6,12 +6,8 @@
 package View;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Point;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
