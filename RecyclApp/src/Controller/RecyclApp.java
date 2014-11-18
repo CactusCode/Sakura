@@ -28,8 +28,7 @@ public class RecyclApp{
     ArrayList <PlantComponant> plantComponantsList;
     ArrayList<Convoyeur> convoyeursList;
     Basket basket;
-    PlantEntrance plantEntrance;
-    PlantExit plantExit;
+
     /**
      * @param _window
      */
@@ -39,8 +38,7 @@ public class RecyclApp{
         this.plantComponantsList = new ArrayList<>();
         this.convoyeursList = new ArrayList<>();
         this.basket = new Basket();
-        this.plantEntrance = new PlantEntrance();
-        this.plantExit = new PlantExit();
+      
     }
     
     public void paintPanel(Plan _plan, Graphics g)
@@ -76,6 +74,12 @@ public class RecyclApp{
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
     public void addEntrance(Point _position) {
+        for(PlantComponant planComponantsList1 : this.plantComponantsList){
+            if("Entrée Usine".equals(planComponantsList1.getDescription())){
+                window.messageToUser("Il ne peut y avoir qu'une entrée!");
+                return;
+            }
+        } 
         if(positionAvailable(_position))
         {   
             PlantEntrance entrance = new PlantEntrance();
@@ -87,6 +91,12 @@ public class RecyclApp{
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
     public void addExit(Point _position) {
+        for(PlantComponant planComponantsList1 : this.plantComponantsList){
+            if("Sortie Usine".equals(planComponantsList1.getDescription())){
+                window.messageToUser("Il ne peut y avoir qu'une sortie!");
+                return;
+            }
+        } 
         if(positionAvailable(_position))
         {   
             PlantExit exit = new PlantExit();
@@ -97,21 +107,35 @@ public class RecyclApp{
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
-
     
-   
     public void addConvoyeur(Point _start,Point _end){
         PlantComponant startComponant = null;
         PlantComponant endComponant = null;
+        
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
             if(occupiedPosition(plantComponantsList1, _start))
             {
+               if(!plantComponantsList1.connectExit() && !"Station".equals(plantComponantsList1.getDescription())){
+                   window.messageToUser("L'élement de départ ne peut plus prendre de convoyeur en sortie!");
+                   return;
+               }
+               else if("Station".equals(plantComponantsList1.getDescription())){
+                   Station station = (Station)plantComponantsList1;
+                   if(!station.addExitConnection()){
+                    window.messageToUser("L'élement de départ ne peut plus prendre de convoyeur en sortie!");
+                    return;
+                   }
+               }
                startComponant = plantComponantsList1;
             }
         }
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
             if(occupiedPosition(plantComponantsList1, _end))
             {
+               if(!plantComponantsList1.connectEntrance() && !"Jonction".equals(plantComponantsList1.getDescription())){
+                   window.messageToUser("L'élement d'arrivé ne peut plus prendre de convoyeur en entré!");
+                   return;
+               }
                endComponant = plantComponantsList1;
             }
         }

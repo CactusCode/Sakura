@@ -16,29 +16,13 @@ import java.util.ArrayList;
  */
 public class Junction extends PlantComponant
 {
-   private ArrayList<Convoyeur> inputConvoyeurs;
-   private Convoyeur outputConvoyeur;
+   
   
     public Junction()
     {
         this.setDescription("Jonction");
-        this.inputConvoyeurs = new ArrayList<>();
         this.planColor = Color.red;
     }
-    public void addInputConvoyeur(Convoyeur _input)
-    {
-        this.inputConvoyeurs.add(_input);
-    }
-    public void addOutputConvoyeur(Convoyeur _output)
-    {
-        this.outputConvoyeur = _output;
-    }
-    public ArrayList<Convoyeur> getInputConvoyeurList()
-    {
-        return this.inputConvoyeurs;
-    }
-    public Convoyeur getOutputConvoyeur()
-    {
-        return this.outputConvoyeur;
-    }    
+    
+    
 }

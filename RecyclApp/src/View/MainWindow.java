@@ -32,6 +32,8 @@ public class MainWindow extends javax.swing.JFrame {
         this.TextFieldPositionX.setText("Position x :"+position.getX());
         this.TextFieldPositionY.setText("Position y :"+position.getY());
     }
+
+   
      public enum PlanStatus
     {
         notWaiting,

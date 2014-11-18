@@ -21,10 +21,13 @@ public abstract class PlantComponant
     protected String description;
     protected Color planColor;
     protected int drawSize = 20;
+    protected boolean entranceIsConnected;
+    protected boolean exitIsConnected;
 
     public PlantComponant()
     {
-        
+        entranceIsConnected = false;
+        exitIsConnected = false;
     }
   
     //Name accessors
@@ -36,7 +39,20 @@ public abstract class PlantComponant
     {
         return this.name;
     }
-
+    public boolean connectEntrance(){
+        if(!entranceIsConnected){
+            this.entranceIsConnected = true;
+            return true;
+        }
+        else return false;
+    }
+    public boolean connectExit(){
+        if(!exitIsConnected){
+            this.exitIsConnected = true;
+            return true;
+        }
+        else return false;
+    }
     //Description accessors
     public void setDescription(String _description)
     {
@@ -72,4 +88,5 @@ public abstract class PlantComponant
         g.setColor(planColor);
         g.fillOval((int)(position.x-drawSize/2), (int)(position.y-drawSize/2), drawSize, drawSize);
     }
+    
 }

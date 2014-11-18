@@ -18,7 +18,7 @@ public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
     private int numberOfExits;
-    
+    private int numberOfExitsConnected;
     
     public Station()
     {    
@@ -26,12 +26,19 @@ public class Station extends PlantComponant
         this.recoveryMatrix = new RecoveryMatrix();
         this.numberOfExits = 0;
         this.planColor = Color.BLUE;
+        this.numberOfExitsConnected = 0;
     }
     public void setNumberOfExits(int _numberOfExits)
     {
         this.numberOfExits = _numberOfExits;
     }
-
+    public boolean addExitConnection(){
+        if(numberOfExitsConnected < numberOfExits){
+            this.numberOfExitsConnected++;
+            return true;
+        }
+        else return false;
+    }
     
     
 }
