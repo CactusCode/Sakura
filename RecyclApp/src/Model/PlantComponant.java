@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -18,6 +19,8 @@ public abstract class PlantComponant
     protected float maximalCapacity;
     protected String name;
     protected String description;
+    protected Color planColor;
+    protected int drawSize = 20;
 
     public PlantComponant()
     {
@@ -62,6 +65,11 @@ public abstract class PlantComponant
     {
         return this.maximalCapacity;
     }
-    
-    public abstract void draw(Graphics g);
+    public int getDrawSize(){
+        return this.drawSize;
+    }
+    public void draw(Graphics g) {
+        g.setColor(planColor);
+        g.fillOval((int)(position.x-drawSize/2), (int)(position.y-drawSize/2), drawSize, drawSize);
+    }
 }

@@ -26,6 +26,7 @@ public class RecyclApp{
     static MainWindow window;
     
     ArrayList <PlantComponant> plantComponantsList;
+    ArrayList<Convoyeur> convoyeursList;
     Basket basket;
     PlantEntrance plantEntrance;
     PlantExit plantExit;
@@ -36,6 +37,7 @@ public class RecyclApp{
         window = new MainWindow();
         window.setVisible(true);   
         this.plantComponantsList = new ArrayList<>();
+        this.convoyeursList = new ArrayList<>();
         this.basket = new Basket();
         this.plantEntrance = new PlantEntrance();
         this.plantExit = new PlantExit();
@@ -43,16 +45,13 @@ public class RecyclApp{
     
     public void paintPanel(Plan _plan, Graphics g)
     {
-        _plan.paintPanel(plantComponantsList, g);
+        _plan.paintPanel(plantComponantsList, convoyeursList, g);
     }
     
     public static void main(String[] args) {
    
     
     }
-
-
-   
     public void addStation(Point _position, int _nombreSortie) {
         if(positionAvailable(_position))
         {   
@@ -61,34 +60,70 @@ public class RecyclApp{
             station.setNumberOfExits(_nombreSortie);
             this.plantComponantsList.add(station);
             window.messageToUser("Station Ajoutée");
-            window.addStationToPlan(station.getPosition());
+            window.redrawPlan();
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
-    
-
-    
-    public void placeExit(Point _position) {
+    public void addJunction(Point _position) {
         if(positionAvailable(_position))
         {   
-            this.plantExit.setPosition(_position);
-            window.messageToUser("Sortie positionnée");         
+            Junction junction = new Junction();
+            junction.setPosition(_position);
+            this.plantComponantsList.add(junction);
+            window.messageToUser("Jonction Ajoutée");
+            window.redrawPlan();
         }
-        else window.messageToUser("Il existe déjà un élément à cet endroit!");   
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
-
-
-    public void placeEntrance(Point _position) {
-         if(positionAvailable(_position))
+    public void addEntrance(Point _position) {
+        if(positionAvailable(_position))
         {   
-            this.plantEntrance.setPosition(_position);
-            window.messageToUser("Entrée positionnée");         
+            PlantEntrance entrance = new PlantEntrance();
+            entrance.setPosition(_position);
+            this.plantComponantsList.add(entrance);
+            window.messageToUser("Entrée Ajoutée");
+            window.redrawPlan();
         }
-        else window.messageToUser("Il existe déjà un élément à cet endroit!"); 
-       
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
-    public void addConvoyeur(Point _start,Point _end){
+    public void addExit(Point _position) {
+        if(positionAvailable(_position))
+        {   
+            PlantExit exit = new PlantExit();
+            exit.setPosition(_position);
+            this.plantComponantsList.add(exit);
+            window.messageToUser("Sortie Ajoutée");
+            window.redrawPlan();
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");
+    }
+
     
+   
+    public void addConvoyeur(Point _start,Point _end){
+        PlantComponant startComponant = null;
+        PlantComponant endComponant = null;
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+            if(occupiedPosition(plantComponantsList1, _start))
+            {
+               startComponant = plantComponantsList1;
+            }
+        }
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+            if(occupiedPosition(plantComponantsList1, _end))
+            {
+               endComponant = plantComponantsList1;
+            }
+        }
+        if (startComponant == null || endComponant == null){
+            window.messageToUser("Le point de départ ou d'arriver n'est pas un élément valide pour un convoyeur!");
+        }
+        else{
+            Convoyeur convoyeur = new Convoyeur(startComponant, endComponant);
+            this.convoyeursList.add(convoyeur);
+            window.messageToUser("Convoyeur Ajoutée");
+            window.redrawPlan();
+        }
     }
     
     public void getContextInfo(Point _position) {
@@ -101,12 +136,12 @@ public class RecyclApp{
         
     }
     private boolean occupiedPosition(PlantComponant _componant, Point _position) {
-        return Math.abs(_componant.getPosition().x-_position.getX())<=5 && Math.abs(_componant.getPosition().y-_position.getY())<=5;
+        return Math.abs(_componant.getPosition().x-_position.getX())<=_componant.getDrawSize()/2 && Math.abs(_componant.getPosition().y-_position.getY())<=_componant.getDrawSize()/2;
     }
     
     public boolean positionAvailable(Point2D _position){
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
-            if (Math.abs(plantComponantsList1.getPosition().x-_position.getX())<=10 && Math.abs(plantComponantsList1.getPosition().y-_position.getY())<=10) {
+            if (Math.abs(plantComponantsList1.getPosition().x-_position.getX())<=plantComponantsList1.getDrawSize() && Math.abs(plantComponantsList1.getPosition().y-_position.getY())<=plantComponantsList1.getDrawSize()) {
                 return false;
             }
         }

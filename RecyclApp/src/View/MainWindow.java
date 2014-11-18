@@ -19,7 +19,7 @@ public class MainWindow extends javax.swing.JFrame {
     static RecyclApp app;
     static MainWindow window;
     static Grid grid;
-
+    static Point start;
     
     public static void main(String[] args) {   
         app = new RecyclApp(window);
@@ -38,7 +38,9 @@ public class MainWindow extends javax.swing.JFrame {
         waitingForStationPosition,
         waitingForConvoyeurPositionStart,
         waitingForConvoyeyrPositionEnd,
-        waitingForJonctionPosition
+        waitingForJonctionPosition,
+        waitingForEntrancePosition,
+        waitingForExitPosition
     }
     
    
@@ -50,13 +52,14 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         planStatus = PlanStatus.notWaiting;
+        start = null;
     }
     public void messageToUser(String _message)
     {
         jLabel1.setText(_message);
     }
     
-     public void addStationToPlan(Point _position) {
+     public void redrawPlan() {
         Graphics g = this.plan1.getGraphics();
         app.paintPanel(plan1, g);
     }
@@ -154,6 +157,11 @@ public class MainWindow extends javax.swing.JFrame {
         ButtonJonction.setLabel("Jonction");
         ButtonJonction.setMaximumSize(new java.awt.Dimension(85, 23));
         ButtonJonction.setMinimumSize(new java.awt.Dimension(85, 23));
+        ButtonJonction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonJonctionActionPerformed(evt);
+            }
+        });
 
         ButtonEntree.setText("Entrée");
         ButtonEntree.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +171,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         ButtonSortie.setLabel("Sortie");
+        ButtonSortie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSortieActionPerformed(evt);
+            }
+        });
 
         ButtonRefaire.setText("Refaire");
         ButtonRefaire.addActionListener(new java.awt.event.ActionListener() {
@@ -249,7 +262,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -381,8 +394,8 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonStationActionPerformed
 
     private void ButtonEntreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntreeActionPerformed
-        
-        System.exit(0);// TODO add your handling code here:
+        this.jLabel1.setText("Choisissez une place sur le plan pour l'entrée de la station");
+        this.planStatus = PlanStatus.waitingForEntrancePosition;
     }//GEN-LAST:event_ButtonEntreeActionPerformed
 
     private void ButtonConvoyeurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConvoyeurActionPerformed
@@ -410,7 +423,7 @@ grid.change();
     }//GEN-LAST:event_grilleOnOffActionPerformed
 
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
-       Point start = null;
+       
        switch(planStatus){
             case waitingForStationPosition : 
                     String numberExitStation = (String)JOptionPane.showInputDialog(this, "Entrez le nombre de sortie de la station", "Nombre de sortie(s)", JOptionPane.QUESTION_MESSAGE, null , null, getComponentCount()); 
@@ -422,12 +435,24 @@ grid.change();
                     }
                     break;
             case waitingForConvoyeurPositionStart :
-                    start = evt.getPoint();
+                    this.start = evt.getPoint();
                     this.jLabel1.setText("Choisissez une composante du plan comme point d'arrivé");
                     this.planStatus = PlanStatus.waitingForConvoyeyrPositionEnd;
                     break;
             case waitingForConvoyeyrPositionEnd :
-                    app.addConvoyeur(start,evt.getPoint());
+                    app.addConvoyeur(this.start,evt.getPoint());
+                    break;
+            case waitingForJonctionPosition :
+                    app.addJunction(evt.getPoint());
+                    this.planStatus = PlanStatus.notWaiting;
+                    break;
+            case waitingForEntrancePosition :
+                    app.addEntrance(evt.getPoint());
+                    this.planStatus = PlanStatus.notWaiting;
+                    break;
+            case waitingForExitPosition :
+                    app.addExit(evt.getPoint());
+                    this.planStatus = PlanStatus.notWaiting;
                     break;
             case notWaiting :
                     app.getContextInfo(evt.getPoint());
@@ -442,6 +467,16 @@ grid.change();
     private void MenuQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitterActionPerformed
         System.exit(0);
     }//GEN-LAST:event_MenuQuitterActionPerformed
+
+    private void ButtonJonctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonJonctionActionPerformed
+        this.jLabel1.setText("Choisissez une place sur le plan pour la jonction");
+        this.planStatus = PlanStatus.waitingForJonctionPosition;
+    }//GEN-LAST:event_ButtonJonctionActionPerformed
+
+    private void ButtonSortieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSortieActionPerformed
+        this.jLabel1.setText("Choisissez une place sur le plan pour la sortie de la station");
+        this.planStatus = PlanStatus.waitingForExitPosition;
+    }//GEN-LAST:event_ButtonSortieActionPerformed
 
     /**
      * @param args the command line arguments

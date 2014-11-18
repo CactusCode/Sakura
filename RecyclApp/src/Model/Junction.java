@@ -6,6 +6,7 @@
 
 package Model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class Junction extends PlantComponant
     {
         this.setDescription("Jonction");
         this.inputConvoyeurs = new ArrayList<>();
+        this.planColor = Color.red;
     }
     public void addInputConvoyeur(Convoyeur _input)
     {
@@ -38,10 +40,5 @@ public class Junction extends PlantComponant
     public Convoyeur getOutputConvoyeur()
     {
         return this.outputConvoyeur;
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }    
 }

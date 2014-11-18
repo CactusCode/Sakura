@@ -6,6 +6,8 @@
 
 package Model;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 
 /**
@@ -31,5 +33,10 @@ public class Convoyeur
      public Point getEndPosition()
     {
         return this.endPoint.getPosition();
+    }
+     public void draw(Graphics g) {
+        g.setColor(Color.black);
+        g.drawLine(this.startPoint.getPosition().x,this.startPoint.getPosition().y,
+                   this.endPoint.getPosition().x, this.endPoint.getPosition().y);
     }
 }

@@ -6,6 +6,7 @@
 package View;
 
 import Controller.RecyclApp;
+import Model.Convoyeur;
 import Model.PlantComponant;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,7 +41,7 @@ public class Plan extends JPanel
         parent = _parent;
     }
     
-    public void paintPanel(ArrayList<PlantComponant> _components, Graphics g)
+    public void paintPanel(ArrayList<PlantComponant> _components, ArrayList<Convoyeur> _convoyeurs, Graphics g)
     {
         paintComponent(g);
         
@@ -51,7 +52,10 @@ public class Plan extends JPanel
         
         for (PlantComponant _component : _components) {
             _component.draw(g);
-        }     
+        }
+        for (Convoyeur _convoyeur : _convoyeurs) {
+            _convoyeur.draw(g);
+        } 
     }
     
     

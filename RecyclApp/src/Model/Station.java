@@ -18,24 +18,20 @@ public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
     private int numberOfExits;
-    private int drawSize = 10;
-    private Color planColor = Color.BLUE;
+    
     
     public Station()
     {    
         this.setDescription("Station");
         this.recoveryMatrix = new RecoveryMatrix();
         this.numberOfExits = 0;
+        this.planColor = Color.BLUE;
     }
     public void setNumberOfExits(int _numberOfExits)
     {
         this.numberOfExits = _numberOfExits;
     }
 
-    @Override
-    public void draw(Graphics g) {
-        g.setColor(planColor);
-        g.drawOval((int)(position.x-drawSize/2), (int)(position.y-drawSize/2), drawSize, drawSize);
-    }
+    
     
 }

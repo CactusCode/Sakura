@@ -6,6 +6,7 @@
 
 package Model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -17,11 +18,8 @@ public class PlantExit extends PlantComponant
     public PlantExit ()
     {
         this.setDescription("Sortie Usine");
-  
+        this.planColor = Color.ORANGE;
     }
 
-    @Override
-    public void draw(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 }

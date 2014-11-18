@@ -15,18 +15,13 @@ import java.awt.geom.Point2D;
  */
 public class PlantEntrance extends PlantComponant{
     private int drawSize = 15;
+   
     public PlantEntrance ()
     {
         this.setDescription("Entrée Usine");
-        this.getPosition();
+        this.planColor = Color.PINK;
     }
 
      
-    @Override
-    public void draw(Graphics g) {
-        g.setColor(Color.blue);
-        g.drawOval((int)(position.getX()-drawSize/2), (int)(position.getY()-drawSize/2), drawSize, drawSize);
-    
-    
-    }
+ 
 }
