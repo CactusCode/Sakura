@@ -150,14 +150,21 @@ public class RecyclApp{
         }
     }
     
-    public void getContextInfo(Point _position) {
-        for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
+    public void getContextInfo(Point _position) 
+    {
+        for (PlantComponant plantComponantsList1 : this.plantComponantsList) 
+        {
             if(occupiedPosition(plantComponantsList1, _position))
             {
-                window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition());
+                if(!"Station".equals(plantComponantsList1.getDescription())){
+                    window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition(),0);
+                }
+                else{
+                    Station station = (Station)plantComponantsList1;
+                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits());
+                }
             }
         }
-        
     }
     private boolean occupiedPosition(PlantComponant _componant, Point _position) {
         return Math.abs(_componant.getPosition().x-_position.getX())<=_componant.getDrawSize()/2 && Math.abs(_componant.getPosition().y-_position.getY())<=_componant.getDrawSize()/2;
