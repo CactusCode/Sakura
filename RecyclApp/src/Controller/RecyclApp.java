@@ -34,8 +34,7 @@ public class RecyclApp{
      */
     public RecyclApp(MainWindow _window) {
         window = new MainWindow();
-        window.setVisible(true);
-        
+        window.setVisible(true);   
         this.plantComponantsList = new ArrayList<>();
         this.basket = new Basket();
         this.plantEntrance = new PlantEntrance();
@@ -54,11 +53,12 @@ public class RecyclApp{
 
 
    
-    public void addStation(Point _position) {
+    public void addStation(Point _position, int _nombreSortie) {
         if(positionAvailable(_position))
         {   
             Station station = new Station();
             station.setPosition(_position);
+            station.setNumberOfExits(_nombreSortie);
             this.plantComponantsList.add(station);
             window.messageToUser("Station Ajoutée");
             window.addStationToPlan(station.getPosition());
@@ -112,6 +112,4 @@ public class RecyclApp{
         }
         return true;
     }
-
- 
 }

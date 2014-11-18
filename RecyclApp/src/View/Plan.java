@@ -49,9 +49,8 @@ public class Plan extends JPanel
         
         MainWindow.grid.draw(g, getWidth(), getHeight());
         
-        for (int i = 0; i < _components.size(); i++)
-        {
-            _components.get(i).draw(g);
+        for (PlantComponant _component : _components) {
+            _component.draw(g);
         }     
     }
     

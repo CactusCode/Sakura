@@ -9,6 +9,7 @@ package View;
 import Controller.RecyclApp;
 import java.awt.Graphics;
 import java.awt.Point;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -414,8 +415,13 @@ grid.change();
        Point start = null;
        switch(planStatus){
             case waitingForStationPosition : 
-                    app.addStation(evt.getPoint());
-                    this.planStatus = PlanStatus.notWaiting;
+                    String numberExitStation = (String)JOptionPane.showInputDialog(this, "Entrez le nombre de sortie de la station", "Nombre de sortie(s)", JOptionPane.QUESTION_MESSAGE, null , null, getComponentCount()); 
+                    int intNumberExitStation = Integer.parseInt(numberExitStation); //les trois lignes font seulement en sorte que le nombre de sorties écrit par l'utilisateur est stocké
+                    if ((numberExitStation != null) && (intNumberExitStation > 0))
+                    {                                                                      
+                        app.addStation(evt.getPoint(), intNumberExitStation);
+                        this.planStatus = PlanStatus.notWaiting;
+                    }
                     break;
             case waitingForConvoyeurPositionStart :
                     start = evt.getPoint();
