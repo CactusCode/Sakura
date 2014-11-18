@@ -32,6 +32,11 @@ public class Station extends PlantComponant
     {
         this.numberOfExits = _numberOfExits;
     }
+    
+    public int getNumberOfExits()
+    {
+        return this.numberOfExits;
+    }
     public boolean addExitConnection(){
         if(numberOfExitsConnected < numberOfExits){
             this.numberOfExitsConnected++;
@@ -39,6 +44,7 @@ public class Station extends PlantComponant
         }
         else return false;
     }
+    
     
     
 }
