@@ -21,9 +21,7 @@ public class MainWindow extends javax.swing.JFrame {
     static Grid grid;
 
     
-    public static void main(String[] args) {
-        window = new MainWindow();
-        window.setVisible(true);
+    public static void main(String[] args) {   
         app = new RecyclApp(window);
         grid = new Grid();
     }
