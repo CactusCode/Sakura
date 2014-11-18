@@ -6,6 +6,7 @@
 
 package Model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 /**
@@ -13,14 +14,19 @@ import java.awt.geom.Point2D;
  * @author Vincent
  */
 public class PlantEntrance extends PlantComponant{
-    
+    private int drawSize = 15;
     public PlantEntrance ()
     {
         this.setDescription("Entrée Usine");
+        this.getPosition();
     }
 
+     
     @Override
     public void draw(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.setColor(Color.blue);
+        g.drawOval((int)(position.getX()-drawSize/2), (int)(position.getY()-drawSize/2), drawSize, drawSize);
+    
+    
     }
 }
