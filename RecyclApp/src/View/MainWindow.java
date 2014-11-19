@@ -443,7 +443,7 @@ grid.change();
        
        switch(planStatus){
             case waitingForStationPosition : 
-                    String numberExitStation = (String)JOptionPane.showInputDialog(this, "Entrez le nombre de sortie de la station", "Nombre de sortie(s)", JOptionPane.QUESTION_MESSAGE, null , null, getComponentCount()); 
+                    String numberExitStation = (String)JOptionPane.showInputDialog(this, "Entrez le nombre de sortie(s) de la station", "Nombre de sortie(s)", JOptionPane.QUESTION_MESSAGE, null , null, getComponentCount()); 
                     int intNumberExitStation = Integer.parseInt(numberExitStation); //les trois lignes font seulement en sorte que le nombre de sorties écrit par l'utilisateur est stocké
                     if ((numberExitStation != null) && (intNumberExitStation > 0))
                     {                                                                      

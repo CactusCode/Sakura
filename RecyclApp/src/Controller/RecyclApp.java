@@ -116,13 +116,13 @@ public class RecyclApp{
             if(occupiedPosition(plantComponantsList1, _start))
             {
                if(!plantComponantsList1.connectExit() && !"Station".equals(plantComponantsList1.getDescription())){
-                   window.messageToUser("L'élement de départ ne peut plus prendre de convoyeur en sortie!");
+                   window.messageToUser("L'élément de départ ne peut plus prendre de convoyeur en sortie!");
                    return;
                }
                else if("Station".equals(plantComponantsList1.getDescription())){
                    Station station = (Station)plantComponantsList1;
                    if(!station.addExitConnection()){
-                    window.messageToUser("L'élement de départ ne peut plus prendre de convoyeur en sortie!");
+                    window.messageToUser("L'élément de départ ne peut plus prendre de convoyeur en sortie!");
                     return;
                    }
                }
@@ -133,19 +133,19 @@ public class RecyclApp{
             if(occupiedPosition(plantComponantsList1, _end))
             {
                if(!plantComponantsList1.connectEntrance() && !"Jonction".equals(plantComponantsList1.getDescription())){
-                   window.messageToUser("L'élement d'arrivé ne peut plus prendre de convoyeur en entré!");
+                   window.messageToUser("L'élément d'arrivé ne peut plus prendre de convoyeur en entrée!");
                    return;
                }
                endComponant = plantComponantsList1;
             }
         }
         if (startComponant == null || endComponant == null){
-            window.messageToUser("Le point de départ ou d'arriver n'est pas un élément valide pour un convoyeur!");
+            window.messageToUser("Le point de départ ou d'arrivé n'est pas un élément valide pour un convoyeur!");
         }
         else{
             Convoyeur convoyeur = new Convoyeur(startComponant, endComponant);
             this.convoyeursList.add(convoyeur);
-            window.messageToUser("Convoyeur Ajoutée");
+            window.messageToUser("Convoyeur Ajouté");
             window.redrawPlan();
         }
     }
