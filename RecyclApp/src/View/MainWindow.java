@@ -114,6 +114,7 @@ public class MainWindow extends javax.swing.JFrame {
         MenuEnregistrer = new javax.swing.JMenuItem();
         MenuQuitter = new javax.swing.JMenuItem();
         MenuVision = new javax.swing.JMenu();
+        MenuGridSize = new javax.swing.JMenuItem();
         MenuAide = new javax.swing.JMenu();
 
         jMenu3.setText("File");
@@ -293,9 +294,20 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         plan1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        plan1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                plan1MouseDragged(evt);
+            }
+        });
         plan1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 plan1MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                plan1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                plan1MouseReleased(evt);
             }
         });
 
@@ -328,6 +340,15 @@ public class MainWindow extends javax.swing.JFrame {
         Menu.add(MenuFichier);
 
         MenuVision.setText("Vision");
+
+        MenuGridSize.setText("Taille grille");
+        MenuGridSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuGridSizeActionPerformed(evt);
+            }
+        });
+        MenuVision.add(MenuGridSize);
+
         Menu.add(MenuVision);
 
         MenuAide.setText("Aide");
@@ -440,7 +461,7 @@ grid.change();
     }//GEN-LAST:event_grilleOnOffActionPerformed
 
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
-       
+
        switch(planStatus){
             case waitingForStationPosition : 
                     String numberExitStation = (String)JOptionPane.showInputDialog(this, "Entrez le nombre de sortie(s) de la station", "Nombre de sortie(s)", JOptionPane.QUESTION_MESSAGE, null , null, getComponentCount()); 
@@ -476,7 +497,7 @@ grid.change();
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case notWaiting :
-                    app.getContextInfo(evt.getPoint());
+                    app.getContextInfo(new Point(evt.getPoint().x-plan1.fakeX, evt.getPoint().y-plan1.fakeY));
                     break;
         }
     }//GEN-LAST:event_plan1MouseClicked
@@ -503,6 +524,49 @@ grid.change();
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldNbStationActionPerformed
 
+    private void MenuGridSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuGridSizeActionPerformed
+        String stringGridSize = (String)JOptionPane.showInputDialog(this, "Entrez la taille de chaque carrés", "Taille de la grille", JOptionPane.QUESTION_MESSAGE, null , null, grid.getSize()); 
+        redrawPlan();
+        int gridSize = Integer.parseInt(stringGridSize);
+        
+        if ((stringGridSize != null) && (gridSize > 0))
+        {
+            grid.setSize(gridSize);
+            redrawPlan();
+        }
+    }//GEN-LAST:event_MenuGridSizeActionPerformed
+
+    int count = 0;
+    Point lastPosition;
+    
+    private void plan1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseDragged
+        count++;
+        grid.moveGrid(lastPosition.x - evt.getPoint().x, lastPosition.y - evt.getPoint().y);
+        
+        plan1.fakeX -= lastPosition.x - evt.getPoint().x;
+        plan1.fakeY -= lastPosition.y - evt.getPoint().y;
+        
+        if (count%20 == 0)
+        {
+            redrawPlan();
+        }
+        
+        lastPosition = evt.getPoint();
+
+    }//GEN-LAST:event_plan1MouseDragged
+
+    private void plan1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MousePressed
+        lastPosition = evt.getPoint();
+    }//GEN-LAST:event_plan1MousePressed
+
+    private void plan1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseReleased
+        if (count != 0)
+        {
+            count = 0;
+            redrawPlan();
+        }
+    }//GEN-LAST:event_plan1MouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -523,6 +587,7 @@ grid.change();
     private javax.swing.JMenu MenuAide;
     private javax.swing.JMenuItem MenuEnregistrer;
     private javax.swing.JMenu MenuFichier;
+    private javax.swing.JMenuItem MenuGridSize;
     private javax.swing.JMenuItem MenuQuitter;
     private javax.swing.JMenu MenuVision;
     private javax.swing.JPanel PanelInterface;
