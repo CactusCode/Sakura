@@ -20,6 +20,7 @@ public class PlantExit extends PlantComponant
         this.setDescription("Sortie Usine");
         this.planColor = Color.ORANGE;
         this.exitIsConnected = true;
+        this.numberOfExits = 0;
     }
 
    

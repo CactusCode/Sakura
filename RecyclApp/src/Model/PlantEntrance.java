@@ -21,6 +21,7 @@ public class PlantEntrance extends PlantComponant{
         this.setDescription("Entrée Usine");
         this.planColor = Color.PINK;
         this.entranceIsConnected = true;
+        this.numberOfExits = 1;
     }
 
      

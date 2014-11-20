@@ -22,6 +22,7 @@ public class Junction extends PlantComponant
     {
         this.setDescription("Jonction");
         this.planColor = Color.red;
+        this.numberOfExits = 1;
     }
     
     

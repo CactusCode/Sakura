@@ -195,13 +195,7 @@ public class RecyclApp{
         {
             if(occupiedPosition(plantComponantsList1, _position))
             {
-                if(!"Station".equals(plantComponantsList1.getDescription())){
-                    window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition(),0);
-                }
-                else{
-                    Station station = (Station)plantComponantsList1;
-                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits());
-                }
+                window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition(),plantComponantsList1.getNumberOfExits());
             }
         }
     }

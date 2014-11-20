@@ -23,6 +23,7 @@ public abstract class PlantComponant
     protected int drawSize = 20;
     protected boolean entranceIsConnected;
     protected boolean exitIsConnected;
+    protected int numberOfExits;
 
     public PlantComponant()
     {
@@ -80,6 +81,14 @@ public abstract class PlantComponant
     public float getMaximalCapacity()
     {
         return this.maximalCapacity;
+    }
+    public void setNumberOfExists(int _numberExits)
+    {
+        this.numberOfExits = _numberExits;
+    }
+    public int getNumberOfExits()
+    {
+        return this.numberOfExits;
     }
     public int getDrawSize(){
         return this.drawSize;

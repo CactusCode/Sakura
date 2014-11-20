@@ -17,7 +17,6 @@ import java.awt.Graphics;
 public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
-    private int numberOfExits;
     private int numberOfExitsConnected;
     
     public Station()
