@@ -27,6 +27,9 @@ public class Plan extends JPanel
     private final int composantH = 12;
     private final int composantW = 12;
     
+    public int fakeX = 0;
+    public int fakeY = 0;
+    
         public boolean grilleActive;
   
         private MainWindow parent;
@@ -51,10 +54,10 @@ public class Plan extends JPanel
         MainWindow.grid.draw(g, getWidth(), getHeight());
         
         for (PlantComponant _component : _components) {
-            _component.draw(g);
+            _component.draw(g, fakeX, fakeY);
         }
         for (Convoyeur _convoyeur : _convoyeurs) {
-            _convoyeur.draw(g);
+            _convoyeur.draw(g, fakeX, fakeY);
         } 
     }
     

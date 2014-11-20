@@ -84,9 +84,9 @@ public abstract class PlantComponant
     public int getDrawSize(){
         return this.drawSize;
     }
-    public void draw(Graphics g) {
+    public void draw(Graphics g, int _fakeX, int _fakeY) {
         g.setColor(planColor);
-        g.fillOval((int)(position.x-drawSize/2), (int)(position.y-drawSize/2), drawSize, drawSize);
+        g.fillOval((int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY, drawSize, drawSize);
     }
     
 }

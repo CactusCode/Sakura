@@ -15,10 +15,16 @@ import java.awt.Graphics;
 public class Grid
 {
     private Boolean show;
+    private int size;
+    private int xStart;
+    private int yStart;
     
     Grid()
     {
         show = false;
+        size = 10;
+        xStart = 0;
+        yStart = 0;
     }
     
     public Boolean isShown()
@@ -41,16 +47,35 @@ public class Grid
         show = !show;
     }
     
+    public void setSize(int _value)
+    {
+        size = _value;
+    }
+    
+    public int getSize()
+    {
+        return size;
+    }
+    
+    public void moveGrid(int _x, int _y)
+    {
+        xStart -= _x;
+        xStart = xStart%size;
+        
+        yStart -= _y;
+        yStart = yStart%size;
+    }
+    
     public void draw(Graphics g, int _width, int _height)
     {
         if(show)
         {
             g.setColor(Color.GRAY);
-            for (int i = 0; i <= _width; i+=10)
+            for (int i = xStart; i <= _width; i+=size)
             {
                 g.drawLine(i, 0, i, _height);
             }
-            for (int i = 0; i <= _width; i+=10)
+            for (int i = yStart; i <= _height; i+=size)
             {
                 g.drawLine(0, i, _width, i);
             }
