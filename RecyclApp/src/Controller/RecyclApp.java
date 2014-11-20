@@ -195,7 +195,7 @@ public class RecyclApp{
         {
             if(occupiedPosition(plantComponantsList1, _position))
             {
-                window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition(),plantComponantsList1.getNumberOfExits());
+                window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition(),plantComponantsList1.getNumberOfExits(), plantComponantsList1.getName(),plantComponantsList1.getMaximalCapacity());
             }
         }
     }
@@ -211,4 +211,27 @@ public class RecyclApp{
         }
         return true;
     }    
+
+    public void setCapMax(float _positionX, float _positionY, float _cap) {
+      for(PlantComponant plantComponantList1 : this.plantComponantsList){
+          if(plantComponantList1.getPosition().x == _positionX && plantComponantList1.getPosition().y == _positionY){
+              plantComponantList1.setMaximalCapacity(_cap);
+          }
+      }
+    }
+
+    public void setName(float _positionX, float _positionY, String _nom) {
+        for(PlantComponant plantComponantList1 : this.plantComponantsList){
+          if(plantComponantList1.getPosition().x == _positionX && plantComponantList1.getPosition().y == _positionY){
+              plantComponantList1.setName(_nom);
+          }
+      }
+    }
+    
+
+   
+
+   
+
+   
 }

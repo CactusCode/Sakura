@@ -9,6 +9,8 @@ package View;
 import Controller.RecyclApp;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,12 +29,14 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     
-    public void setContextInfo(String description, Point position, int NumberExits) 
+    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax) 
     {
-        this.TextFieldNom.setText("Description :"+description);
-        this.TextFieldPositionX.setText("Position x :"+position.getX());
-        this.TextFieldPositionY.setText("Position y :"+position.getY());
-        this.TextFieldNbStation.setText("Nombre de sortie(s) :"+NumberExits);
+        this.TextFieldDescription.setText(description);
+        this.TextFieldPositionX.setText(String.valueOf(position.getX()));
+        this.TextFieldPositionY.setText(String.valueOf(position.getY()));
+        this.TextFieldNbStation.setText(String.valueOf(numberExits));
+        this.TextFieldNom.setText(nom);
+        this.TextFieldCapMax.setText(String.valueOf(capMax));
     }
 
    
@@ -98,13 +102,21 @@ public class MainWindow extends javax.swing.JFrame {
         ButtonAnnuler = new javax.swing.JButton();
         LabelInterface = new javax.swing.JLabel();
         PanelInterface = new javax.swing.JPanel();
-        TextFieldNom = new javax.swing.JTextField();
+        TextFieldDescription = new javax.swing.JTextField();
         TextFieldPositionX = new javax.swing.JTextField();
         TextFieldPositionY = new javax.swing.JTextField();
         ScrollPaneMatrice = new javax.swing.JScrollPane();
         MatriceRecup = new javax.swing.JTable();
         LabelMatrice = new javax.swing.JLabel();
         TextFieldNbStation = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        TextFieldNom = new javax.swing.JTextField();
+        TextFieldCapMax = new javax.swing.JTextField();
         grilleOnOff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
@@ -202,25 +214,22 @@ public class MainWindow extends javax.swing.JFrame {
         PanelInterface.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelInterface.setPreferredSize(new java.awt.Dimension(613, 275));
 
-        TextFieldNom.setBackground(new java.awt.Color(240, 240, 240));
-        TextFieldNom.setText("Description :");
-        TextFieldNom.setToolTipText("Nom:");
-        TextFieldNom.addActionListener(new java.awt.event.ActionListener() {
+        TextFieldDescription.setEditable(false);
+        TextFieldDescription.setToolTipText("Nom:");
+        TextFieldDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldNomActionPerformed(evt);
+                TextFieldDescriptionActionPerformed(evt);
             }
         });
 
-        TextFieldPositionX.setBackground(new java.awt.Color(240, 240, 240));
-        TextFieldPositionX.setText("Position x: ");
+        TextFieldPositionX.setEditable(false);
         TextFieldPositionX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextFieldPositionXActionPerformed(evt);
             }
         });
 
-        TextFieldPositionY.setBackground(new java.awt.Color(240, 240, 240));
-        TextFieldPositionY.setText("Position y:");
+        TextFieldPositionY.setEditable(false);
 
         MatriceRecup.setBackground(new java.awt.Color(240, 240, 240));
         MatriceRecup.setModel(new javax.swing.table.DefaultTableModel(
@@ -240,11 +249,34 @@ public class MainWindow extends javax.swing.JFrame {
 
         LabelMatrice.setText("Matrice de récupération");
 
-        TextFieldNbStation.setBackground(new java.awt.Color(240, 240, 240));
-        TextFieldNbStation.setText("Nombre de sortie(s): ");
+        TextFieldNbStation.setEditable(false);
         TextFieldNbStation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextFieldNbStationActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Description :");
+
+        jLabel5.setText("Nom :");
+
+        jLabel3.setText("Pos X :");
+
+        jLabel4.setText("Pos Y :");
+
+        jLabel6.setText("Nb de sorties :");
+
+        jLabel7.setText("Cap. Max. :");
+
+        TextFieldNom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TextFieldNomKeyPressed(evt);
+            }
+        });
+
+        TextFieldCapMax.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TextFieldCapMaxKeyPressed(evt);
             }
         });
 
@@ -253,37 +285,73 @@ public class MainWindow extends javax.swing.JFrame {
         PanelInterfaceLayout.setHorizontalGroup(
             PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)))
+                        .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel6))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(TextFieldPositionY, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(TextFieldPositionX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-                            .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(TextFieldDescription, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextFieldPositionY, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextFieldPositionX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                        .addContainerGap(183, Short.MAX_VALUE))
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
                         .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 11, Short.MAX_VALUE))))
+                            .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 183, Short.MAX_VALUE))))
+            .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                        .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         PanelInterfaceLayout.setVerticalGroup(
             PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextFieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         grilleOnOff.setText("Grille On/Off");
@@ -447,10 +515,6 @@ public class MainWindow extends javax.swing.JFrame {
      
     }//GEN-LAST:event_ButtonConvoyeurActionPerformed
 
-    private void TextFieldNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldNomActionPerformed
-
     private void ButtonRefaireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRefaireActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonRefaireActionPerformed
@@ -512,10 +576,6 @@ grid.change();
         }
     }//GEN-LAST:event_plan1MouseClicked
 
-    private void TextFieldPositionXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldPositionXActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldPositionXActionPerformed
-
     private void MenuQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitterActionPerformed
         System.exit(0);
     }//GEN-LAST:event_MenuQuitterActionPerformed
@@ -529,10 +589,6 @@ grid.change();
         this.jLabel1.setText("Choisissez une place sur le plan pour la sortie de la station");
         this.planStatus = PlanStatus.waitingForExitPosition;
     }//GEN-LAST:event_ButtonSortieActionPerformed
-
-    private void TextFieldNbStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNbStationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldNbStationActionPerformed
 
     private void MenuGridSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuGridSizeActionPerformed
         String stringGridSize = (String)JOptionPane.showInputDialog(this, "Entrez la taille de chaque carrés", "Taille de la grille", JOptionPane.QUESTION_MESSAGE, null , null, grid.getSize()); 
@@ -581,6 +637,40 @@ grid.change();
         grid.changeMagnet();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void TextFieldNbStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNbStationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldNbStationActionPerformed
+
+    private void TextFieldPositionXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldPositionXActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldPositionXActionPerformed
+
+    private void TextFieldDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDescriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextFieldDescriptionActionPerformed
+
+    private void TextFieldCapMaxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldCapMaxKeyPressed
+        float cap;
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            try {
+                cap = Float.parseFloat(TextFieldCapMax.getText());
+          
+                app.setCapMax(Float.parseFloat(TextFieldPositionX.getText()),Float.parseFloat(TextFieldPositionY.getText()),cap);
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showConfirmDialog(null, "Please enter numbers only", "naughty", JOptionPane.CANCEL_OPTION);
+                }
+        }
+    }//GEN-LAST:event_TextFieldCapMaxKeyPressed
+
+    private void TextFieldNomKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldNomKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            app.setName(Float.parseFloat(TextFieldPositionX.getText()),Float.parseFloat(TextFieldPositionY.getText()),TextFieldNom.getText());
+        }
+    }//GEN-LAST:event_TextFieldNomKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -606,6 +696,8 @@ grid.change();
     private javax.swing.JMenu MenuVision;
     private javax.swing.JPanel PanelInterface;
     private javax.swing.JScrollPane ScrollPaneMatrice;
+    private javax.swing.JTextField TextFieldCapMax;
+    private javax.swing.JTextField TextFieldDescription;
     private javax.swing.JTextField TextFieldNbStation;
     private javax.swing.JTextField TextFieldNom;
     private javax.swing.JTextField TextFieldPositionX;
@@ -613,6 +705,12 @@ grid.change();
     private javax.swing.JButton grilleOnOff;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu3;
