@@ -51,20 +51,8 @@ public class RecyclApp{
    
     
     }
-    public void addStation(Point _position, int _nombreSortie) {
-        if(positionAvailable(_position))
-        {   
-            Station station = new Station();
-            station.setPosition(_position);
-            station.setNumberOfExits(_nombreSortie);
-            this.plantComponantsList.add(station);
-            window.messageToUser("Station Ajoutée");
-            window.redrawPlan();
-        }
-        else window.messageToUser("Il existe déjà un élément à cet endroit!");
-    }
     
-    private Point checkMagnetPosition(Point _position)
+        private Point checkMagnetPosition(Point _position)
     {
         if (window.grid.isMagnet())
         {
@@ -96,9 +84,22 @@ public class RecyclApp{
         return _position;
     }
     
+    public void addStation(Point _position, int _nombreSortie) {
+        _position = checkMagnetPosition(_position);
+        if(positionAvailable(_position))
+        {   
+            Station station = new Station();
+            station.setPosition(_position);
+            station.setNumberOfExits(_nombreSortie);
+            this.plantComponantsList.add(station);
+            window.messageToUser("Station Ajoutée");
+            window.redrawPlan();
+        }
+        else window.messageToUser("Il existe déjà un élément à cet endroit!");
+    }
+    
     public void addJunction(Point _position) {
         _position = checkMagnetPosition(_position);
-        
         if(positionAvailable(_position))
         {   
             Junction junction = new Junction();
@@ -110,6 +111,7 @@ public class RecyclApp{
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
     public void addEntrance(Point _position) {
+        _position = checkMagnetPosition(_position);
         for(PlantComponant planComponantsList1 : this.plantComponantsList){
             if("Entrée Usine".equals(planComponantsList1.getDescription())){
                 window.messageToUser("Il ne peut y avoir qu'une entrée!");
@@ -127,6 +129,7 @@ public class RecyclApp{
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
     public void addExit(Point _position) {
+        _position = checkMagnetPosition(_position);
         for(PlantComponant planComponantsList1 : this.plantComponantsList){
             if("Sortie Usine".equals(planComponantsList1.getDescription())){
                 window.messageToUser("Il ne peut y avoir qu'une sortie!");
