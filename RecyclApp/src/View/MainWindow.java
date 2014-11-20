@@ -10,7 +10,6 @@ import Controller.RecyclApp;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 
 /**
