@@ -29,6 +29,7 @@ public class RecyclApp{
     ArrayList <PlantComponant> plantComponantsList;
     ArrayList<Convoyeur> convoyeursList;
     Basket basket;
+    int focusIndex;
 
     /**
      * @param _window
@@ -189,16 +190,21 @@ public class RecyclApp{
         }
     }
     
-    public void getContextInfo(Point _position) 
+     public void getContextInfo(Point _position) 
     {
-        for (PlantComponant plantComponantsList1 : this.plantComponantsList) 
+        for (int i = 0; i<plantComponantsList.size(); i++)
         {
-            if(occupiedPosition(plantComponantsList1, _position))
+            if(occupiedPosition(plantComponantsList.get(i), _position))
             {
-                window.setContextInfo(plantComponantsList1.getDescription(), plantComponantsList1.getPosition(),plantComponantsList1.getNumberOfExits(), plantComponantsList1.getName(),plantComponantsList1.getMaximalCapacity());
+                window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity());
+                focusIndex = i;
             }
         }
+ 
     }
+               
+       
+    
     private boolean occupiedPosition(PlantComponant _componant, Point _position) {
         return Math.abs(_componant.getPosition().x-_position.getX())<=_componant.getDrawSize()/2 && Math.abs(_componant.getPosition().y-_position.getY())<=_componant.getDrawSize()/2;
     }
@@ -226,6 +232,38 @@ public class RecyclApp{
               plantComponantList1.setName(_nom);
           }
       }
+    }
+    public void setFocusIndex(int _focus)
+    {
+        focusIndex = _focus;
+    }
+    
+    public int getFocusIndex()
+    {
+        return focusIndex;
+    }
+  
+    public void deleteFocus()
+    {
+        for(int i=convoyeursList.size()-1;i >= 0;i--)
+        {
+  
+            if (convoyeursList.get(i).getStartComponant()== plantComponantsList.get(focusIndex))      
+            {
+                //libérer la sortie qui de la station
+                convoyeursList.remove(i);
+            }
+            
+            if (convoyeursList.get(i).getEndComponant()== plantComponantsList.get(focusIndex))
+            {
+                 //libérer la sortie qui de la station
+                convoyeursList.remove(i);
+            }
+        }
+        
+        plantComponantsList.remove(focusIndex);
+        
+        window.redrawPlan();
     }
     
 

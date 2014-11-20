@@ -176,6 +176,8 @@
                   <Group type="102" attributes="0">
                       <Component id="LabelInterface" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jButtonSupprimer" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="ButtonRefaire" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="ButtonAnnuler" min="-2" max="-2" attributes="0"/>
@@ -196,6 +198,7 @@
                           <Component id="ButtonAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="ButtonRefaire" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="LabelInterface" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonSupprimer" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="PanelInterface" min="-2" pref="551" max="-2" attributes="0"/>
                   </Group>
@@ -339,7 +342,7 @@
                               <Component id="TextFieldPositionY" alignment="0" max="32767" attributes="0"/>
                               <Component id="TextFieldPositionX" alignment="0" pref="134" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="183" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -347,19 +350,17 @@
                               <Component id="TextFieldNom" alignment="0" min="-2" pref="134" max="-2" attributes="0"/>
                               <Component id="TextFieldCapMax" alignment="0" min="-2" pref="134" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="183" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="LabelMatrice" min="-2" pref="163" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="LabelMatrice" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
                       <Component id="ScrollPaneMatrice" alignment="0" min="-2" pref="374" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -387,9 +388,9 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="TextFieldNbStation" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="TextFieldNbStation" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -473,7 +474,7 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Curseur par d&#xe9;faut"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -529,11 +530,21 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldNom">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextFieldNomKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldCapMax">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextFieldCapMaxKeyPressed"/>
           </Events>
@@ -584,6 +595,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonSupprimer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Supprimer"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSupprimerActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

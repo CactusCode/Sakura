@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author pandi_000
+ * @author vale
  */
 public class MainWindow extends javax.swing.JFrame {
     static RecyclApp app;
@@ -120,6 +120,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
         jButton2 = new javax.swing.JButton();
+        jButtonSupprimer = new javax.swing.JButton();
         Menu = new javax.swing.JMenuBar();
         MenuFichier = new javax.swing.JMenu();
         MenuEnregistrer = new javax.swing.JMenuItem();
@@ -267,12 +268,14 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel7.setText("Cap. Max. :");
 
+        TextFieldNom.setBackground(new java.awt.Color(240, 240, 240));
         TextFieldNom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TextFieldNomKeyPressed(evt);
             }
         });
 
+        TextFieldCapMax.setBackground(new java.awt.Color(240, 240, 240));
         TextFieldCapMax.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TextFieldCapMaxKeyPressed(evt);
@@ -304,20 +307,19 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(TextFieldDescription, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextFieldPositionY, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextFieldPositionX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-                        .addContainerGap(183, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
                         .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 183, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                        .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelInterfaceLayout.setVerticalGroup(
             PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,9 +341,9 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(TextFieldPositionY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -393,6 +395,13 @@ public class MainWindow extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButtonSupprimer.setText("Supprimer");
+        jButtonSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSupprimerActionPerformed(evt);
             }
         });
 
@@ -460,6 +469,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(LabelInterface)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonSupprimer)
+                        .addGap(18, 18, 18)
                         .addComponent(ButtonRefaire)
                         .addGap(18, 18, 18)
                         .addComponent(ButtonAnnuler))
@@ -475,7 +486,8 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ButtonAnnuler)
                             .addComponent(ButtonRefaire)
-                            .addComponent(LabelInterface))
+                            .addComponent(LabelInterface)
+                            .addComponent(jButtonSupprimer))
                         .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -670,6 +682,10 @@ grid.change();
         }
     }//GEN-LAST:event_TextFieldNomKeyPressed
 
+    private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
+        app.deleteFocus();// TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSupprimerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -703,6 +719,7 @@ grid.change();
     private javax.swing.JTextField TextFieldPositionY;
     private javax.swing.JButton grilleOnOff;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
