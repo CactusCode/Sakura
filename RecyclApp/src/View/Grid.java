@@ -18,13 +18,15 @@ public class Grid
     private int size;
     private int xStart;
     private int yStart;
+    private Boolean magnet;
     
     Grid()
     {
         show = false;
-        size = 10;
+        size = 50;
         xStart = 0;
         yStart = 0;
+        magnet = false;
     }
     
     public Boolean isShown()
@@ -45,6 +47,16 @@ public class Grid
     public void change()
     {
         show = !show;
+    }
+    
+    public Boolean isMagnet()
+    {
+        return magnet;
+    }
+    
+    public void changeMagnet()
+    {
+        magnet = !magnet;
     }
     
     public void setSize(int _value)

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class MainWindow extends javax.swing.JFrame {
     static RecyclApp app;
     static MainWindow window;
-    static Grid grid;
+    public static Grid grid;
     static Point start;
     
     public static void main(String[] args) {   
@@ -323,6 +323,11 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jButton2.setText("Magnetique On/Off");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         MenuFichier.setText("Fichier");
 
@@ -460,6 +465,11 @@ grid.change();
         app.paintPanel(plan1, g);
     }//GEN-LAST:event_grilleOnOffActionPerformed
 
+    private Point convertScreenPoint(Point _point)
+    {
+        return new Point(_point.x-plan1.fakeX, _point.y-plan1.fakeY);
+    }
+    
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
 
        switch(planStatus){
@@ -468,7 +478,7 @@ grid.change();
                     int intNumberExitStation = Integer.parseInt(numberExitStation); //les trois lignes font seulement en sorte que le nombre de sorties écrit par l'utilisateur est stocké
                     if ((numberExitStation != null) && (intNumberExitStation > 0))
                     {                                                                      
-                        app.addStation(evt.getPoint(), intNumberExitStation);
+                        app.addStation(convertScreenPoint(evt.getPoint()), intNumberExitStation);
                         this.planStatus = PlanStatus.notWaiting;
                     }
                     else
@@ -477,27 +487,27 @@ grid.change();
                     }
                     break;
             case waitingForConvoyeurPositionStart :
-                    this.start = evt.getPoint();
+                    this.start = convertScreenPoint(evt.getPoint());
                     this.jLabel1.setText("Choisissez une composante du plan comme point d'arrivé");
                     this.planStatus = PlanStatus.waitingForConvoyeyrPositionEnd;
                     break;
             case waitingForConvoyeyrPositionEnd :
-                    app.addConvoyeur(this.start,evt.getPoint());
+                    app.addConvoyeur(this.start,convertScreenPoint(evt.getPoint()));
                     break;
             case waitingForJonctionPosition :
-                    app.addJunction(evt.getPoint());
+                    app.addJunction(convertScreenPoint(evt.getPoint()));
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case waitingForEntrancePosition :
-                    app.addEntrance(evt.getPoint());
+                    app.addEntrance(convertScreenPoint(evt.getPoint()));
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case waitingForExitPosition :
-                    app.addExit(evt.getPoint());
+                    app.addExit(convertScreenPoint(evt.getPoint()));
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case notWaiting :
-                    app.getContextInfo(new Point(evt.getPoint().x-plan1.fakeX, evt.getPoint().y-plan1.fakeY));
+                    app.getContextInfo(convertScreenPoint(evt.getPoint()));
                     break;
         }
     }//GEN-LAST:event_plan1MouseClicked
@@ -566,6 +576,10 @@ grid.change();
             redrawPlan();
         }
     }//GEN-LAST:event_plan1MouseReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        grid.changeMagnet();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

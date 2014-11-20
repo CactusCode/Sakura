@@ -63,7 +63,42 @@ public class RecyclApp{
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
+    
+    private Point checkMagnetPosition(Point _position)
+    {
+        if (window.grid.isMagnet())
+        {
+            int tempX = _position.x;
+            int tempY = _position.y;
+            
+            tempX = tempX % window.grid.getSize();
+            tempY = tempY % window.grid.getSize();
+            
+            if (tempX <= window.grid.getSize()/2)
+            {
+                _position.x -= tempX;
+            }
+            else
+            {
+                _position.x += window.grid.getSize() - tempX;
+            }
+            
+            if (tempY <= window.grid.getSize()/2)
+            {
+                _position.y -= tempY;
+            }
+            else
+            {
+                _position.y += window.grid.getSize() - tempY;
+            }
+        }
+        
+        return _position;
+    }
+    
     public void addJunction(Point _position) {
+        _position = checkMagnetPosition(_position);
+        
         if(positionAvailable(_position))
         {   
             Junction junction = new Junction();
