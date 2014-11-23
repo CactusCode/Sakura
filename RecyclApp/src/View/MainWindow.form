@@ -165,7 +165,7 @@
                               <Component id="ButtonSortie" min="-2" pref="85" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="39" max="32767" attributes="0"/>
+                              <EmptySpace pref="135" max="32767" attributes="0"/>
                               <Component id="grilleOnOff" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -283,17 +283,11 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Refaire"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonRefaireActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonAnnuler">
       <Properties>
         <Property name="text" type="java.lang.String" value="Annuler"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonAnnulerActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelInterface">
       <Properties>
@@ -356,11 +350,13 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="LabelMatrice" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
-                      <Component id="ScrollPaneMatrice" alignment="0" min="-2" pref="374" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="LabelMatrice" min="-2" pref="163" max="-2" attributes="0"/>
+                  <EmptySpace pref="215" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="ScrollPaneMatrice" min="-2" pref="374" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -412,17 +408,11 @@
             <Property name="editable" type="boolean" value="false"/>
             <Property name="toolTipText" type="java.lang.String" value="Nom:"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldDescriptionActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldPositionX">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldPositionXActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldPositionY">
           <Properties>
@@ -442,31 +432,13 @@
                   <Color blue="f0" green="f0" red="f0" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Produit" type="java.lang.Object"/>
-                    <Column editable="true" title="Sortie 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Sortie 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Sortie 4" type="java.lang.Object"/>
+                  <Table columnCount="1" rowCount="2">
+                    <Column editable="false" title="Produit" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -474,7 +446,7 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Curseur par d&#xe9;faut"/>
+                  <Color id="Default Cursor"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -483,6 +455,9 @@
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
               </AccessibilityProperties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="MatriceRecupKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -495,9 +470,6 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldNbStationActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -531,9 +503,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldNom">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f0" green="f0" red="f0" type="rgb"/>
-            </Property>
+            <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextFieldNomKeyPressed"/>
@@ -541,9 +511,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldCapMax">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f0" green="f0" red="f0" type="rgb"/>
-            </Property>
+            <Property name="editable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextFieldCapMaxKeyPressed"/>

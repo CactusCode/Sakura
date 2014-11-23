@@ -7,16 +7,21 @@
 package View;
 
 import Controller.RecyclApp;
+import Model.Material;
+import Model.RecoveryMatrix;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author vale
  */
-public class MainWindow extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame{
     static RecyclApp app;
     static MainWindow window;
     public static Grid grid;
@@ -25,10 +30,11 @@ public class MainWindow extends javax.swing.JFrame {
     public static void main(String[] args) {   
         app = new RecyclApp(window);
         grid = new Grid();
+        
     }
 
     
-    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax) 
+    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix) 
     {
         this.TextFieldDescription.setText(description);
         this.TextFieldPositionX.setText(String.valueOf(position.getX()));
@@ -36,6 +42,29 @@ public class MainWindow extends javax.swing.JFrame {
         this.TextFieldNbStation.setText(String.valueOf(numberExits));
         this.TextFieldNom.setText(nom);
         this.TextFieldCapMax.setText(String.valueOf(capMax));
+        this.TextFieldNom.setEditable(true);
+        this.TextFieldCapMax.setEditable(true);     
+        if("Station".equalsIgnoreCase(description)){
+            this.MatriceRecup.setVisible(true);
+            List<String> col = new ArrayList<>(Arrays.asList("Produits"));
+            for (int i = 0;i <numberExits;i++){
+               col.add("Sortie " + String.valueOf(i+1));
+            }
+            
+            DefaultTableModel model = new DefaultTableModel(col.toArray(), 2);
+            this.MatriceRecup.setModel(model);
+            this.MatriceRecup.setValueAt("Produit 1", 0, 0);
+            this.MatriceRecup.setValueAt("Produit 2", 1, 0);
+            for (RecoveryMatrix.MatrixLine matrix : recoveryMatrix.getMatrix()) {
+              if(matrix.type==Material.MaterialType.product1){
+                  this.MatriceRecup.setValueAt(matrix.pourcentage, 0, matrix.exitNumber);
+              }
+              if(matrix.type==Material.MaterialType.product2){
+                  this.MatriceRecup.setValueAt(matrix.pourcentage, 1, matrix.exitNumber);
+              }
+            }
+        }
+        else this.MatriceRecup.setVisible(false);
     }
 
    
@@ -59,12 +88,15 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         planStatus = PlanStatus.notWaiting;
-        start = null;
+        MatriceRecup.setVisible(false);
+       
     }
     public void messageToUser(String _message)
     {
         jLabel1.setText(_message);
     }
+    
+
     
      public void redrawPlan() {
         Graphics g = this.plan1.getGraphics();
@@ -196,18 +228,8 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         ButtonRefaire.setText("Refaire");
-        ButtonRefaire.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonRefaireActionPerformed(evt);
-            }
-        });
 
         ButtonAnnuler.setText("Annuler");
-        ButtonAnnuler.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonAnnulerActionPerformed(evt);
-            }
-        });
 
         LabelInterface.setText("Interface");
 
@@ -216,45 +238,44 @@ public class MainWindow extends javax.swing.JFrame {
 
         TextFieldDescription.setEditable(false);
         TextFieldDescription.setToolTipText("Nom:");
-        TextFieldDescription.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldDescriptionActionPerformed(evt);
-            }
-        });
 
         TextFieldPositionX.setEditable(false);
-        TextFieldPositionX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldPositionXActionPerformed(evt);
-            }
-        });
 
         TextFieldPositionY.setEditable(false);
 
         MatriceRecup.setBackground(new java.awt.Color(240, 240, 240));
         MatriceRecup.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null}
             },
             new String [] {
-                "Produit", "Sortie 1", "Sortie 3", "Sortie 4"
+                "Produit"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         MatriceRecup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MatriceRecup.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                MatriceRecupKeyPressed(evt);
+            }
+        });
         ScrollPaneMatrice.setViewportView(MatriceRecup);
+        if (MatriceRecup.getColumnModel().getColumnCount() > 0) {
+            MatriceRecup.getColumnModel().getColumn(0).setResizable(false);
+        }
         MatriceRecup.getAccessibleContext().setAccessibleDescription("");
 
         LabelMatrice.setText("Matrice de récupération");
 
         TextFieldNbStation.setEditable(false);
-        TextFieldNbStation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldNbStationActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Description :");
 
@@ -268,14 +289,14 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel7.setText("Cap. Max. :");
 
-        TextFieldNom.setBackground(new java.awt.Color(240, 240, 240));
+        TextFieldNom.setEditable(false);
         TextFieldNom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TextFieldNomKeyPressed(evt);
             }
         });
 
-        TextFieldCapMax.setBackground(new java.awt.Color(240, 240, 240));
+        TextFieldCapMax.setEditable(false);
         TextFieldCapMax.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TextFieldCapMaxKeyPressed(evt);
@@ -316,10 +337,12 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(215, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         PanelInterfaceLayout.setVerticalGroup(
             PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,7 +485,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(ButtonSortie, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38)
                                 .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                                 .addComponent(grilleOnOff)))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -526,16 +549,8 @@ public class MainWindow extends javax.swing.JFrame {
      
     }//GEN-LAST:event_ButtonConvoyeurActionPerformed
 
-    private void ButtonRefaireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRefaireActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonRefaireActionPerformed
-
-    private void ButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAnnulerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonAnnulerActionPerformed
-
     private void grilleOnOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grilleOnOffActionPerformed
-grid.change();
+        grid.change();
         Graphics g = this.plan1.getGraphics();
         app.paintPanel(plan1, g);
     }//GEN-LAST:event_grilleOnOffActionPerformed
@@ -648,18 +663,6 @@ grid.change();
         grid.changeMagnet();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void TextFieldNbStationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldNbStationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldNbStationActionPerformed
-
-    private void TextFieldPositionXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldPositionXActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldPositionXActionPerformed
-
-    private void TextFieldDescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDescriptionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldDescriptionActionPerformed
-
     private void TextFieldCapMaxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldCapMaxKeyPressed
         float cap;
         if(evt.getKeyCode() == KeyEvent.VK_ENTER)
@@ -686,6 +689,29 @@ grid.change();
         app.deleteFocus();// TODO add your handling code here:
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
+    private void MatriceRecupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MatriceRecupKeyPressed
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+           
+        {
+           for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
+                  for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
+                      int exitNumber = y;
+                      float pourcentage = Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
+                
+                      Material.MaterialType type= Material.MaterialType.product1;
+                      double posx = Double.parseDouble(TextFieldPositionX.getText());
+                      double posy = Double.parseDouble(TextFieldPositionY.getText());
+                      if(i==1){
+                         type = Material.MaterialType.product2;
+                      }
+                      app.setMatrix(type,exitNumber,pourcentage,posx,posy);
+                  }   
+            }
+        }
+    }//GEN-LAST:event_MatriceRecupKeyPressed
+    
+    
+    
     /**
      * @param args the command line arguments
      */

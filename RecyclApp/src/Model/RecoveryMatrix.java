@@ -32,9 +32,13 @@ public class RecoveryMatrix
     {
         this.matrix = new ArrayList<>();
     }
-    public void addLineToMatrix(MatrixLine _line)
+    public void addLineToMatrix(Material.MaterialType _type, int _exitNumber, float _pourcentage)
     {
-        this.matrix.add(_line);
+        MatrixLine line = new MatrixLine(_type, _exitNumber, _pourcentage);
+        this.matrix.add(line);
+    }
+    public ArrayList<MatrixLine> getMatrix(){
+        return this.matrix;
     }
     public void setPourcentageForMaterialType(Material.MaterialType _type, float _pourcentage)
     {
@@ -52,9 +56,6 @@ public class RecoveryMatrix
            }
        }
     }
-    public ArrayList<MatrixLine> getMatrix()
-    {
-        return this.matrix;
-    }
+  
 }
 

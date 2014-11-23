@@ -196,8 +196,15 @@ public class RecyclApp{
         {
             if(occupiedPosition(plantComponantsList.get(i), _position))
             {
-                window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity());
-                focusIndex = i;
+                if(!"Station".equals(plantComponantsList.get(i).getDescription())){
+                    window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null);
+                    focusIndex = i;
+                }
+                else {
+                    Station station = (Station)plantComponantsList.get(i);
+                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix());
+                    focusIndex = i;
+                }
             }
         }
  
@@ -265,6 +272,21 @@ public class RecyclApp{
         
         window.redrawPlan();
     }
+
+    public void setMatrix(Material.MaterialType type, int exitNumber, float pourcentage, Point position) {
+        
+    }
+
+    public void setMatrix(Material.MaterialType type, int exitNumber, float pourcentage, double posx, double posy) {
+        for(PlantComponant plantComponantList1 : this.plantComponantsList){
+          if(plantComponantList1.getPosition().x == posx && plantComponantList1.getPosition().y == posy){
+             Station station = (Station) plantComponantList1;
+             station.AddLineToMatrix(type,exitNumber,pourcentage);
+          }
+      } 
+    }
+
+  
     
 
    

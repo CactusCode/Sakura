@@ -30,8 +30,15 @@ public class Station extends PlantComponant
     public void setNumberOfExits(int _numberOfExits)
     {
         this.numberOfExits = _numberOfExits;
+       
+        for(int i=0;i<_numberOfExits;i++){
+            this.recoveryMatrix.addLineToMatrix(Material.MaterialType.product1, i+1, 0);
+        }
+        for(int i=0;i<_numberOfExits;i++){
+            this.recoveryMatrix.addLineToMatrix(Material.MaterialType.product2, i+1, 0);
+        }
     }
-    
+        
     public int getNumberOfExits()
     {
         return this.numberOfExits;
@@ -43,7 +50,12 @@ public class Station extends PlantComponant
         }
         else return false;
     }
-    
-    
+    public RecoveryMatrix getMatrix(){
+        return this.recoveryMatrix;
+    }
+
+    public void AddLineToMatrix(Material.MaterialType type, int exitNumber, float pourcentage) {
+        this.recoveryMatrix.addLineToMatrix(type, exitNumber, pourcentage);
+    }
     
 }
