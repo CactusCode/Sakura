@@ -76,7 +76,8 @@ public class MainWindow extends javax.swing.JFrame{
         waitingForConvoyeyrPositionEnd,
         waitingForJonctionPosition,
         waitingForEntrancePosition,
-        waitingForExitPosition
+        waitingForExitPosition,
+        isDraggingComponant
     }
     
    
@@ -583,6 +584,7 @@ public class MainWindow extends javax.swing.JFrame{
                     break;
             case waitingForConvoyeyrPositionEnd :
                     app.addConvoyeur(this.start,convertScreenPoint(evt.getPoint()));
+                    this.planStatus = PlanStatus.notWaiting;
                     break;
             case waitingForJonctionPosition :
                     app.addJunction(convertScreenPoint(evt.getPoint()));
@@ -632,18 +634,25 @@ public class MainWindow extends javax.swing.JFrame{
     Point lastPosition;
     
     private void plan1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseDragged
-        count++;
-        grid.moveGrid(lastPosition.x - evt.getPoint().x, lastPosition.y - evt.getPoint().y);
-        
-        plan1.fakeX -= lastPosition.x - evt.getPoint().x;
-        plan1.fakeY -= lastPosition.y - evt.getPoint().y;
-        
-        if (count%20 == 0)
-        {
-            redrawPlan();
-        }
-        
-        lastPosition = evt.getPoint();
+        if("".equals(TextFieldDescription.getText())|| null == TextFieldDescription.getText())
+	{
+            count++;
+            grid.moveGrid(lastPosition.x - evt.getPoint().x, lastPosition.y - evt.getPoint().y);
+
+            plan1.fakeX -= lastPosition.x - evt.getPoint().x;
+            plan1.fakeY -= lastPosition.y - evt.getPoint().y;
+
+            if (count%20 == 0)
+            {
+                    redrawPlan();
+            }
+
+            lastPosition = evt.getPoint();
+	}
+	else
+	{
+		this.planStatus = planStatus.isDraggingComponant;
+	}
 
     }//GEN-LAST:event_plan1MouseDragged
 
@@ -652,11 +661,19 @@ public class MainWindow extends javax.swing.JFrame{
     }//GEN-LAST:event_plan1MousePressed
 
     private void plan1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseReleased
-        if (count != 0)
-        {
-            count = 0;
-            redrawPlan();
-        }
+        if(this.planStatus == planStatus.isDraggingComponant)
+	{
+            Point newPoint = new Point(evt.getPoint().x - plan1.fakeX, evt.getPoint().y - plan1.fakeY);  
+            this.app.setNewPosition(Float.parseFloat(TextFieldPositionX.getText()),
+                                    Float.parseFloat(TextFieldPositionY.getText()), newPoint);
+            this.planStatus = planStatus.notWaiting;
+	}
+	
+	if (count != 0)
+	{
+		count = 0;
+		redrawPlan();
+	}
     }//GEN-LAST:event_plan1MouseReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

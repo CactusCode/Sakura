@@ -199,6 +199,7 @@ public class RecyclApp{
                 if(!"Station".equals(plantComponantsList.get(i).getDescription())){
                     window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null);
                     focusIndex = i;
+                    break;
                 }
                 else {
                     Station station = (Station)plantComponantsList.get(i);
@@ -285,13 +286,26 @@ public class RecyclApp{
           }
       } 
     }
-
-  
-    
-
-   
-
-   
-
-   
+    public void setNewPosition(float _positionX, float _positionY, Point _newPosition) //déplacer élément sur le plan
+    {
+	for(PlantComponant plantComponant1 : this.plantComponantsList)
+	{
+            if (! positionAvailable(_newPosition))
+            {
+                window.messageToUser("Position déjà occupé!");
+            }
+            if(plantComponant1.getPosition().x == _positionX && plantComponant1.getPosition().y == _positionY
+                            && positionAvailable(_newPosition))
+            {
+                if (window.grid.isMagnet())								 // verifier que la grille est magnétique
+                {
+                        _newPosition = checkMagnetPosition(_newPosition);
+                }
+                plantComponant1.setPosition(_newPosition);
+                this.getContextInfo(_newPosition);
+                 window.messageToUser("Élément déplacé");
+                 window.redrawPlan();
+            }
+	}
+    }  
 }
