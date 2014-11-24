@@ -708,22 +708,24 @@ public class MainWindow extends javax.swing.JFrame{
 
     private void MatriceRecupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MatriceRecupKeyPressed
        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-           
-        {
-           for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
-                  for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
-                      int exitNumber = y;
-                      float pourcentage = Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
-                
-                      Material.MaterialType type= Material.MaterialType.product1;
-                      double posx = Double.parseDouble(TextFieldPositionX.getText());
-                      double posy = Double.parseDouble(TextFieldPositionY.getText());
-                      if(i==1){
-                         type = Material.MaterialType.product2;
-                      }
-                      app.setMatrix(type,exitNumber,pourcentage,posx,posy);
-                  }   
-            }
+           {
+            double posx = Double.parseDouble(TextFieldPositionX.getText());
+            double posy = Double.parseDouble(TextFieldPositionY.getText());
+            app.clearMatrix(posx,posy);
+            for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
+                   for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
+                       int exitNumber = y;
+                       float pourcentage = Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
+
+                       Material.MaterialType type= Material.MaterialType.product1;
+
+                       if(i==1){
+                          type = Material.MaterialType.product2;
+                       }
+
+                       app.setMatrix(type,exitNumber,pourcentage,posx,posy);
+                   }   
+             }
         }
     }//GEN-LAST:event_MatriceRecupKeyPressed
     

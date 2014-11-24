@@ -319,4 +319,13 @@ public class RecyclApp{
             }
 	}
     }  
+
+    public void clearMatrix(double posx, double posy) {
+        for(PlantComponant plantComponant1 : this.plantComponantsList){
+             if(plantComponant1.getPosition().x == posx && plantComponant1.getPosition().y == posy){
+                 Station station = (Station)plantComponant1;
+                 station.clearMatrix();
+             }
+        }
+    }
 }

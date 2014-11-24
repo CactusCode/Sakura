@@ -57,5 +57,9 @@ public class Station extends PlantComponant
     public void AddLineToMatrix(Material.MaterialType type, int exitNumber, float pourcentage) {
         this.recoveryMatrix.addLineToMatrix(type, exitNumber, pourcentage);
     }
+
+    public void clearMatrix() {
+        this.recoveryMatrix = new RecoveryMatrix();
+    }
     
 }
