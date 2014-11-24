@@ -97,7 +97,122 @@ public class MainWindow extends javax.swing.JFrame{
         jLabel1.setText(_message);
     }
     
+public void zoom(float _value)
+    {
+        float oldZoom = plan1.zoomFactor;
+        
+        if (_value > 1 && oldZoom < 1)
+                zoom(1);
+        
+        if (_value < 1 && oldZoom > 1)
+            zoom(1);
+        
+        plan1.zoom(_value);
+        
+        /*
+        Point gridPosition = grid.getStart();//convertScreenPoint(grid.getStart());
+        
+        System.out.println(plan1.getConterPoint());
+        System.out.println(gridPosition);
+        
+        int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
+        int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
+        
+        System.out.println(xZoomMod);
+        System.out.println(yZoomMod);
+        
+        xZoomMod /= plan1.zoomFactor;
+        yZoomMod /= plan1.zoomFactor;
+        
+        //int xZoomMod = plan1.getWidth()/2;
+        //int yZoomMod = plan1.getHeight()/2;
+        
+        System.out.println(xZoomMod);
+        System.out.println(yZoomMod);
+        
+        
+        //xZoomMod /= plan1.zoomFactor;
+        //yZoomMod /= plan1.zoomFactor;
+        
+        //grid.xStart = plan1.projectPoint(gridPosition).x;
+        //grid.yStart = plan1.projectPoint(gridPosition).y;
+        
+        //grid.moveGrid(xZoomMod, yZoomMod, plan1.zoomFactor);
+        //grid.xStart -= xZoomMod;
+        //grid.yStart -= yZoomMod;
+        */
+        //float x = plan1.getConterPoint().x;
+        
+        //Zoom
+        
+        if (_value > 1)
+        {
+            System.out.println("zoom");
+            Point gridPosition = grid.getStart();
+        
+            int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
+            int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
+        
+            grid.moveGrid(xZoomMod, yZoomMod, plan1.zoomFactor);
+        }
+        else if (_value < 1)
+        {
+            System.out.println("dezoom");
+            Point gridPosition = grid.getStart();
+        
+            int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
+            int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
+        
+            xZoomMod*=plan1.zoomFactor;
+            yZoomMod*=plan1.zoomFactor;
+        
+            grid.moveGrid(-xZoomMod, -yZoomMod, _value); 
+        }
+        else if (_value == 1)
+        {
+            if (oldZoom > 1)
+            {
+                System.out.println("reset");
+                Point gridPosition = grid.getStart();
+        
+                int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
+                int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
+        
+                grid.moveGrid(-xZoomMod/2, -yZoomMod/2, plan1.zoomFactor);
+            }
+            else if (oldZoom < 1)
+            {
+                System.out.println("reset");
+                Point gridPosition = grid.getStart();
 
+                int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
+                int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
+
+                xZoomMod/=plan1.zoomFactor;
+                yZoomMod/=plan1.zoomFactor;
+
+                grid.moveGrid(xZoomMod, yZoomMod, _value);
+            }
+        }
+        //
+        
+        //System.out.println(plan1.getWidth()/plan1.zoomFactor);
+        //System.out.println(plan1.getHeight()/plan1.zoomFactor);
+        
+        //grid.xStart -= xZoomMod;
+        //grid.yStart -= yZoomMod;
+        
+        
+        //dezoom
+        /*
+        
+
+        
+        System.out.println(grid.xStart);
+        System.out.println(grid.yStart);
+*/
+        redrawPlan();
+    }
     
      public void redrawPlan() {
         Graphics g = this.plan1.getGraphics();
@@ -160,6 +275,10 @@ public class MainWindow extends javax.swing.JFrame{
         MenuQuitter = new javax.swing.JMenuItem();
         MenuVision = new javax.swing.JMenu();
         MenuGridSize = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         MenuAide = new javax.swing.JMenu();
 
         jMenu3.setText("File");
@@ -454,6 +573,34 @@ public class MainWindow extends javax.swing.JFrame{
         });
         MenuVision.add(MenuGridSize);
 
+        jMenu1.setText("Zoom");
+
+        jMenuItem1.setText("Close");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Normal");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Far");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        MenuVision.add(jMenu1);
+
         Menu.add(MenuVision);
 
         MenuAide.setText("Aide");
@@ -558,7 +705,13 @@ public class MainWindow extends javax.swing.JFrame{
 
     private Point convertScreenPoint(Point _point)
     {
-        return new Point(_point.x-plan1.fakeX, _point.y-plan1.fakeY);
+        int xZoomMod = plan1.distanceX(_point, plan1.projectPoint(_point));
+        int yZoomMod = plan1.distanceY(_point, plan1.projectPoint(_point));
+        
+        xZoomMod /= plan1.zoomFactor;
+        yZoomMod /= plan1.zoomFactor;
+        
+        return new Point(_point.x-(int)(plan1.fakeX) + xZoomMod, _point.y-(int)(plan1.fakeY) + yZoomMod);
     }
     
     private void plan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseClicked
@@ -637,12 +790,12 @@ public class MainWindow extends javax.swing.JFrame{
         if("".equals(TextFieldDescription.getText())|| null == TextFieldDescription.getText())
 	{
             count++;
-            grid.moveGrid(lastPosition.x - evt.getPoint().x, lastPosition.y - evt.getPoint().y);
+            grid.moveGrid(lastPosition.x - evt.getPoint().x, lastPosition.y - evt.getPoint().y, plan1.getZoomFactor());
 
-            plan1.fakeX -= lastPosition.x - evt.getPoint().x;
-            plan1.fakeY -= lastPosition.y - evt.getPoint().y;
+            plan1.fakeX -= (lastPosition.x - evt.getPoint().x)/plan1.getZoomFactor();
+            plan1.fakeY -= (lastPosition.y - evt.getPoint().y)/plan1.getZoomFactor();
 
-            if (count%20 == 0)
+            if (count%1 == 0)
             {
                     redrawPlan();
             }
@@ -663,7 +816,7 @@ public class MainWindow extends javax.swing.JFrame{
     private void plan1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseReleased
         if(this.planStatus == planStatus.isDraggingComponant)
 	{
-            Point newPoint = new Point(evt.getPoint().x - plan1.fakeX, evt.getPoint().y - plan1.fakeY);  
+            Point newPoint = new Point(evt.getPoint().x - (int)plan1.fakeX, evt.getPoint().y - (int)plan1.fakeY);  
             this.app.setNewPosition(Float.parseFloat(TextFieldPositionX.getText()),
                                     Float.parseFloat(TextFieldPositionY.getText()), newPoint);
             this.planStatus = planStatus.notWaiting;
@@ -728,6 +881,18 @@ public class MainWindow extends javax.swing.JFrame{
              }
         }
     }//GEN-LAST:event_MatriceRecupKeyPressed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        zoom(2);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        zoom(1);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        zoom(0.5f);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
     
     
     
@@ -772,6 +937,7 @@ public class MainWindow extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu3;
@@ -784,6 +950,9 @@ public class MainWindow extends javax.swing.JFrame{
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuBar jMenuBar4;
     private javax.swing.JMenuBar jMenuBar5;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private View.Plan plan1;
     // End of variables declaration//GEN-END:variables
 }

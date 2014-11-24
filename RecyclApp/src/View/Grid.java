@@ -7,6 +7,7 @@ package View;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 /**
  *
@@ -15,9 +16,9 @@ import java.awt.Graphics;
 public class Grid
 {
     private Boolean show;
-    private int size;
-    private int xStart;
-    private int yStart;
+    private float size;
+    private float xStart;
+    private float yStart;
     private Boolean magnet;
     
     Grid()
@@ -66,29 +67,88 @@ public class Grid
     
     public int getSize()
     {
-        return size;
+        return (int)size;
     }
     
-    public void moveGrid(int _x, int _y)
+    public Point getStart()
+    {
+        return new Point((int)xStart, (int)yStart);
+    }
+    
+    public void moveGrid(float _x, float _y, float _zoom)
     {
         xStart -= _x;
-        xStart = xStart%size;
+        xStart = xStart%(int)(size*_zoom);
         
         yStart -= _y;
-        yStart = yStart%size;
+        yStart = yStart%(int)(size*_zoom);
     }
     
-    public void draw(Graphics g, int _width, int _height)
+    public void draw(Graphics g, int _width, int _height, float _zoom)
     {
         if(show)
         {
+            int temp = 0;
             g.setColor(Color.GRAY);
-            for (int i = xStart; i <= _width; i+=size)
+                                            //width*2 hack, a arranger plus tard
+            for (int i = (int)xStart; i <= (_width*2)+xStart; i+=(size*_zoom))
             {
+                /*if (temp == 0)
+                {
+                    g.setColor(Color.black);
+                    temp++;
+                }
+                else if (temp == 1)
+                {
+                    g.setColor(Color.red);
+                    temp++;
+                }
+                else if (temp == 2)
+                {
+                    g.setColor(Color.blue);
+                    temp++;
+                }
+                else if (temp == 3)
+                {
+                    g.setColor(Color.orange);
+                    temp++;
+                }
+                else
+                {
+                    g.setColor(Color.green);
+                    temp = 0;
+                }*/
+                
                 g.drawLine(i, 0, i, _height);
             }
-            for (int i = yStart; i <= _height; i+=size)
+             temp = 0;
+            for (int i = (int)yStart; i <= (_height*2)+yStart; i+=(size*_zoom))
             {
+                /*if (temp == 0)
+                {
+                    g.setColor(Color.black);
+                    temp++;
+                }
+                else if (temp == 1)
+                {
+                    g.setColor(Color.red);
+                    temp++;
+                }
+                else if (temp == 2)
+                {
+                    g.setColor(Color.blue);
+                    temp++;
+                }
+                else if (temp == 3)
+                {
+                    g.setColor(Color.orange);
+                    temp++;
+                }
+                else
+                {
+                    g.setColor(Color.green);
+                    temp = 0;
+                }*/
                 g.drawLine(0, i, _width, i);
             }
         }

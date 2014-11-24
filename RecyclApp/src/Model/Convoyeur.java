@@ -44,10 +44,10 @@ public class Convoyeur
     {
         return this.endPoint.getPosition();
     }
-     public void draw(Graphics g, int _fakeX, int _fakeY) {
+     public void draw(Graphics g, int _fakeX, int _fakeY, float _zoom, Point _start, Point _end) {
         g.setColor(Color.black);
-        this.drawArrow(g, this.startPoint.getPosition().x+_fakeX,this.startPoint.getPosition().y+_fakeY,
-                   this.endPoint.getPosition().x+_fakeX, this.endPoint.getPosition().y+_fakeY);
+        this.drawArrow(g, _start.x+(int)(_fakeX*_zoom),_start.y+(int)(_fakeY*_zoom),
+                   _end.x+(int)(_fakeX*_zoom), _end.y+(int)(_fakeY*_zoom));
         
     }
      void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
