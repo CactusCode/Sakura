@@ -205,7 +205,12 @@ public class RecyclApp{
                     Station station = (Station)plantComponantsList.get(i);
                     window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix());
                     focusIndex = i;
+                    break;
                 }
+            }
+            else
+            {
+                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix());
             }
         }
  
@@ -234,11 +239,17 @@ public class RecyclApp{
       }
     }
 
-    public void setName(float _positionX, float _positionY, String _nom) {
-        for(PlantComponant plantComponantList1 : this.plantComponantsList){
+    public void setName(float _positionX, float _positionY, String _nom) 
+    {
+        for(PlantComponant plantComponantList1 : this.plantComponantsList)
+        {
           if(plantComponantList1.getPosition().x == _positionX && plantComponantList1.getPosition().y == _positionY){
               plantComponantList1.setName(_nom);
-          }
+        }
+        /*if(plantComponantList1.getName()!= "")
+        {
+            //redraw;
+        }*/
       }
     }
     public void setFocusIndex(int _focus)
