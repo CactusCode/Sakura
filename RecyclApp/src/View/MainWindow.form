@@ -116,7 +116,7 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Close"/>
+                    <Property name="text" type="java.lang.String" value="Proche"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
@@ -132,7 +132,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Far"/>
+                    <Property name="text" type="java.lang.String" value="Loin"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>

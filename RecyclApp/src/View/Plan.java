@@ -30,7 +30,7 @@ public class Plan extends JPanel
         private MainWindow parent;
         
     private Point centerPoint;
-    public float zoomFactor = 1;
+    private float zoomFactor = 1;
         
     public Plan()
     {

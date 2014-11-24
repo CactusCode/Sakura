@@ -99,7 +99,7 @@ public class MainWindow extends javax.swing.JFrame{
     
 public void zoom(float _value)
     {
-        float oldZoom = plan1.zoomFactor;
+        float oldZoom = plan1.getZoomFactor();
         
         if (_value > 1 && oldZoom < 1)
                 zoom(1);
@@ -153,7 +153,7 @@ public void zoom(float _value)
             int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
             int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
         
-            grid.moveGrid(xZoomMod, yZoomMod, plan1.zoomFactor);
+            grid.moveGrid(xZoomMod, yZoomMod, plan1.getZoomFactor());
         }
         else if (_value < 1)
         {
@@ -163,8 +163,8 @@ public void zoom(float _value)
             int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
             int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
         
-            xZoomMod*=plan1.zoomFactor;
-            yZoomMod*=plan1.zoomFactor;
+            xZoomMod*=plan1.getZoomFactor();
+            yZoomMod*=plan1.getZoomFactor();
         
             grid.moveGrid(-xZoomMod, -yZoomMod, _value); 
         }
@@ -178,7 +178,7 @@ public void zoom(float _value)
                 int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
                 int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
         
-                grid.moveGrid(-xZoomMod/2, -yZoomMod/2, plan1.zoomFactor);
+                grid.moveGrid(-xZoomMod/2, -yZoomMod/2, plan1.getZoomFactor());
             }
             else if (oldZoom < 1)
             {
@@ -188,8 +188,8 @@ public void zoom(float _value)
                 int xZoomMod = (int)(plan1.distanceX(plan1.getConterPoint(), gridPosition));
                 int yZoomMod = (int)(plan1.distanceY(plan1.getConterPoint(), gridPosition));
 
-                xZoomMod/=plan1.zoomFactor;
-                yZoomMod/=plan1.zoomFactor;
+                xZoomMod/=plan1.getZoomFactor();
+                yZoomMod/=plan1.getZoomFactor();
 
                 grid.moveGrid(xZoomMod, yZoomMod, _value);
             }
@@ -575,7 +575,7 @@ public void zoom(float _value)
 
         jMenu1.setText("Zoom");
 
-        jMenuItem1.setText("Close");
+        jMenuItem1.setText("Proche");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -591,7 +591,7 @@ public void zoom(float _value)
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setText("Far");
+        jMenuItem3.setText("Loin");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -708,8 +708,8 @@ public void zoom(float _value)
         int xZoomMod = plan1.distanceX(_point, plan1.projectPoint(_point));
         int yZoomMod = plan1.distanceY(_point, plan1.projectPoint(_point));
         
-        xZoomMod /= plan1.zoomFactor;
-        yZoomMod /= plan1.zoomFactor;
+        xZoomMod /= plan1.getZoomFactor();
+        yZoomMod /= plan1.getZoomFactor();
         
         return new Point(_point.x-(int)(plan1.fakeX) + xZoomMod, _point.y-(int)(plan1.fakeY) + yZoomMod);
     }
