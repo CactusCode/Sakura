@@ -35,7 +35,7 @@ public class MainWindow extends javax.swing.JFrame{
     }
 
     
-    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket) 
+    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket, String _weight) 
     {
         this.LabelMatrice.setText("");
         this.TextFieldDescription.setText(description);
@@ -46,6 +46,7 @@ public class MainWindow extends javax.swing.JFrame{
         this.TextFieldCapMax.setText(String.valueOf(capMax));
         this.TextFieldNom.setEditable(true);
         this.TextFieldCapMax.setEditable(true);     
+        this.weightLabel.setText(_weight);
         if("Station".equalsIgnoreCase(description)){
             this.LabelMatrice.setText("Matrice de récupération");
             this.MatriceRecup.setVisible(true);
@@ -287,6 +288,7 @@ public void zoom(float _value)
         TextFieldNom = new javax.swing.JTextField();
         TextFieldCapMax = new javax.swing.JTextField();
         mousePositionLabel = new javax.swing.JLabel();
+        weightLabel = new javax.swing.JLabel();
         grilleOnOff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
@@ -485,14 +487,21 @@ public void zoom(float _value)
                             .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mousePositionLabel)
-                    .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mousePositionLabel)
+                            .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(weightLabel)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         PanelInterfaceLayout.setVerticalGroup(
@@ -526,9 +535,11 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
-                .addGap(44, 44, 44))
+                .addGap(8, 8, 8)
+                .addComponent(weightLabel)
+                .addContainerGap())
         );
 
         grilleOnOff.setText("Grille On/Off");
@@ -792,6 +803,8 @@ public void zoom(float _value)
                     app.getContextInfo(convertScreenPoint(evt.getPoint()));
                     break;
         }
+       
+       app.calculatePasingWeight();
     }//GEN-LAST:event_plan1MouseClicked
 
     private void MenuQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuQuitterActionPerformed
@@ -1014,5 +1027,6 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JLabel mousePositionLabel;
     private View.Plan plan1;
+    private javax.swing.JLabel weightLabel;
     // End of variables declaration//GEN-END:variables
 }

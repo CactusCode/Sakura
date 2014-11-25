@@ -212,26 +212,26 @@ public class RecyclApp{
                 if("Station".equals(plantComponantsList.get(i).getDescription())){
                     
                     Station station = (Station)plantComponantsList.get(i);
-                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix(),null);
+                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix(),null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
                     focusIndex = i;
                     break;
                 }
                 if("Entrée Usine".equals(plantComponantsList.get(i).getDescription())){
                     
                     PlantEntrance planEntrance  = (PlantEntrance)plantComponantsList.get(i);
-                    window.setContextInfo(planEntrance.getDescription(), planEntrance.getPosition(),planEntrance.getNumberOfExits(), planEntrance.getName(),planEntrance.getMaximalCapacity(),null,planEntrance.getBasket());
+                    window.setContextInfo(planEntrance.getDescription(), planEntrance.getPosition(),planEntrance.getNumberOfExits(), planEntrance.getName(),planEntrance.getMaximalCapacity(),null,planEntrance.getBasket(), Float.toString(plantComponantsList.get(i).getMatterWeight()));
                     focusIndex = i;
                     break;
                 }
                 else {
-                    window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null,null);
+                    window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null,null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
                     focusIndex = i;
                     break;
                 }
             }
             else
             {
-                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix(),null);
+                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix(),null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
             }
         }
  
@@ -345,6 +345,33 @@ public class RecyclApp{
                  station.clearMatrix();
              }
         }
+    }
+    
+    public void calculatePasingWeight()
+    {
+        componentCycleCheckList.clear();
+        for (int i = 0; i < plantComponantsList.size(); i++)
+        {
+            if (plantComponantsList.get(i).getDescription() == "Entrée Usine")
+            {
+                componentCycleCheckList.add(plantComponantsList.get(i));
+                break;
+            }
+        }
+        
+        if (componentCycleCheckList.size() != 0)
+            sendDataThroughPlan();
+    }
+    
+    private void sendDataThroughPlan()
+    {
+        componentCycleCheckList.get(componentCycleCheckList.size()-1).setMatterWeight(20);
+        for (int i = 0; i < componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().size(); i++)
+            {
+                componentCycleCheckList.add(componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().get(i).convoyeur.getEndComponant());
+                sendDataThroughPlan();
+                componentCycleCheckList.remove(componentCycleCheckList.size()-1);
+            }
     }
     
     public boolean circuitIsValid()

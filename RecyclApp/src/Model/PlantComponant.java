@@ -27,6 +27,7 @@ public abstract class PlantComponant
     protected int numberOfExits;
     protected ArrayList<connectionConvoyeurExit> connectionsConvoyeursExits;
     protected int numberOfExitsConnected;
+    protected float matterWeight = 10;
     public PlantComponant()
     {
         entranceIsConnected = false;
@@ -61,7 +62,14 @@ public abstract class PlantComponant
         }
         else return false;
     }
-   
+    public float getMatterWeight()
+    {
+        return matterWeight;
+    }
+   public void setMatterWeight(float _weight)
+   {
+       matterWeight = _weight;
+   }
    
     //Description accessors
     public void setDescription(String _description)
