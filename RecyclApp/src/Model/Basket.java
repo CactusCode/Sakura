@@ -39,7 +39,7 @@ public class Basket {
     {
         this.basketContents.add(new MaterialQty(_material, _quantity));
     }
-    public float getPourcentageInBasketForMaterialType(Material.MaterialType _type)
+    public float getQtyInBasketForMaterialType(Material.MaterialType _type)
     {
         for (MaterialQty basketContent : this.basketContents) {
             if (basketContent.material.materialType == _type) {

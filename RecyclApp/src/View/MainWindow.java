@@ -37,6 +37,7 @@ public class MainWindow extends javax.swing.JFrame{
     
     public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket) 
     {
+        this.LabelMatrice.setText("");
         this.TextFieldDescription.setText(description);
         this.TextFieldPositionX.setText(String.valueOf(position.getX()));
         this.TextFieldPositionY.setText(String.valueOf(position.getY()));
@@ -46,6 +47,7 @@ public class MainWindow extends javax.swing.JFrame{
         this.TextFieldNom.setEditable(true);
         this.TextFieldCapMax.setEditable(true);     
         if("Station".equalsIgnoreCase(description)){
+            this.LabelMatrice.setText("Matrice de récupération");
             this.MatriceRecup.setVisible(true);
             List<String> col = new ArrayList<>(Arrays.asList("Produits"));
             for (int i = 0;i <numberExits;i++){
@@ -66,17 +68,23 @@ public class MainWindow extends javax.swing.JFrame{
             }
         }
         else if("Entrée Usine".equalsIgnoreCase(description)){
-            //
+            this.LabelMatrice.setText("Panier d'entrée");
             this.MatriceRecup.setVisible(true);
             List<String> col = new ArrayList<>(Arrays.asList("Produits"));
-            col.add("Poid en Kg/h");
+            col.add("Quantité");
+            col.add("Poid");
+            col.add("Total Kg/h");
             DefaultTableModel model = new DefaultTableModel(col.toArray(), 2);
             this.MatriceRecup.setModel(model);
             this.MatriceRecup.setValueAt("Produit 1", 0, 0);
             this.MatriceRecup.setValueAt("Produit 2", 1, 0);
-            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getPourcentageInBasketForMaterialType(Material.MaterialType.product1)), 0,  1);
-            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getPourcentageInBasketForMaterialType(Material.MaterialType.product2)), 1,  1);
-            
+            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getQtyInBasketForMaterialType(Material.MaterialType.product1)), 0,  1);
+            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getQtyInBasketForMaterialType(Material.MaterialType.product2)), 1,  1);
+            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getBasketContents().get(0).material.getWeight()), 0,  2);
+            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getBasketContents().get(1).material.getWeight()), 1,  2);
+            this.MatriceRecup.setValueAt(String.valueOf(Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(0, 1)))*Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(0, 2)))), 0,  3);
+            this.MatriceRecup.setValueAt(String.valueOf(Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(1, 1)))*Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(1, 2)))), 1,  3);
+
         }
         else this.MatriceRecup.setVisible(false);
     }
@@ -408,8 +416,6 @@ public void zoom(float _value)
         }
         MatriceRecup.getAccessibleContext().setAccessibleDescription("");
 
-        LabelMatrice.setText("Matrice de récupération");
-
         TextFieldNbStation.setEditable(false);
 
         jLabel2.setText("Description :");
@@ -514,7 +520,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
                 .addGap(44, 44, 44))
         );

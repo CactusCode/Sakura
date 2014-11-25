@@ -431,7 +431,7 @@
                   <Component id="LabelMatrice" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="ScrollPaneMatrice" min="-2" pref="193" max="-2" attributes="0"/>
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
+                  <EmptySpace pref="76" max="32767" attributes="0"/>
                   <Component id="mousePositionLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               </Group>
@@ -498,9 +498,6 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="LabelMatrice">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Matrice de r&#xe9;cup&#xe9;ration"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TextFieldNbStation">
           <Properties>
