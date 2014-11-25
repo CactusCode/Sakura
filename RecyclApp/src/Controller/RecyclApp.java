@@ -185,7 +185,10 @@ public class RecyclApp{
             window.messageToUser("Le point de départ ou d'arrivé n'est pas un élément valide pour un convoyeur!");
         }
         else{
+            
             Convoyeur convoyeur = new Convoyeur(startComponant, endComponant);
+            int exitNumber = startComponant.linkConvoyeurWithExit(convoyeur);
+            convoyeur.setExitAssociated(exitNumber);
             this.convoyeursList.add(convoyeur);
             window.messageToUser("Convoyeur Ajouté");
             window.redrawPlan();
@@ -286,10 +289,6 @@ public class RecyclApp{
         plantComponantsList.remove(focusIndex);
         
         window.redrawPlan();
-    }
-
-    public void setMatrix(Material.MaterialType type, int exitNumber, float pourcentage, Point position) {
-        
     }
 
     public void setMatrix(Material.MaterialType type, int exitNumber, float pourcentage, double posx, double posy) {

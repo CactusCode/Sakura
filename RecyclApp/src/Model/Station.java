@@ -18,7 +18,8 @@ public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
     private int numberOfExitsConnected;
-    
+  
+            
     public Station()
     {    
         this.setDescription("Station");

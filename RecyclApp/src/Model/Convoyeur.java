@@ -23,14 +23,18 @@ public class Convoyeur
     private final PlantComponant startPoint;
     private final PlantComponant endPoint;
     private final int ARR_SIZE = 9;
-    
+    private int exitAssociated;
     public Convoyeur(PlantComponant _start,PlantComponant _end)
     {
        this.startPoint = _start;
        this.endPoint = _end;
+       this.exitAssociated = 0;
     }   
     public PlantComponant getStartComponant(){
         return this.startPoint;
+    }
+    public void setExitAssociated(int _exitNumber){
+        this.exitAssociated = _exitNumber;
     }
     public PlantComponant getEndComponant(){
         return this.endPoint;
@@ -48,6 +52,7 @@ public class Convoyeur
         g.setColor(Color.black);
         this.drawArrow(g, _start.x+(int)(_fakeX*_zoom),_start.y+(int)(_fakeY*_zoom),
                    _end.x+(int)(_fakeX*_zoom), _end.y+(int)(_fakeY*_zoom));
+        g.drawString("Sortie #"+this.exitAssociated,(_start.x+((_end.x-_start.x)/2))+(int)(_fakeX*_zoom),(_start.y+((_end.y-_start.y)/2))+(int)(_fakeY*_zoom));
         
     }
      void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {

@@ -8,6 +8,7 @@ package Model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,12 +25,14 @@ public abstract class PlantComponant
     protected boolean entranceIsConnected;
     protected boolean exitIsConnected;
     protected int numberOfExits;
+    protected ArrayList<connectionConvoyeurExit> connectionsConvoyeursExits;
 
     public PlantComponant()
     {
         entranceIsConnected = false;
         exitIsConnected = false;
         name="";
+        connectionsConvoyeursExits = new ArrayList<>();
     }
   
     //Name accessors
@@ -99,6 +102,18 @@ public abstract class PlantComponant
         g.fillOval((int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY, drawSize, drawSize);
         g.setColor(Color.BLACK);
         g.drawString(name,(int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY);
+    }
+    public int linkConvoyeurWithExit(Convoyeur _convoyeur){
+        this.connectionsConvoyeursExits.add(new connectionConvoyeurExit(this.connectionsConvoyeursExits.size(), _convoyeur));
+        return this.connectionsConvoyeursExits.size();
+    }
+    public static class connectionConvoyeurExit {
+        public int exitNumber;
+        public Convoyeur convoyeur;
+        public connectionConvoyeurExit(int _exitNumber, Convoyeur _convoyeur) {
+            this.exitNumber= _exitNumber;
+            this.convoyeur = _convoyeur;
+        }
     }
     
 }
