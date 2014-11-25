@@ -212,7 +212,7 @@ public class RecyclApp{
                 if("Station".equals(plantComponantsList.get(i).getDescription())){
                     
                     Station station = (Station)plantComponantsList.get(i);
-                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix(),null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
+                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getRecoveryMatrix(),null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
                     focusIndex = i;
                     break;
                 }
@@ -372,8 +372,8 @@ public class RecyclApp{
                     break;
                 }
             }
-            
-            sendDataThroughPlan();
+            System.out.println("LALALALALALA");
+            sendDataThroughPlan(0);
         }
     }
     
@@ -392,20 +392,35 @@ public class RecyclApp{
             }
     }
     
-    private void sendDataThroughPlan()
+    private void sendDataThroughPlan(int _exitIndex)
     {
+        System.out.println("function");
         if (componentCycleCheckList.size()-1 != 0)
         {
-            float toAdd = componentCycleCheckList.get(componentCycleCheckList.size()-2).getMatterWeight();
-            System.out.println(toAdd);
-            componentCycleCheckList.get(componentCycleCheckList.size()-1).addMatterWeight(toAdd);
+            if (componentCycleCheckList.get(componentCycleCheckList.size()-2).getDescription() == "Station")
+            { 
+                System.out.println("from station");
+                float toAdd = componentCycleCheckList.get(componentCycleCheckList.size()-2).getMatterWeight();
+                toAdd *= (componentCycleCheckList.get(componentCycleCheckList.size()-2).getRecoveryMatrix().getMatrix().get(_exitIndex).pourcentage/100);
+                componentCycleCheckList.get(componentCycleCheckList.size()-1).addMatterWeight(toAdd);
+                System.out.println(_exitIndex);
+                System.out.println(toAdd);
+            }
+            else
+            {
+
+                float toAdd = componentCycleCheckList.get(componentCycleCheckList.size()-2).getMatterWeight();
+                componentCycleCheckList.get(componentCycleCheckList.size()-1).addMatterWeight(toAdd);
+                                System.out.println("NOT from station");
+                System.out.println(toAdd);
+            }
         }
 
         
         for (int i = 0; i < componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().size(); i++)
         {
             componentCycleCheckList.add(componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().get(i).convoyeur.getEndComponant());
-            sendDataThroughPlan();
+            sendDataThroughPlan(i);
             componentCycleCheckList.remove(componentCycleCheckList.size()-1);
         }
     }

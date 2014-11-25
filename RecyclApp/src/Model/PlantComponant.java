@@ -28,6 +28,7 @@ public abstract class PlantComponant
     protected ArrayList<connectionConvoyeurExit> connectionsConvoyeursExits;
     protected int numberOfExitsConnected;
     protected float matterWeight = 0;
+    public RecoveryMatrix recoveryMatrix;
     public PlantComponant()
     {
         entranceIsConnected = false;
@@ -141,4 +142,7 @@ public abstract class PlantComponant
         }
     }
     
+    public RecoveryMatrix getRecoveryMatrix(){
+        return this.recoveryMatrix;
+    }
 }

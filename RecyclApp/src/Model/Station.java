@@ -15,7 +15,7 @@ import java.awt.Color;
  */
 public class Station extends PlantComponant
 {
-    public RecoveryMatrix recoveryMatrix;
+
     
   
             
@@ -44,9 +44,7 @@ public class Station extends PlantComponant
         return this.numberOfExits;
     }
     
-    public RecoveryMatrix getMatrix(){
-        return this.recoveryMatrix;
-    }
+
 
     public void AddLineToMatrix(Material.MaterialType type, int exitNumber, float pourcentage) {
         this.recoveryMatrix.addLineToMatrix(type, exitNumber, pourcentage);
