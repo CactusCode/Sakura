@@ -29,6 +29,10 @@ public class RecyclApp{
     ArrayList<Convoyeur> convoyeursList;
     Basket basket;
     int focusIndex;
+    
+        ArrayList<PlantComponant> componentCycleCheckList;
+    
+    boolean hasCircuit = false;
 
     /**
      * @param _window
@@ -39,6 +43,8 @@ public class RecyclApp{
         this.plantComponantsList = new ArrayList<>();
         this.convoyeursList = new ArrayList<>();
         this.basket = new Basket();
+        
+        componentCycleCheckList = new ArrayList<PlantComponant>();
       
     }
     
@@ -333,10 +339,57 @@ public class RecyclApp{
         }
     }
     
-    public boolean validateCircuit()
+    public boolean circuitIsValid()
     {
+        hasCircuit = false;
         
+        componentCycleCheckList.clear();
         
-        return true;
+        for (int i = 0; i < plantComponantsList.size(); i++)
+        {
+            if (plantComponantsList.get(i).getDescription() == "Entrée Usine")
+            {
+                componentCycleCheckList.add(plantComponantsList.get(i));
+                break;
+            }
+        }
+        
+        if (componentCycleCheckList.size() != 0)
+            checkCircuit();
+
+        return !hasCircuit;
+    }
+    
+    private void checkCircuit()
+    {
+        if (!hasCircuit)
+        {
+            checkForDuplicate();
+            
+            for (int i = 0; i < componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().size(); i++)
+            {
+                componentCycleCheckList.add(componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().get(i).convoyeur.getEndComponant());
+                checkCircuit();
+                componentCycleCheckList.remove(componentCycleCheckList.size()-1);
+            }
+        }
+    }
+    
+    private void checkForDuplicate()
+    {
+        for (int i = 0; i < componentCycleCheckList.size(); i++)
+        {
+            if (!hasCircuit)
+            {
+                for (int j = i+1; j < componentCycleCheckList.size(); j++)
+                {
+                    if (componentCycleCheckList.get(i).getPosition() == componentCycleCheckList.get(j).getPosition())
+                    {
+                        hasCircuit = true;
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

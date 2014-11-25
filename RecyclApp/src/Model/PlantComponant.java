@@ -98,6 +98,10 @@ public abstract class PlantComponant
     public int getDrawSize(){
         return this.drawSize;
     }
+    public ArrayList<connectionConvoyeurExit> getConvoyeurList()
+    {
+        return connectionsConvoyeursExits;
+    }
     public void draw(Graphics g, int _fakeX, int _fakeY) {
         g.setColor(planColor);
         g.fillOval((int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY, drawSize, drawSize);
