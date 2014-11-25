@@ -26,15 +26,21 @@ public abstract class PlantComponant
     protected boolean exitIsConnected;
     protected int numberOfExits;
     protected ArrayList<connectionConvoyeurExit> connectionsConvoyeursExits;
-
+    protected int numberOfExitsConnected;
     public PlantComponant()
     {
         entranceIsConnected = false;
         exitIsConnected = false;
         name="";
         connectionsConvoyeursExits = new ArrayList<>();
+        numberOfExitsConnected = 0;
     }
-  
+    public boolean canConnectExit(){
+        return numberOfExitsConnected < numberOfExits;
+    }
+    public void addExitConnection(){
+            this.numberOfExitsConnected++;    
+    }
     //Name accessors
     public void setName(String _name)
     {
@@ -51,13 +57,8 @@ public abstract class PlantComponant
         }
         else return false;
     }
-    public boolean connectExit(){
-        if(!exitIsConnected){
-            this.exitIsConnected = true;
-            return true;
-        }
-        else return false;
-    }
+   
+   
     //Description accessors
     public void setDescription(String _description)
     {

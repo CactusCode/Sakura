@@ -49,6 +49,7 @@ public class Plan extends JPanel
         mousePosition = _position;
     }
     
+    
     public void paintPanel(ArrayList<PlantComponant> _components, ArrayList<Convoyeur> _convoyeurs, Graphics g)
     {
         paintComponent(g);
@@ -87,8 +88,6 @@ public class Plan extends JPanel
             _convoyeur.draw(g, (int)fakeX, (int)fakeY, zoomFactor, projectPoint(_convoyeur.getStartPosition()), projectPoint(_convoyeur.getEndPosition()));
         }
         
-        String pos = "X: " + mousePosition.x + " Y: " + mousePosition.y;
-        g.drawString(pos, (int)(getWidth()*0.02), (int)(getHeight()*0.95));
     }
     
         public Point projectPoint(Point _end)

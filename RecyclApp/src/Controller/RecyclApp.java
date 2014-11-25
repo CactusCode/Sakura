@@ -8,7 +8,6 @@ package Controller;
 import Model.*;
 import View.*;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.awt.Point;
@@ -26,7 +25,7 @@ public class RecyclApp{
     static RecyclApp app;
     static MainWindow window;
     
-    ArrayList <PlantComponant> plantComponantsList;
+    ArrayList<PlantComponant> plantComponantsList;
     ArrayList<Convoyeur> convoyeursList;
     Basket basket;
     int focusIndex;
@@ -155,19 +154,11 @@ public class RecyclApp{
         for (PlantComponant plantComponantsList1 : this.plantComponantsList) {
             if(occupiedPosition(plantComponantsList1, _start))
             {
-               if(!plantComponantsList1.connectExit() && !"Station".equals(plantComponantsList1.getDescription())){
+               if(!plantComponantsList1.canConnectExit()){
                    window.messageToUser("L'élément de départ ne peut plus prendre de convoyeur en sortie!");
-                   //delete dans la liste de convoyeur ... libérer la station et/ou jonction
                    return;
                }
-               else if("Station".equals(plantComponantsList1.getDescription())){
-                   Station station = (Station)plantComponantsList1;
-                   if(!station.addExitConnection()){
-                    window.messageToUser("L'élément de départ ne peut plus prendre de convoyeur en sortie!");
-                    //delete dans la liste de convoyeur ... libérer la station et/ou jonction
-                    return;
-                   }
-               }
+             
                startComponant = plantComponantsList1;
             }
         }
@@ -184,8 +175,11 @@ public class RecyclApp{
         if (startComponant == null || endComponant == null){
             window.messageToUser("Le point de départ ou d'arrivé n'est pas un élément valide pour un convoyeur!");
         }
+        else if (startComponant ==endComponant){
+            window.messageToUser("Le point de départ et d'arrivé est le même!");
+        }
         else{
-            
+            startComponant.addExitConnection();
             Convoyeur convoyeur = new Convoyeur(startComponant, endComponant);
             int exitNumber = startComponant.linkConvoyeurWithExit(convoyeur);
             convoyeur.setExitAssociated(exitNumber);

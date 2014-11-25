@@ -65,7 +65,7 @@ public class MainWindow extends javax.swing.JFrame{
               }
             }
         }
-        if("Entrée Usine".equalsIgnoreCase(description)){
+        else if("Entrée Usine".equalsIgnoreCase(description)){
             //
             this.MatriceRecup.setVisible(true);
             List<String> col = new ArrayList<>(Arrays.asList("Produits"));
@@ -278,6 +278,7 @@ public void zoom(float _value)
         jLabel7 = new javax.swing.JLabel();
         TextFieldNom = new javax.swing.JTextField();
         TextFieldCapMax = new javax.swing.JTextField();
+        mousePositionLabel = new javax.swing.JLabel();
         grilleOnOff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
@@ -437,6 +438,8 @@ public void zoom(float _value)
             }
         });
 
+        mousePositionLabel.setText("jLabel8");
+
         javax.swing.GroupLayout PanelInterfaceLayout = new javax.swing.GroupLayout(PanelInterface);
         PanelInterface.setLayout(PanelInterfaceLayout);
         PanelInterfaceLayout.setHorizontalGroup(
@@ -474,8 +477,10 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mousePositionLabel)
+                    .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         PanelInterfaceLayout.setVerticalGroup(
@@ -509,7 +514,9 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(mousePositionLabel)
+                .addGap(44, 44, 44))
         );
 
         grilleOnOff.setText("Grille On/Off");
@@ -913,8 +920,8 @@ public void zoom(float _value)
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void plan1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseMoved
-        plan1.setMousePosition(convertScreenPoint(evt.getPoint()));
-        redrawPlan();
+     
+        mousePositionLabel.setText("x : " + String.valueOf(convertScreenPoint(evt.getPoint()).x) + " , " + "y : "+String.valueOf(convertScreenPoint(evt.getPoint()).y));
     }//GEN-LAST:event_plan1MouseMoved
     
     
@@ -976,6 +983,7 @@ public void zoom(float _value)
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JLabel mousePositionLabel;
     private View.Plan plan1;
     // End of variables declaration//GEN-END:variables
 }

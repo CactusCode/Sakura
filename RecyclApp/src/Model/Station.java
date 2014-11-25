@@ -7,7 +7,6 @@
 package Model;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 
 /**
@@ -17,7 +16,7 @@ import java.awt.Graphics;
 public class Station extends PlantComponant
 {
     public RecoveryMatrix recoveryMatrix;
-    private int numberOfExitsConnected;
+    
   
             
     public Station()
@@ -26,7 +25,7 @@ public class Station extends PlantComponant
         this.recoveryMatrix = new RecoveryMatrix();
         this.numberOfExits = 0;
         this.planColor = Color.BLUE;
-        this.numberOfExitsConnected = 0;
+      
     }
     public void setNumberOfExits(int _numberOfExits)
     {
@@ -44,13 +43,7 @@ public class Station extends PlantComponant
     {
         return this.numberOfExits;
     }
-    public boolean addExitConnection(){
-        if(numberOfExitsConnected < numberOfExits){
-            this.numberOfExitsConnected++;
-            return true;
-        }
-        else return false;
-    }
+    
     public RecoveryMatrix getMatrix(){
         return this.recoveryMatrix;
     }
