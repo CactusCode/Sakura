@@ -74,6 +74,7 @@ public class Plan extends JPanel
             
             _component.draw(g, (int)(fakeX*zoomFactor) - xZoomMod, (int)(fakeY*zoomFactor) - yZoomMod);
             //_component.draw(g, (int)fakeX, (int)fakeY);
+            
         }
         for (Convoyeur _convoyeur : _convoyeurs) {
             _convoyeur.draw(g, (int)fakeX, (int)fakeY, zoomFactor, projectPoint(_convoyeur.getStartPosition()), projectPoint(_convoyeur.getEndPosition()));

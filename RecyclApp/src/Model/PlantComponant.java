@@ -29,6 +29,7 @@ public abstract class PlantComponant
     {
         entranceIsConnected = false;
         exitIsConnected = false;
+        name="";
     }
   
     //Name accessors
@@ -96,6 +97,8 @@ public abstract class PlantComponant
     public void draw(Graphics g, int _fakeX, int _fakeY) {
         g.setColor(planColor);
         g.fillOval((int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY, drawSize, drawSize);
+        g.setColor(Color.BLACK);
+        g.drawString(name,(int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY);
     }
     
 }

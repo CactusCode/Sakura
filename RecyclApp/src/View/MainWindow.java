@@ -687,8 +687,9 @@ public void zoom(float _value)
     }//GEN-LAST:event_ButtonStationActionPerformed
 
     private void ButtonEntreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntreeActionPerformed
-        this.jLabel1.setText("Choisissez une place sur le plan pour l'entrée de la station");
-        this.planStatus = PlanStatus.waitingForEntrancePosition;
+        Point pointInitialEntree = new Point(199, 201); 
+        app.addEntrance(convertScreenPoint(pointInitialEntree));
+        this.planStatus = PlanStatus.notWaiting;
     }//GEN-LAST:event_ButtonEntreeActionPerformed
 
     private void ButtonConvoyeurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConvoyeurActionPerformed

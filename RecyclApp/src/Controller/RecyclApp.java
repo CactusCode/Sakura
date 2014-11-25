@@ -157,12 +157,14 @@ public class RecyclApp{
             {
                if(!plantComponantsList1.connectExit() && !"Station".equals(plantComponantsList1.getDescription())){
                    window.messageToUser("L'élément de départ ne peut plus prendre de convoyeur en sortie!");
+                   //delete dans la liste de convoyeur ... libérer la station et/ou jonction
                    return;
                }
                else if("Station".equals(plantComponantsList1.getDescription())){
                    Station station = (Station)plantComponantsList1;
                    if(!station.addExitConnection()){
                     window.messageToUser("L'élément de départ ne peut plus prendre de convoyeur en sortie!");
+                    //delete dans la liste de convoyeur ... libérer la station et/ou jonction
                     return;
                    }
                }
@@ -245,6 +247,7 @@ public class RecyclApp{
         {
           if(plantComponantList1.getPosition().x == _positionX && plantComponantList1.getPosition().y == _positionY){
               plantComponantList1.setName(_nom);
+              window.redrawPlan();
         }
         /*if(plantComponantList1.getName()!= "")
         {
