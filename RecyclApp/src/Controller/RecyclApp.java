@@ -53,7 +53,7 @@ public class RecyclApp{
     
     }
     
-        private Point checkMagnetPosition(Point _position)
+    private Point checkMagnetPosition(Point _position)
     {
         if (window.grid.isMagnet())
         {
@@ -195,27 +195,35 @@ public class RecyclApp{
         }
     }
     
-     public void getContextInfo(Point _position) 
+    public void getContextInfo(Point _position) 
     {
         for (int i = 0; i<plantComponantsList.size(); i++)
         {
             if(occupiedPosition(plantComponantsList.get(i), _position))
             {
-                if(!"Station".equals(plantComponantsList.get(i).getDescription())){
-                    window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null);
+                if("Station".equals(plantComponantsList.get(i).getDescription())){
+                    
+                    Station station = (Station)plantComponantsList.get(i);
+                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix(),null);
+                    focusIndex = i;
+                    break;
+                }
+                if("Entrée Usine".equals(plantComponantsList.get(i).getDescription())){
+                    
+                    PlantEntrance planEntrance  = (PlantEntrance)plantComponantsList.get(i);
+                    window.setContextInfo(planEntrance.getDescription(), planEntrance.getPosition(),planEntrance.getNumberOfExits(), planEntrance.getName(),planEntrance.getMaximalCapacity(),null,planEntrance.getBasket());
                     focusIndex = i;
                     break;
                 }
                 else {
-                    Station station = (Station)plantComponantsList.get(i);
-                    window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getMatrix());
+                    window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null,null);
                     focusIndex = i;
                     break;
                 }
             }
             else
             {
-                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix());
+                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix(),null);
             }
         }
  
@@ -329,5 +337,12 @@ public class RecyclApp{
                  station.clearMatrix();
              }
         }
+    }
+    
+    public boolean validateCircuit()
+    {
+        
+        
+        return true;
     }
 }

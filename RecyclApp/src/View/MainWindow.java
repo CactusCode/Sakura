@@ -7,6 +7,7 @@
 package View;
 
 import Controller.RecyclApp;
+import Model.Basket;
 import Model.Material;
 import Model.RecoveryMatrix;
 import java.awt.Graphics;
@@ -34,7 +35,7 @@ public class MainWindow extends javax.swing.JFrame{
     }
 
     
-    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix) 
+    public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket) 
     {
         this.TextFieldDescription.setText(description);
         this.TextFieldPositionX.setText(String.valueOf(position.getX()));
@@ -63,6 +64,19 @@ public class MainWindow extends javax.swing.JFrame{
                   this.MatriceRecup.setValueAt(matrix.pourcentage, 1, matrix.exitNumber);
               }
             }
+        }
+        if("Entrée Usine".equalsIgnoreCase(description)){
+            //
+            this.MatriceRecup.setVisible(true);
+            List<String> col = new ArrayList<>(Arrays.asList("Produits"));
+            col.add("Poid en Kg/h");
+            DefaultTableModel model = new DefaultTableModel(col.toArray(), 2);
+            this.MatriceRecup.setModel(model);
+            this.MatriceRecup.setValueAt("Produit 1", 0, 0);
+            this.MatriceRecup.setValueAt("Produit 2", 1, 0);
+            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getPourcentageInBasketForMaterialType(Material.MaterialType.product1)), 0,  1);
+            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getPourcentageInBasketForMaterialType(Material.MaterialType.product2)), 1,  1);
+            
         }
         else this.MatriceRecup.setVisible(false);
     }
