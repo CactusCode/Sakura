@@ -104,7 +104,7 @@ public abstract class PlantComponant
         g.drawString(name,(int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY);
     }
     public int linkConvoyeurWithExit(Convoyeur _convoyeur){
-        this.connectionsConvoyeursExits.add(new connectionConvoyeurExit(this.connectionsConvoyeursExits.size(), _convoyeur));
+        this.connectionsConvoyeursExits.add(new connectionConvoyeurExit(this.connectionsConvoyeursExits.size()+1, _convoyeur));
         return this.connectionsConvoyeursExits.size();
     }
     public static class connectionConvoyeurExit {

@@ -458,7 +458,7 @@ public void zoom(float _value)
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -495,7 +495,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         grilleOnOff.setText("Grille On/Off");
@@ -506,11 +506,6 @@ public void zoom(float _value)
         });
 
         plan1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        plan1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                plan1MouseDragged(evt);
-            }
-        });
         plan1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 plan1MouseClicked(evt);
@@ -520,6 +515,14 @@ public void zoom(float _value)
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 plan1MouseReleased(evt);
+            }
+        });
+        plan1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                plan1MouseDragged(evt);
+            }
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                plan1MouseMoved(evt);
             }
         });
 
@@ -894,6 +897,11 @@ public void zoom(float _value)
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         zoom(0.5f);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void plan1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plan1MouseMoved
+        plan1.setMousePosition(convertScreenPoint(evt.getPoint()));
+        redrawPlan();
+    }//GEN-LAST:event_plan1MouseMoved
     
     
     

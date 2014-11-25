@@ -31,6 +31,8 @@ public class Plan extends JPanel
         
     private Point centerPoint;
     private float zoomFactor = 1;
+    
+    private Point mousePosition = new Point();
         
     public Plan()
     {
@@ -40,6 +42,11 @@ public class Plan extends JPanel
     public void setParent(MainWindow _parent)
     {
         parent = _parent;
+    }
+    
+    public void setMousePosition(Point _position)
+    {
+        mousePosition = _position;
     }
     
     public void paintPanel(ArrayList<PlantComponant> _components, ArrayList<Convoyeur> _convoyeurs, Graphics g)
@@ -79,6 +86,9 @@ public class Plan extends JPanel
         for (Convoyeur _convoyeur : _convoyeurs) {
             _convoyeur.draw(g, (int)fakeX, (int)fakeY, zoomFactor, projectPoint(_convoyeur.getStartPosition()), projectPoint(_convoyeur.getEndPosition()));
         }
+        
+        String pos = "X: " + mousePosition.x + " Y: " + mousePosition.y;
+        g.drawString(pos, (int)(getWidth()*0.02), (int)(getHeight()*0.95));
     }
     
         public Point projectPoint(Point _end)
