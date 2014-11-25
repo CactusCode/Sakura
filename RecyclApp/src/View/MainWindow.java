@@ -331,6 +331,7 @@ public void zoom(float _value)
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        ButtonStation.setForeground(new java.awt.Color(0, 0, 255));
         ButtonStation.setText("Station");
         ButtonStation.setMaximumSize(new java.awt.Dimension(85, 23));
         ButtonStation.setMinimumSize(new java.awt.Dimension(85, 23));
@@ -347,6 +348,7 @@ public void zoom(float _value)
             }
         });
 
+        ButtonJonction.setForeground(new java.awt.Color(255, 0, 0));
         ButtonJonction.setLabel("Jonction");
         ButtonJonction.setMaximumSize(new java.awt.Dimension(85, 23));
         ButtonJonction.setMinimumSize(new java.awt.Dimension(85, 23));
@@ -356,6 +358,8 @@ public void zoom(float _value)
             }
         });
 
+        ButtonEntree.setBackground(new java.awt.Color(140, 140, 140));
+        ButtonEntree.setForeground(new java.awt.Color(255, 175, 175));
         ButtonEntree.setText("Entrée");
         ButtonEntree.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,6 +367,8 @@ public void zoom(float _value)
             }
         });
 
+        ButtonSortie.setBackground(new java.awt.Color(140, 140, 140));
+        ButtonSortie.setForeground(new java.awt.Color(255, 200, 0));
         ButtonSortie.setLabel("Sortie");
         ButtonSortie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -483,7 +489,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mousePositionLabel)
                     .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -520,7 +526,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
                 .addGap(44, 44, 44))
         );
@@ -891,25 +897,42 @@ public void zoom(float _value)
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
     private void MatriceRecupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MatriceRecupKeyPressed
-       if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+if(evt.getKeyCode() == KeyEvent.VK_ENTER)
            {
             double posx = Double.parseDouble(TextFieldPositionX.getText());
             double posy = Double.parseDouble(TextFieldPositionY.getText());
-            app.clearMatrix(posx,posy);
+            
+            
             for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
-                   for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
+                float pourcentageTotal = 0; 
+                for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
+                      pourcentageTotal = pourcentageTotal + Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
+                }
+                if(pourcentageTotal!=100){
+                    messageToUser("La somme des pourcentages pour les sorties d'un produit doivent être égal 100%");
+                    return;
+                }
+            }
+            app.clearMatrix(posx,posy);    
+            
+            for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
+               for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
                        int exitNumber = y;
                        float pourcentage = Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
-
+                       
+                       
                        Material.MaterialType type= Material.MaterialType.product1;
 
                        if(i==1){
                           type = Material.MaterialType.product2;
                        }
-
+                       
                        app.setMatrix(type,exitNumber,pourcentage,posx,posy);
-                   }   
-             }
+                   }  
+                
+                }
+               messageToUser("Matrice mise à jour");
+            
         }
     }//GEN-LAST:event_MatriceRecupKeyPressed
 

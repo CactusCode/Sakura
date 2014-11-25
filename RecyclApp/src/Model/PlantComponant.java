@@ -41,6 +41,10 @@ public abstract class PlantComponant
     public void addExitConnection(){
             this.numberOfExitsConnected++;    
     }
+    public void removeExitConnection()
+    {
+        this.numberOfExitsConnected--;
+    }
     //Name accessors
     public void setName(String _name)
     {
@@ -111,6 +115,10 @@ public abstract class PlantComponant
     public int linkConvoyeurWithExit(Convoyeur _convoyeur){
         this.connectionsConvoyeursExits.add(new connectionConvoyeurExit(this.connectionsConvoyeursExits.size()+1, _convoyeur));
         return this.connectionsConvoyeursExits.size();
+    }
+    public void unLinkConvoyeurWithExit()
+    {
+        this.connectionsConvoyeursExits.remove(connectionsConvoyeursExits.size()-1);
     }
     public static class connectionConvoyeurExit {
         public int exitNumber;

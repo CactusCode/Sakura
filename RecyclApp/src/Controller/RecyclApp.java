@@ -190,7 +190,15 @@ public class RecyclApp{
             int exitNumber = startComponant.linkConvoyeurWithExit(convoyeur);
             convoyeur.setExitAssociated(exitNumber);
             this.convoyeursList.add(convoyeur);
-            window.messageToUser("Convoyeur Ajouté");
+            if (circuitIsValid())
+                window.messageToUser("Convoyeur Ajouté");
+            else
+            {
+                this.convoyeursList.remove(convoyeur);
+                startComponant.removeExitConnection();
+                startComponant.unLinkConvoyeurWithExit();
+                window.messageToUser("Un cycle est crée dans le circuit, opération annulé");
+            }
             window.redrawPlan();
         }
     }
