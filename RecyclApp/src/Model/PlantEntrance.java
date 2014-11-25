@@ -23,6 +23,7 @@ public class PlantEntrance extends PlantComponant{
         this.planColor = Color.PINK;
         this.entranceIsConnected = true;
         this.numberOfExits = 1;
+        this.matterWeight = 2000;
     }
 
     public Basket getBasket()

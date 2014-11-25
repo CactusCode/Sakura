@@ -46,7 +46,7 @@ public class MainWindow extends javax.swing.JFrame{
         this.TextFieldCapMax.setText(String.valueOf(capMax));
         this.TextFieldNom.setEditable(true);
         this.TextFieldCapMax.setEditable(true);     
-        this.weightLabel.setText(_weight);
+        this.weightLabel.setText("Kg/h: " + _weight);
         if("Station".equalsIgnoreCase(description)){
             this.LabelMatrice.setText("Matrice de récupération");
             this.MatriceRecup.setVisible(true);
@@ -454,6 +454,8 @@ public void zoom(float _value)
 
         mousePositionLabel.setText("jLabel8");
 
+        weightLabel.setText("Kg/h: 0");
+
         javax.swing.GroupLayout PanelInterfaceLayout = new javax.swing.GroupLayout(PanelInterface);
         PanelInterface.setLayout(PanelInterfaceLayout);
         PanelInterfaceLayout.setHorizontalGroup(
@@ -535,7 +537,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
                 .addGap(8, 8, 8)
                 .addComponent(weightLabel)

@@ -231,7 +231,7 @@ public class RecyclApp{
             }
             else
             {
-                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix(),null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
+                window.setContextInfo("", new Point(), 0, "", 0, new RecoveryMatrix(),null, "0");
             }
         }
  
@@ -360,18 +360,54 @@ public class RecyclApp{
         }
         
         if (componentCycleCheckList.size() != 0)
+        {
+            cleanDataPlan();
+            
+            componentCycleCheckList.clear();
+            for (int i = 0; i < plantComponantsList.size(); i++)
+            {
+                if (plantComponantsList.get(i).getDescription() == "Entrée Usine")
+                {
+                    componentCycleCheckList.add(plantComponantsList.get(i));
+                    break;
+                }
+            }
+            
             sendDataThroughPlan();
+        }
+    }
+    
+    private void cleanDataPlan()
+    {
+        if (componentCycleCheckList.size()-1 != 0)
+        {
+            componentCycleCheckList.get(componentCycleCheckList.size()-1).setMatterWeight(0);
+        }
+        
+            for (int i = 0; i < componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().size(); i++)
+            {
+                componentCycleCheckList.add(componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().get(i).convoyeur.getEndComponant());
+                cleanDataPlan();
+                componentCycleCheckList.remove(componentCycleCheckList.size()-1);
+            }
     }
     
     private void sendDataThroughPlan()
     {
-        componentCycleCheckList.get(componentCycleCheckList.size()-1).setMatterWeight(20);
+        if (componentCycleCheckList.size()-1 != 0)
+        {
+            float toAdd = componentCycleCheckList.get(componentCycleCheckList.size()-2).getMatterWeight();
+            System.out.println(toAdd);
+            componentCycleCheckList.get(componentCycleCheckList.size()-1).addMatterWeight(toAdd);
+        }
+
+        
         for (int i = 0; i < componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().size(); i++)
-            {
-                componentCycleCheckList.add(componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().get(i).convoyeur.getEndComponant());
-                sendDataThroughPlan();
-                componentCycleCheckList.remove(componentCycleCheckList.size()-1);
-            }
+        {
+            componentCycleCheckList.add(componentCycleCheckList.get(componentCycleCheckList.size()-1).getConvoyeurList().get(i).convoyeur.getEndComponant());
+            sendDataThroughPlan();
+            componentCycleCheckList.remove(componentCycleCheckList.size()-1);
+        }
     }
     
     public boolean circuitIsValid()
