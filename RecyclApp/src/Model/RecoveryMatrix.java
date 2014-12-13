@@ -12,10 +12,10 @@ import java.util.ArrayList;
  *
  * @author Vincent
  */
-public class RecoveryMatrix 
+public class RecoveryMatrix implements java.io.Serializable
 {
   
-   public class MatrixLine
+   public class MatrixLine implements java.io.Serializable
     {
         public Material.MaterialType type;
         public int exitNumber;

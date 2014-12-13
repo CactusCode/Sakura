@@ -6,18 +6,28 @@
 
 package View;
 
-import Controller.RecyclApp;
+
 import Model.Basket;
 import Model.Material;
 import Model.RecoveryMatrix;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Controller.*;
+import javax.swing.JFrame;
 /**
  *
  * @author vale
@@ -33,6 +43,7 @@ public class MainWindow extends javax.swing.JFrame{
         grid = new Grid();
         
     }
+    private Object textArea;
 
     
     public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket, String _weight) 
@@ -296,7 +307,9 @@ public void zoom(float _value)
         jButtonSupprimer = new javax.swing.JButton();
         Menu = new javax.swing.JMenuBar();
         MenuFichier = new javax.swing.JMenu();
+        OuvrirFichier = new javax.swing.JMenuItem();
         MenuEnregistrer = new javax.swing.JMenuItem();
+        MenuExportImage = new javax.swing.JMenuItem();
         MenuQuitter = new javax.swing.JMenuItem();
         MenuVision = new javax.swing.JMenu();
         MenuGridSize = new javax.swing.JMenuItem();
@@ -491,7 +504,7 @@ public void zoom(float _value)
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(15, Short.MAX_VALUE)
                         .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mousePositionLabel)
                             .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -537,7 +550,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
                 .addGap(8, 8, 8)
                 .addComponent(weightLabel)
@@ -599,9 +612,33 @@ public void zoom(float _value)
 
         MenuFichier.setText("Fichier");
 
+        OuvrirFichier.setText("Ouvrir");
+        OuvrirFichier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OuvrirFichierActionPerformed(evt);
+            }
+        });
+        MenuFichier.add(OuvrirFichier);
+
+        MenuEnregistrer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         MenuEnregistrer.setText("Enregistrer");
+        MenuEnregistrer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuEnregistrerActionPerformed(evt);
+            }
+        });
         MenuFichier.add(MenuEnregistrer);
 
+        MenuExportImage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        MenuExportImage.setText("ExporterCommeImage");
+        MenuExportImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuExportImageActionPerformed(evt);
+            }
+        });
+        MenuFichier.add(MenuExportImage);
+
+        MenuQuitter.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         MenuQuitter.setText("Quitter");
         MenuQuitter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -967,6 +1004,59 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
      
         mousePositionLabel.setText("x : " + String.valueOf(convertScreenPoint(evt.getPoint()).x) + " , " + "y : "+String.valueOf(convertScreenPoint(evt.getPoint()).y));
     }//GEN-LAST:event_plan1MouseMoved
+
+    private void MenuEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuEnregistrerActionPerformed
+        JFrame parentFrame = new JFrame();
+ 
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to save");   
+ 
+        int userSelection = fileChooser.showSaveDialog(parentFrame);
+ 
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            Serialize serialize = new Serialize(fileToSave);
+            serialize.save(app);
+        }
+        
+        
+        
+    
+    }//GEN-LAST:event_MenuEnregistrerActionPerformed
+
+    private void MenuExportImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuExportImageActionPerformed
+       // app.exportImage();
+        BufferedImage bi = new BufferedImage(plan1.getSize().width, plan1.getSize().height, BufferedImage.TYPE_INT_ARGB); 
+        Graphics g = bi.createGraphics();
+        app.paintPanel(plan1,g);  //this == JComponent
+        g.dispose();
+        try
+        {
+           ImageIO.write(bi,"png",new File("test2.png"));
+        }
+
+        catch (Exception e) {}
+    }//GEN-LAST:event_MenuExportImageActionPerformed
+
+    private void OuvrirFichierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OuvrirFichierActionPerformed
+          JFrame parentFrame = new JFrame();
+ 
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to load");   
+ 
+        int userSelection = fileChooser.showOpenDialog(parentFrame);
+ 
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToLoad = fileChooser.getSelectedFile();
+            
+            Deserialize deserialize = new Deserialize(fileToLoad);
+            app = deserialize.load();
+            Graphics g = plan1.getGraphics();
+            app.paintPanel(plan1, g);
+        }
+        
+       
+    }//GEN-LAST:event_OuvrirFichierActionPerformed
     
     
     
@@ -989,10 +1079,12 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JMenuBar Menu;
     private javax.swing.JMenu MenuAide;
     private javax.swing.JMenuItem MenuEnregistrer;
+    private javax.swing.JMenuItem MenuExportImage;
     private javax.swing.JMenu MenuFichier;
     private javax.swing.JMenuItem MenuGridSize;
     private javax.swing.JMenuItem MenuQuitter;
     private javax.swing.JMenu MenuVision;
+    private javax.swing.JMenuItem OuvrirFichier;
     private javax.swing.JPanel PanelInterface;
     private javax.swing.JScrollPane ScrollPaneMatrice;
     private javax.swing.JTextField TextFieldCapMax;

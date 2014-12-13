@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author Pascal
  */
-public abstract class PlantComponant
+public abstract class PlantComponant implements java.io.Serializable
 {   
     protected Point position;
     protected float maximalCapacity;

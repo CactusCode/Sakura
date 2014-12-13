@@ -11,9 +11,9 @@ package Model;
  * @author Vincent
  */
 
-public class Material {
+public class Material implements java.io.Serializable {
     
-    public enum MaterialType 
+    public enum MaterialType  implements java.io.Serializable 
     {
         product1,product2
     }

@@ -19,7 +19,7 @@ import java.awt.Point;
  * @author Pascal
  */
 
-public class RecyclApp{
+public class RecyclApp implements java.io.Serializable {
     
    
     static RecyclApp app;
@@ -478,4 +478,8 @@ public class RecyclApp{
             }
         }
     }
+
+ 
+
+
 }

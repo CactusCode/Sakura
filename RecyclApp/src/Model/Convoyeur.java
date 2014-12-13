@@ -17,7 +17,7 @@ import java.awt.geom.AffineTransform;
  *
  * @author Vale
  */
-public class Convoyeur 
+public class Convoyeur implements java.io.Serializable
 {
   
     private final PlantComponant startPoint;

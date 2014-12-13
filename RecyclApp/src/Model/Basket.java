@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Vincent
  */
-public class Basket {
+public class Basket implements java.io.Serializable {
     
     public class MaterialQty 
     {
