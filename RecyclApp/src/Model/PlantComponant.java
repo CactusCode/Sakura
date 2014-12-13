@@ -8,6 +8,7 @@ package Model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -133,7 +134,7 @@ public abstract class PlantComponant implements java.io.Serializable
     {
         this.connectionsConvoyeursExits.remove(connectionsConvoyeursExits.size()-1);
     }
-    public static class connectionConvoyeurExit {
+    public static class connectionConvoyeurExit implements Serializable{
         public int exitNumber;
         public Convoyeur convoyeur;
         public connectionConvoyeurExit(int _exitNumber, Convoyeur _convoyeur) {

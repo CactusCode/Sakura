@@ -6,15 +6,16 @@
 
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Vincent
  */
-public class Basket implements java.io.Serializable {
+public class Basket implements java.io.Serializable{
     
-    public class MaterialQty 
+    public class MaterialQty implements Serializable
     {
         public Material material;
         public float quantity;

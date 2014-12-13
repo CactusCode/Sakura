@@ -33,15 +33,24 @@ import javax.swing.JFrame;
  * @author vale
  */
 public class MainWindow extends javax.swing.JFrame{
-    static RecyclApp app;
+       static RecyclApp app;
     static MainWindow window;
     public static Grid grid;
     static Point start;
+    static ArrayList<RecyclApp> appsMemorized;
+    static Serialize serializer;
+    static Deserialize deserializer;
     
     public static void main(String[] args) {   
         app = new RecyclApp(window);
         grid = new Grid();
-        
+        appsMemorized = new ArrayList<>();
+        File file = new File("save.ser");
+        serializer = new Serialize(file);
+        deserializer = new Deserialize(file);
+        serializer.save(app);
+        appsMemorized.add(deserializer.load());
+        appsMemorized.add(deserializer.load());
     }
     private Object textArea;
 
@@ -392,8 +401,18 @@ public void zoom(float _value)
         });
 
         ButtonRefaire.setText("Refaire");
+        ButtonRefaire.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRefaireActionPerformed(evt);
+            }
+        });
 
         ButtonAnnuler.setText("Annuler");
+        ButtonAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonAnnulerActionPerformed(evt);
+            }
+        });
 
         LabelInterface.setText("Interface");
 
@@ -504,7 +523,7 @@ public void zoom(float _value)
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                        .addContainerGap(15, Short.MAX_VALUE)
+                        .addContainerGap(21, Short.MAX_VALUE)
                         .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mousePositionLabel)
                             .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -550,7 +569,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
                 .addGap(8, 8, 8)
                 .addComponent(weightLabel)
@@ -774,7 +793,10 @@ public void zoom(float _value)
 
     private void ButtonEntreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntreeActionPerformed
         Point pointInitialEntree = new Point(199, 201); 
+        serializer.save(app);
+        appsMemorized.add(0, deserializer.load());
         app.addEntrance(convertScreenPoint(pointInitialEntree));
+        appsMemorized.add(1,app);
         this.planStatus = PlanStatus.notWaiting;
     }//GEN-LAST:event_ButtonEntreeActionPerformed
 
@@ -808,8 +830,13 @@ public void zoom(float _value)
                     String numberExitStation = (String)JOptionPane.showInputDialog(this, "Entrez le nombre de sortie(s) de la station", "Nombre de sortie(s)", JOptionPane.QUESTION_MESSAGE, null , null, getComponentCount()); 
                     int intNumberExitStation = Integer.parseInt(numberExitStation); //les trois lignes font seulement en sorte que le nombre de sorties écrit par l'utilisateur est stocké
                     if ((numberExitStation != null) && (intNumberExitStation > 0))
-                    {                                                                      
+                    {        
+                        serializer.save(app);
+                        appsMemorized.add(0, deserializer.load());
+                  
                         app.addStation(convertScreenPoint(evt.getPoint()), intNumberExitStation);
+                
+                        appsMemorized.add(1,app);
                         this.planStatus = PlanStatus.notWaiting;
                     }
                     else
@@ -823,19 +850,31 @@ public void zoom(float _value)
                     this.planStatus = PlanStatus.waitingForConvoyeyrPositionEnd;
                     break;
             case waitingForConvoyeyrPositionEnd :
+                    serializer.save(app);
+                    appsMemorized.add(0, deserializer.load());
                     app.addConvoyeur(this.start,convertScreenPoint(evt.getPoint()));
+                    appsMemorized.add(1,app);
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case waitingForJonctionPosition :
+                    serializer.save(app);
+                    appsMemorized.add(0, deserializer.load());
                     app.addJunction(convertScreenPoint(evt.getPoint()));
+                    appsMemorized.add(1,app);
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case waitingForEntrancePosition :
+                    serializer.save(app);
+                    appsMemorized.add(0, deserializer.load());
                     app.addEntrance(convertScreenPoint(evt.getPoint()));
+                    appsMemorized.add(1,app);
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case waitingForExitPosition :
+                    serializer.save(app);
+                    appsMemorized.add(0, deserializer.load());
                     app.addExit(convertScreenPoint(evt.getPoint()));
+                    appsMemorized.add(1,app);
                     this.planStatus = PlanStatus.notWaiting;
                     break;
             case notWaiting :
@@ -906,8 +945,11 @@ public void zoom(float _value)
         if(this.planStatus == planStatus.isDraggingComponant)
 	{
             Point newPoint = new Point(evt.getPoint().x - (int)plan1.fakeX, evt.getPoint().y - (int)plan1.fakeY);  
+            serializer.save(app);
+            appsMemorized.add(0, deserializer.load());
             this.app.setNewPosition(Float.parseFloat(TextFieldPositionX.getText()),
                                     Float.parseFloat(TextFieldPositionY.getText()), newPoint);
+            appsMemorized.add(1,app);
             this.planStatus = planStatus.notWaiting;
 	}
 	
@@ -928,9 +970,10 @@ public void zoom(float _value)
         {
             try {
                 cap = Float.parseFloat(TextFieldCapMax.getText());
-          
+                serializer.save(app);
+                appsMemorized.add(0, deserializer.load());
                 app.setCapMax(Float.parseFloat(TextFieldPositionX.getText()),Float.parseFloat(TextFieldPositionY.getText()),cap);
-
+                appsMemorized.add(1,app);
                 } catch (NumberFormatException e) {
                     JOptionPane.showConfirmDialog(null, "Please enter numbers only", "naughty", JOptionPane.CANCEL_OPTION);
                 }
@@ -940,7 +983,10 @@ public void zoom(float _value)
     private void TextFieldNomKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextFieldNomKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         {
+            serializer.save(app);
+            appsMemorized.add(0, deserializer.load());
             app.setName(Float.parseFloat(TextFieldPositionX.getText()),Float.parseFloat(TextFieldPositionY.getText()),TextFieldNom.getText());
+            appsMemorized.add(1,app);
         }
     }//GEN-LAST:event_TextFieldNomKeyPressed
 
@@ -1057,6 +1103,18 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         
        
     }//GEN-LAST:event_OuvrirFichierActionPerformed
+
+    private void ButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAnnulerActionPerformed
+            app = appsMemorized.get(0);
+            Graphics g = plan1.getGraphics();
+            app.paintPanel(plan1, g);
+    }//GEN-LAST:event_ButtonAnnulerActionPerformed
+
+    private void ButtonRefaireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRefaireActionPerformed
+            app = appsMemorized.get(1);
+            Graphics g = plan1.getGraphics();
+            app.paintPanel(plan1, g);
+    }//GEN-LAST:event_ButtonRefaireActionPerformed
     
     
     
