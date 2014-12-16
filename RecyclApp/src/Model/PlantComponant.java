@@ -211,7 +211,7 @@ public abstract class PlantComponant implements java.io.Serializable
     public void addConvoyeurV2(PlantComponant _start, PlantComponant _end)
     {
         System.out.println("adding convoyeurV2");
-        ConvoyeurV2 newConvoyeurV2 = new ConvoyeurV2(_start.getPosition(), _end.getPosition(), "Sortie #" + convoyeurIdentifier);
+        ConvoyeurV2 newConvoyeurV2 = new ConvoyeurV2(_start, _end, "Sortie #" + convoyeurIdentifier);
         convoyeurV2List.add(newConvoyeurV2);
         convoyeurIdentifier++;
         _end.addMaterialV2Max();

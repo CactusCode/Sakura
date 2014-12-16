@@ -107,34 +107,34 @@ public class MainWindow extends javax.swing.JFrame{
             model.addColumn(_componant.getConvoyeurV2List().get(i).getName());
         }
         
-        Map diffMap = new HashMap();
-        int diffIndex = 0;
+        //Map diffMap = new HashMap();
+        //int diffIndex = 0;
         
         //row name
         for (int i = 0; i < _componant.getMatrixV2().getSize(); i++)
         {
             if (_componant.hasAnEntry(_componant.getMatrixV2().getLine(i).getName()))
                 model.addRow(new Object[]{_componant.getMatrixV2().getLine(i).getName()});
-            else
-                diffIndex++;
-            diffMap.put(i, diffIndex);
+            //else
+            //    diffIndex++;
+            //diffMap.put(i, diffIndex);
         }
         matrixV2.setModel(model);
         
         print("TESTS ARE HERE DUMB");
-        print("DIFF INDEX " + diffIndex);
+        //print("DIFF INDEX " + diffIndex);
         print("SIZE " + _componant.getMatrixV2().getSize());
-        print("SUBSTRACTED " + (_componant.getMatrixV2().getSize()-diffIndex));
+        print("SUBSTRACTED " + (_componant.getMatrixV2().getSize()/*-diffIndex*/));
         print("COLUMN SIZE " + _componant.getConvoyeurV2List().size());
         //table values
         for (int i = 0; i < _componant.getConvoyeurV2List().size(); i++)
         {
-            for (int j = 0; j < _componant.getMatrixV2().getSize()-diffIndex; j++)
+            for (int j = 0; j < _componant.getMatrixV2().getSize()/*-diffIndex*/; j++)
             {
                 print("THE ROW INDEX " + j);
-                print("THE DIFF VALUE " + (int)diffMap.get(j));
-                print("TRYING TO ACCESS AT ROW " + (j+(int)diffMap.get(j)) + " COLUMN " + (i+1));
-                matrixV2.setValueAt(_componant.getMatrixV2().getLine(j+(int)diffMap.get(j)).getValueAt(i), j, i+1);
+                print("THE DIFF VALUE " /*+ (int)diffMap.get(j)*/);
+                print("TRYING TO ACCESS AT ROW " + (j/*+(int)diffMap.get(j)*/) + " COLUMN " + (i+1));
+                matrixV2.setValueAt(_componant.getMatrixV2().getLine(j/*+(int)diffMap.get(j)*/).getValueAt(i), j, i+1);
             }
         }
         
@@ -165,7 +165,7 @@ public class MainWindow extends javax.swing.JFrame{
             {
                 diffIndex++;
             }
-            diffMap.put(i, diffIndex);
+           diffMap.put(i, diffIndex);
         }
         entryTable.setModel(model);
         
@@ -1286,14 +1286,14 @@ public void zoom(float _value)
     private void btnAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEntryActionPerformed
         String name = JOptionPane.showInputDialog("Entrez le type de produit");
         String quantity = JOptionPane.showInputDialog("Entrez la quantité du produit");
-        app.addEntry(name, quantity);
-        setMatrixV2(app.getFocusComponant());
+        //app.addEntry(name, quantity);
+        //setMatrixV2(app.getFocusComponant());
     }//GEN-LAST:event_btnAddEntryActionPerformed
 
     private void btnRemoveEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEntryActionPerformed
         String name = JOptionPane.showInputDialog("Entrez le type de produit");
-        app.removeEntry(name);
-        setMatrixV2(app.getFocusComponant());
+        //app.removeEntry(name);
+        //setMatrixV2(app.getFocusComponant());
     }//GEN-LAST:event_btnRemoveEntryActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
