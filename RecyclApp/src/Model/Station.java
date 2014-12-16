@@ -69,7 +69,7 @@ public class Station extends PlantComponant
        File sourceimage = new File("factory.png");
        Image image=null;
         try {
-            image = image = ImageIO.read(sourceimage);
+            image = ImageIO.read(sourceimage);
         } catch (IOException ex) {
             Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
         }

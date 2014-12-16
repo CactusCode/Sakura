@@ -85,7 +85,7 @@ public class Plan extends JPanel
             
         }
         for (Convoyeur _convoyeur : _convoyeurs) {
-            _convoyeur.draw(g, (int)fakeX, (int)fakeY, zoomFactor, projectPoint(_convoyeur.getStartPosition()), projectPoint(_convoyeur.getEndPosition()));
+            _convoyeur.draw(g, (int)fakeX, (int)fakeY, zoomFactor, projectPoint(_convoyeur.getStartPosition()), projectPoint(_convoyeur.getEndPosition()),projectPoint(_convoyeur.getElbow(1).getPosition()),projectPoint(_convoyeur.getElbow(2).getPosition()));
         }
         
     }

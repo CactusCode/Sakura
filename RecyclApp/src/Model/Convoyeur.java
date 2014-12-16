@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 
 /**
@@ -65,20 +64,20 @@ public class Convoyeur implements java.io.Serializable
     {
         this.planColor = newColor ;
     }
-     public void draw(Graphics g, int _fakeX, int _fakeY, float _zoom, Point _start, Point _end) {
+     public void draw(Graphics g, int _fakeX, int _fakeY, float _zoom, Point _start, Point _end,Point _elbow1, Point _elbow2) {
         g.setColor(planColor);
         g.drawLine(_start.x+(int)(_fakeX*_zoom),_start.y+(int)(_fakeY*_zoom),
-                   elbow1.getPosition().x+(int)(_fakeX*_zoom), elbow1.getPosition().y+(int)(_fakeY*_zoom));
+                   _elbow1.x+(int)(_fakeX*_zoom), _elbow1.y+(int)(_fakeY*_zoom));
 
-        elbow1.draw(g, _fakeX, _fakeY);
+       
         g.setColor(planColor);
-        g.drawLine(elbow1.getPosition().x+(int)(_fakeX*_zoom),elbow1.getPosition().y+(int)(_fakeY*_zoom),
-                   elbow2.getPosition().x+(int)(_fakeX*_zoom), elbow2.getPosition().y+(int)(_fakeY*_zoom));
-        elbow2.draw(g, _fakeX, _fakeY);
-        g.drawString("Sortie #"+this.exitAssociated,(elbow1.getPosition().x+(int)(_fakeX*_zoom))-15,(elbow1.getPosition().y+(int)(_fakeY*_zoom))-10);
-        this.drawArrow(g, elbow2.getPosition().x+(int)(_fakeX*_zoom),elbow2.getPosition().y+(int)(_fakeY*_zoom),
+        g.drawLine(_elbow1.x+(int)(_fakeX*_zoom),_elbow1.y+(int)(_fakeY*_zoom),
+                   _elbow2.x+(int)(_fakeX*_zoom), _elbow2.y+(int)(_fakeY*_zoom));
+       
+        g.drawString("Sortie #"+this.exitAssociated,(_elbow1.x+(int)(_fakeX*_zoom))-15,(_elbow1.y+(int)(_fakeY*_zoom))-10);
+        this.drawArrow(g, _elbow2.x+(int)(_fakeX*_zoom),_elbow2.y+(int)(_fakeY*_zoom),
                    _end.x+(int)(_fakeX*_zoom), _end.y+(int)(_fakeY*_zoom));
-         g.drawString("Sortie #"+this.exitAssociated,(elbow2.getPosition().x+(int)(_fakeX*_zoom))-15,(elbow2.getPosition().y+(int)(_fakeY*_zoom))-10);
+         g.drawString("Sortie #"+this.exitAssociated,(_elbow2.x+(int)(_fakeX*_zoom))-15,(_elbow2.y+(int)(_fakeY*_zoom))-10);
         //elbow.draw(g, _fakeX, _fakeY);
     }
      void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
@@ -96,4 +95,6 @@ public class Convoyeur implements java.io.Serializable
                 g.fillPolygon(new int[] {len, len-ARR_SIZE, len-ARR_SIZE, len},
                               new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
             }
+     
+     
 }
