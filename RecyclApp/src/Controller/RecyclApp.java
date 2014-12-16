@@ -7,10 +7,12 @@ package Controller;
 
 import Model.*;
 import View.*;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.awt.Point;
+import javax.swing.JColorChooser;
 
 
    
@@ -195,14 +197,15 @@ public class RecyclApp implements java.io.Serializable {
             int exitNumber = startComponant.linkConvoyeurWithExit(convoyeur);
             convoyeur.setExitAssociated(exitNumber);
             this.convoyeursList.add(convoyeur);
-            this.plantComponantsList.add(convoyeur.getElbow());
+            this.plantComponantsList.add(convoyeur.getElbow(1));
+            this.plantComponantsList.add(convoyeur.getElbow(2));
             if (circuitIsValid())
                 window.messageToUser("Convoyeur Ajouté");
             else
             {
                 this.convoyeursList.remove(convoyeur);
                 startComponant.removeExitConnection();
-                startComponant.unLinkConvoyeurWithExit();
+                startComponant.unLinkConvoyeurWithExit(convoyeur);
                 window.messageToUser("Un cycle est crée dans le circuit, opération annulé");
             }
             window.redrawPlan();
@@ -295,20 +298,33 @@ public class RecyclApp implements java.io.Serializable {
         for(int i=convoyeursList.size()-1;i >= 0;i--)
         {
   
-            if (convoyeursList.get(i).getStartComponant()== plantComponantsList.get(focusIndex))      
+            if (convoyeursList.get(i).getStartComponant()== plantComponantsList.get(focusIndex)||
+                convoyeursList.get(i).getEndComponant()== plantComponantsList.get(focusIndex))      
             {
                 //libérer la sortie qui de la station
+                PlantComponant plantComp = convoyeursList.get(i).getStartComponant();
+                plantComp.removeExitConnection();
+                plantComp.unLinkConvoyeurWithExit(convoyeursList.get(i));
+                plantComp = convoyeursList.get(i).getEndComponant();
+                plantComp.removeEntranceConnection();
+                
+                this.plantComponantsList.remove(convoyeursList.get(i).getElbow(1));
+                this.plantComponantsList.remove(convoyeursList.get(i).getElbow(2));
                 convoyeursList.remove(i);
             }
             
-            if (convoyeursList.get(i).getEndComponant()== plantComponantsList.get(focusIndex))
-            {
-                 //libérer la sortie qui de la station
-                convoyeursList.remove(i);
-            }
+         
         }
         if("Coude".equals(plantComponantsList.get(focusIndex).getDescription())){
+            
             Elbow coude = (Elbow)plantComponantsList.get(focusIndex);
+            PlantComponant plantComp = coude.getConvoyeurAssociated().getStartComponant();
+            plantComp.removeExitConnection();
+            plantComp.unLinkConvoyeurWithExit(coude.getConvoyeurAssociated());
+            plantComp.reLinkConvoyeurWithExit();
+            plantComp = coude.getConvoyeurAssociated().getEndComponant();
+            plantComp.removeEntranceConnection();
+           
             this.convoyeursList.remove(coude.getConvoyeurAssociated());
         }
         
@@ -489,7 +505,26 @@ public class RecyclApp implements java.io.Serializable {
         }
     }
 
- 
-
-
+    public void stationImage() {
+        
+        for(PlantComponant plantComponant1 : this.plantComponantsList){
+            if(plantComponant1 == plantComponantsList.get(focusIndex)){
+                if("Station".equals(plantComponant1.getDescription())){
+                    Station station = (Station)plantComponant1;
+                    station.drawImage(window);
+                }
+            }
+            
+        }
+    }
+    public void getColor()
+    {
+        for (int i = 0; i<plantComponantsList.size(); i++)
+        {
+            if(plantComponantsList.get(i) ==plantComponantsList.get(focusIndex))
+            {
+               plantComponantsList.get(i).setColor(JColorChooser.showDialog(null, null, Color.BLUE));
+            }
+        }
+    }
 }

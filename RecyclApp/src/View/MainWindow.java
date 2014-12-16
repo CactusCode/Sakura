@@ -23,6 +23,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controller.*;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 /**
  *
@@ -47,6 +52,8 @@ public class MainWindow extends javax.swing.JFrame{
         serializer.save(app);
         appsMemorized.add(deserializer.load());
         appsMemorized.add(deserializer.load());
+      
+       
     }
     private Object textArea;
 
@@ -54,6 +61,7 @@ public class MainWindow extends javax.swing.JFrame{
     public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket, String _weight) 
     {
         this.LabelMatrice.setText("");
+        this.imageButton.setVisible(false);
         this.TextFieldDescription.setText(description);
         this.TextFieldPositionX.setText(String.valueOf(position.getX()));
         this.TextFieldPositionY.setText(String.valueOf(position.getY()));
@@ -64,6 +72,7 @@ public class MainWindow extends javax.swing.JFrame{
         this.TextFieldCapMax.setEditable(true);     
         this.weightLabel.setText("Kg/h: " + _weight);
         if("Station".equalsIgnoreCase(description)){
+            this.imageButton.setVisible(true);
             this.LabelMatrice.setText("Matrice de récupération");
             this.MatriceRecup.setVisible(true);
             List<String> col = new ArrayList<>(Arrays.asList("Produits"));
@@ -129,6 +138,7 @@ public class MainWindow extends javax.swing.JFrame{
         initComponents();
         planStatus = PlanStatus.notWaiting;
         MatriceRecup.setVisible(false);
+        this.imageButton.setVisible(false);
        
     }
     public void messageToUser(String _message)
@@ -305,6 +315,8 @@ public void zoom(float _value)
         TextFieldCapMax = new javax.swing.JTextField();
         mousePositionLabel = new javax.swing.JLabel();
         weightLabel = new javax.swing.JLabel();
+        imageButton = new javax.swing.JButton();
+        changerCouleurButton = new javax.swing.JButton();
         grilleOnOff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
@@ -484,6 +496,20 @@ public void zoom(float _value)
 
         weightLabel.setText("Kg/h: 0");
 
+        imageButton.setText("Image Station");
+        imageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imageButtonActionPerformed(evt);
+            }
+        });
+
+        changerCouleurButton.setText("couleur");
+        changerCouleurButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changerCouleurButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelInterfaceLayout = new javax.swing.GroupLayout(PanelInterface);
         PanelInterface.setLayout(PanelInterfaceLayout);
         PanelInterfaceLayout.setHorizontalGroup(
@@ -505,21 +531,26 @@ public void zoom(float _value)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TextFieldDescription, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextFieldPositionY, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TextFieldPositionX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(PanelInterfaceLayout.createSequentialGroup()
                         .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextFieldNbStation, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
+                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TextFieldDescription, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TextFieldPositionY, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TextFieldPositionX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(imageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(changerCouleurButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40))))
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                        .addContainerGap(21, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mousePositionLabel)
                             .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -540,12 +571,14 @@ public void zoom(float _value)
                 .addContainerGap()
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextFieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(imageButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                    .addComponent(TextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(changerCouleurButton))
+                .addGap(9, 9, 9)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextFieldPositionX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -565,7 +598,7 @@ public void zoom(float _value)
                 .addComponent(LabelMatrice)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(mousePositionLabel)
                 .addGap(8, 8, 8)
                 .addComponent(weightLabel)
@@ -738,15 +771,15 @@ public void zoom(float _value)
                                 .addComponent(grilleOnOff)))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(LabelInterface)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonSupprimer)
                         .addGap(18, 18, 18)
                         .addComponent(ButtonRefaire)
                         .addGap(18, 18, 18)
-                        .addComponent(ButtonAnnuler))
-                    .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ButtonAnnuler)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -806,6 +839,7 @@ public void zoom(float _value)
         grid.change();
         Graphics g = this.plan1.getGraphics();
         app.paintPanel(plan1, g);
+
     }//GEN-LAST:event_grilleOnOffActionPerformed
 
     private Point convertScreenPoint(Point _point)
@@ -987,7 +1021,10 @@ public void zoom(float _value)
     }//GEN-LAST:event_TextFieldNomKeyPressed
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
+        serializer.save(app);
+        appsMemorized.add(0, deserializer.load());
         app.deleteFocus();// TODO add your handling code here:
+        appsMemorized.add(1,app);
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
     private void MatriceRecupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MatriceRecupKeyPressed
@@ -1111,6 +1148,20 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
             Graphics g = plan1.getGraphics();
             app.paintPanel(plan1, g);
     }//GEN-LAST:event_ButtonRefaireActionPerformed
+
+    private void imageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imageButtonActionPerformed
+
+        app.stationImage();
+        Graphics g = plan1.getGraphics();
+        app.paintPanel(plan1, g);
+    }//GEN-LAST:event_imageButtonActionPerformed
+
+    private void changerCouleurButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changerCouleurButtonActionPerformed
+        
+        app.getColor();
+        Graphics g = plan1.getGraphics();
+        app.paintPanel(plan1, g);
+    }//GEN-LAST:event_changerCouleurButtonActionPerformed
     
     
     
@@ -1147,7 +1198,9 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JTextField TextFieldNom;
     private javax.swing.JTextField TextFieldPositionX;
     private javax.swing.JTextField TextFieldPositionY;
+    private javax.swing.JButton changerCouleurButton;
     private javax.swing.JButton grilleOnOff;
+    private javax.swing.JButton imageButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JLabel jLabel1;

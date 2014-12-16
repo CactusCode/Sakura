@@ -6,7 +6,15 @@
 
 package Model;
 
+import View.MainWindow;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -53,5 +61,20 @@ public class Station extends PlantComponant
     public void clearMatrix() {
         this.recoveryMatrix = new RecoveryMatrix();
     }
+    public void drawImage(MainWindow _observer){
+        image =true;
+        this.observer = _observer;
+    }
+    public void drawWithImage(Graphics g,int _fakeX, int _fakeY){
+       File sourceimage = new File("factory.png");
+       Image image=null;
+        try {
+            image = image = ImageIO.read(sourceimage);
+        } catch (IOException ex) {
+            Logger.getLogger(Station.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         g.drawImage(image, (int)(position.x-drawSize/2)+_fakeX, (int)(position.y-drawSize/2)+_fakeY,30,30, observer);
+    }
+    
     
 }

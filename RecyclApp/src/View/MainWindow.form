@@ -232,7 +232,8 @@
               </Group>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Component id="PanelInterface" min="-2" pref="403" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="LabelInterface" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButtonSupprimer" min="-2" max="-2" attributes="0"/>
@@ -241,7 +242,6 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="ButtonAnnuler" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="PanelInterface" min="-2" pref="403" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -414,27 +414,34 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="TextFieldDescription" alignment="0" max="32767" attributes="0"/>
-                              <Component id="TextFieldPositionY" alignment="0" max="32767" attributes="0"/>
-                              <Component id="TextFieldPositionX" alignment="0" pref="134" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="TextFieldNbStation" min="-2" pref="134" max="-2" attributes="0"/>
-                              <Component id="TextFieldNom" alignment="0" min="-2" pref="134" max="-2" attributes="0"/>
                               <Component id="TextFieldCapMax" alignment="0" min="-2" pref="134" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="TextFieldNom" alignment="0" min="-2" pref="134" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="TextFieldDescription" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="TextFieldPositionY" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="TextFieldPositionX" alignment="0" pref="134" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="imageButton" pref="0" max="32767" attributes="0"/>
+                              <Component id="changerCouleurButton" min="-2" pref="124" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="21" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="mousePositionLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="ScrollPaneMatrice" min="-2" pref="374" max="-2" attributes="0"/>
@@ -465,13 +472,15 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="TextFieldDescription" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="imageButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="TextFieldNom" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="changerCouleurButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="TextFieldPositionX" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -495,7 +504,7 @@
                   <Component id="LabelMatrice" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="ScrollPaneMatrice" min="-2" pref="193" max="-2" attributes="0"/>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace pref="39" max="32767" attributes="0"/>
                   <Component id="mousePositionLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Component id="weightLabel" min="-2" max="-2" attributes="0"/>
@@ -625,6 +634,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Kg/h: 0"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="imageButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Image Station"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imageButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="changerCouleurButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="couleur"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="changerCouleurButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

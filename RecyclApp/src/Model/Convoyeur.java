@@ -22,21 +22,29 @@ public class Convoyeur implements java.io.Serializable
   
     private final PlantComponant startPoint;
     private final PlantComponant endPoint;
-    private final Elbow elbow;
+    private final Elbow elbow1;
+    private final Elbow elbow2;
     private final int ARR_SIZE = 9;
     private int exitAssociated;
+    private Color planColor;
     public Convoyeur(PlantComponant _start,PlantComponant _end)
     {
        this.startPoint = _start;
        this.endPoint = _end;
-       this.elbow = new Elbow(startPoint.getPosition(),endPoint.getPosition(),this);
+       this.elbow1 = new Elbow(startPoint.getPosition(),endPoint.getPosition(),this,3);
+       this.elbow2 = new Elbow(elbow1.getPosition(),endPoint.getPosition(),this,2);
        this.exitAssociated = 0;
+       this.planColor = Color.BLACK;
     }   
     public PlantComponant getStartComponant(){
         return this.startPoint;
     }
-    public Elbow getElbow(){
-        return this.elbow;
+    public Elbow getElbow(int x){
+        if(x == 1){
+            return this.elbow1;
+        }
+        else return this.elbow2;
+        
     }
     public void setExitAssociated(int _exitNumber){
         this.exitAssociated = _exitNumber;
@@ -53,20 +61,28 @@ public class Convoyeur implements java.io.Serializable
     {
         return this.endPoint.getPosition();
     }
+     public void setColor(Color newColor)
+    {
+        this.planColor = newColor ;
+    }
      public void draw(Graphics g, int _fakeX, int _fakeY, float _zoom, Point _start, Point _end) {
-        g.setColor(Color.black);
-      
-        this.drawArrow(g, _start.x+(int)(_fakeX*_zoom),_start.y+(int)(_fakeY*_zoom),
-                   elbow.getPosition().x+(int)(_fakeX*_zoom), elbow.getPosition().y+(int)(_fakeY*_zoom));
-        elbow.draw(g, _fakeX, _fakeY);
-        g.drawString("Sortie #"+this.exitAssociated,(elbow.getPosition().x+(int)(_fakeX*_zoom))-10,(elbow.getPosition().y+(int)(_fakeY*_zoom))-10);
-        this.drawArrow(g, elbow.getPosition().x+(int)(_fakeX*_zoom),elbow.getPosition().y+(int)(_fakeY*_zoom),
+        g.setColor(planColor);
+        g.drawLine(_start.x+(int)(_fakeX*_zoom),_start.y+(int)(_fakeY*_zoom),
+                   elbow1.getPosition().x+(int)(_fakeX*_zoom), elbow1.getPosition().y+(int)(_fakeY*_zoom));
+
+        elbow1.draw(g, _fakeX, _fakeY);
+        g.setColor(planColor);
+        g.drawLine(elbow1.getPosition().x+(int)(_fakeX*_zoom),elbow1.getPosition().y+(int)(_fakeY*_zoom),
+                   elbow2.getPosition().x+(int)(_fakeX*_zoom), elbow2.getPosition().y+(int)(_fakeY*_zoom));
+        elbow2.draw(g, _fakeX, _fakeY);
+        g.drawString("Sortie #"+this.exitAssociated,(elbow1.getPosition().x+(int)(_fakeX*_zoom))-15,(elbow1.getPosition().y+(int)(_fakeY*_zoom))-10);
+        this.drawArrow(g, elbow2.getPosition().x+(int)(_fakeX*_zoom),elbow2.getPosition().y+(int)(_fakeY*_zoom),
                    _end.x+(int)(_fakeX*_zoom), _end.y+(int)(_fakeY*_zoom));
-        elbow.draw(g, _fakeX, _fakeY);
+        //elbow.draw(g, _fakeX, _fakeY);
     }
      void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
                 Graphics2D g = (Graphics2D) g1.create();
-
+                g.setColor(planColor);
                 double dx = x2 - x1, dy = y2 - y1;
                 double angle = Math.atan2(dy, dx);
                 int len = (int) Math.sqrt(dx*dx + dy*dy);
