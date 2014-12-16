@@ -24,6 +24,12 @@ public class PlantEntrance extends PlantComponant{
         this.entranceIsConnected = true;
         this.numberOfExits = 1;
         this.matterWeight = 2000;
+        
+        materialV2List.add(new MaterialV2("Produit 1", 1000));
+        materialV2List.add(new MaterialV2("Produit 2", 1000));
+        
+        matrixV2.addLine("Produit 1");
+        matrixV2.addLine("Produit 2");
     }
 
     public Basket getBasket()

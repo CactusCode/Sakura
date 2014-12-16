@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.MaterialV2;
 import Model.*;
 import View.*;
 import java.awt.Color;
@@ -13,6 +14,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.awt.Point;
 import javax.swing.JColorChooser;
+import javax.swing.JTable;
 
 
    
@@ -120,12 +122,12 @@ public class RecyclApp implements java.io.Serializable {
     }
     public void addEntrance(Point _position) {
         _position = checkMagnetPosition(_position);
-        for(PlantComponant planComponantsList1 : this.plantComponantsList){
+        /*for(PlantComponant planComponantsList1 : this.plantComponantsList){
             if("Entrée Usine".equals(planComponantsList1.getDescription())){
                 window.messageToUser("Il ne peut y avoir qu'une entrée!");
                 return;
             }
-        } 
+        } */
         if(positionAvailable(_position))
         {   
             PlantEntrance entrance = new PlantEntrance();
@@ -208,12 +210,17 @@ public class RecyclApp implements java.io.Serializable {
                 startComponant.unLinkConvoyeurWithExit(convoyeur);
                 window.messageToUser("Un cycle est crée dans le circuit, opération annulé");
             }
+            
+            //convoyeurV2 method
+            startComponant.addConvoyeurV2(startComponant, endComponant);
+            
             window.redrawPlan();
         }
     }
     
     public void getContextInfo(Point _position) 
     {
+                window.setEditButtonEnable(false);
         for (int i = 0; i<plantComponantsList.size(); i++)
         {
             if(occupiedPosition(plantComponantsList.get(i), _position))
@@ -222,6 +229,7 @@ public class RecyclApp implements java.io.Serializable {
                     
                     Station station = (Station)plantComponantsList.get(i);
                     window.setContextInfo(station.getDescription(), station.getPosition(),station.getNumberOfExits(), station.getName(),station.getMaximalCapacity(),station.getRecoveryMatrix(),null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
+                    window.setMatrixV2(plantComponantsList.get(i));
                     focusIndex = i;
                     break;
                 }
@@ -229,11 +237,13 @@ public class RecyclApp implements java.io.Serializable {
                     
                     PlantEntrance planEntrance  = (PlantEntrance)plantComponantsList.get(i);
                     window.setContextInfo(planEntrance.getDescription(), planEntrance.getPosition(),planEntrance.getNumberOfExits(), planEntrance.getName(),planEntrance.getMaximalCapacity(),null,planEntrance.getBasket(), Float.toString(plantComponantsList.get(i).getMatterWeight()));
+                    window.setMatrixV2(plantComponantsList.get(i));
                     focusIndex = i;
                     break;
                 }
                 else {
                     window.setContextInfo(plantComponantsList.get(i).getDescription(), plantComponantsList.get(i).getPosition(),plantComponantsList.get(i).getNumberOfExits(), plantComponantsList.get(i).getName(),plantComponantsList.get(i).getMaximalCapacity(),null,null, Float.toString(plantComponantsList.get(i).getMatterWeight()));
+                    window.setMatrixV2(plantComponantsList.get(i));
                     focusIndex = i;
                     break;
                 }
@@ -529,5 +539,142 @@ public class RecyclApp implements java.io.Serializable {
                plantComponantsList.get(i).setColor(JColorChooser.showDialog(null, null, Color.BLUE));
             }
         }
+    }
+
+    private void print(Object _value)
+    {
+        System.out.println(_value);
+    }
+    
+    public boolean sendMaterial(Point _identifier, MaterialV2 _material, boolean moreToCome)
+    {
+        
+        boolean result = false;
+        for (int i = 0; i < plantComponantsList.size(); i++)
+        {
+            print(_identifier);
+            print(plantComponantsList.get(i).getPosition());
+            if (plantComponantsList.get(i).getPosition() == _identifier)
+            {
+                plantComponantsList.get(i).receiveMaterialV2(_material, moreToCome);
+                result = true;
+                break;
+            }
+        }
+        
+        return result;
+    }
+
+    public void setFocusComponantMatrixLine(int _line, int _index, float _value)
+    {
+        plantComponantsList.get(focusIndex).setMatrixLine(_line, _index, _value);
+    }
+    
+    public void setFocusComponantMatrixLineByName(String _name, int _index, float _value)
+    {
+        plantComponantsList.get(focusIndex).setMatrixLineByName(_name, _index, _value);
+    }
+    
+    public void runTest()
+    {
+        PlantComponant.emptyTotalMaterial();
+        
+        for (int i = 0; i < plantComponantsList.size(); i++)
+        {
+            plantComponantsList.get(i).makeTotalMaterial();
+        }
+        
+        for (int i = 0; i < plantComponantsList.size(); i++)
+        {
+           print("HHHH" + plantComponantsList.get(i).getDescription() + "HHHH");
+           if (!plantComponantsList.get(i).getDescription().equals("Entrée Usine"))
+           {
+               print("HHHH" + plantComponantsList.get(i).getDescription() + "HHHH");
+               plantComponantsList.get(i).emptyMaterials();
+           }
+        }
+        for (int i = 0; i < plantComponantsList.size(); i++)
+        {
+            if (plantComponantsList.get(i).getDescription().equals("Entrée Usine"))
+            {
+                print (plantComponantsList.get(i).getDescription() + " IS SENDING STUFF");
+                plantComponantsList.get(i).sendMaterialV2();
+            }
+        }
+    }
+    
+    public PlantComponant getFocusComponant()
+    {
+        return plantComponantsList.get(focusIndex);
+    }
+    
+    public void applyTableToComponant(JTable matrixV2, JTable entryTable)
+    {
+        boolean validLine = true;
+        float lineTotal = 0.0f;
+        
+        for (int i = 0; i < matrixV2.getRowCount(); i++)
+        {
+            lineTotal = 0.0f;
+            for (int j = 1; j < matrixV2.getColumnCount(); j++)
+            {
+                lineTotal += Float.parseFloat(matrixV2.getValueAt(i, j).toString());
+            }
+            if (lineTotal != 100.0f)
+            {
+                validLine = false;
+            }
+        }
+        
+        if (validLine && matrixV2.getColumnCount() > 1 && !getFocusComponant().getDescription().equals("Jonction") && !getFocusComponant().getDescription().equals("Entrée Usine"))
+        {
+            for (int i = 1; i < matrixV2.getColumnCount(); i++)
+            {
+                for (int j = 0; j < matrixV2.getRowCount(); j++)
+                {
+                    float matrixValue = Float.parseFloat(matrixV2.getValueAt(j, i).toString());
+                    String name = matrixV2.getValueAt(j, 0).toString();
+                    setFocusComponantMatrixLine(j, i, matrixValue);
+                    //setFocusComponantMatrixLineByName(name, i, matrixValue);
+                }
+            }
+        }
+        if (!validLine)
+        {
+            print("invalid line");
+        }
+        
+        if (getFocusComponant().getDescription().equals("Entrée Usine"))
+        {
+            for (int i = 0; i < entryTable.getRowCount(); i++)
+            {
+                String name = entryTable.getValueAt(i, 0).toString();
+                float newQuantity = Float.parseFloat(entryTable.getValueAt(i, 1).toString());
+                getFocusComponant().setMaterialQuantity(name, newQuantity);
+            }
+        }
+    }
+    
+    public String parseTableValue(float _value)
+    {
+        String valueCutOff = Float.toString(_value);
+        if  (valueCutOff.length() > 5)
+            valueCutOff = valueCutOff.substring(0, 5);
+        
+        return valueCutOff;
+    }
+    
+    public boolean addEntry(String _name, String _quantity)
+    {
+        float quantityFloat = Float.parseFloat(_quantity);
+        
+        getFocusComponant().addEntry(_name, quantityFloat);
+        
+        return true;
+    }
+    
+    public void removeEntry(String _name)
+    {
+        getFocusComponant().removeEntry(_name);
     }
 }

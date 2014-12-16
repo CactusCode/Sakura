@@ -23,8 +23,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controller.*;
+import Model.PlantComponant;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -57,9 +60,142 @@ public class MainWindow extends javax.swing.JFrame{
     }
     private Object textArea;
 
+    static public RecyclApp getApp()
+    {
+        return app;
+    }
+    
+    public void clearMatrixV2()
+    {
+        DefaultTableModel model = new DefaultTableModel();
+        
+        matrixV2.setModel(model);
+        
+        clearEntryTable();
+    }
+    
+    public void clearEntryTable()
+    {
+        DefaultTableModel model = new DefaultTableModel();
+        
+        entryTable.setModel(model);
+    }
+    
+    private void print(Object _value)
+    {
+        System.out.println(_value);
+    }
+    
+    public void setEditButtonEnable(boolean _value)
+    {
+        btnAddEntry.setEnabled(_value);
+        btnRemoveEntry.setEnabled(_value);
+    }
+    
+    public void setMatrixV2(PlantComponant _componant)
+    {
+        if (_componant.getDescription().equals("Entrée Usine"))
+            setEditButtonEnable(true);
+
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Produits");
+        
+        //column name
+        for (int i = 0; i < _componant.getConvoyeurV2List().size(); i++)
+        {
+            model.addColumn(_componant.getConvoyeurV2List().get(i).getName());
+        }
+        
+        Map diffMap = new HashMap();
+        int diffIndex = 0;
+        
+        //row name
+        for (int i = 0; i < _componant.getMatrixV2().getSize(); i++)
+        {
+            if (_componant.hasAnEntry(_componant.getMatrixV2().getLine(i).getName()))
+                model.addRow(new Object[]{_componant.getMatrixV2().getLine(i).getName()});
+            else
+                diffIndex++;
+            diffMap.put(i, diffIndex);
+        }
+        matrixV2.setModel(model);
+        
+        print("TESTS ARE HERE DUMB");
+        print("DIFF INDEX " + diffIndex);
+        print("SIZE " + _componant.getMatrixV2().getSize());
+        print("SUBSTRACTED " + (_componant.getMatrixV2().getSize()-diffIndex));
+        print("COLUMN SIZE " + _componant.getConvoyeurV2List().size());
+        //table values
+        for (int i = 0; i < _componant.getConvoyeurV2List().size(); i++)
+        {
+            for (int j = 0; j < _componant.getMatrixV2().getSize()-diffIndex; j++)
+            {
+                print("THE ROW INDEX " + j);
+                print("THE DIFF VALUE " + (int)diffMap.get(j));
+                print("TRYING TO ACCESS AT ROW " + (j+(int)diffMap.get(j)) + " COLUMN " + (i+1));
+                matrixV2.setValueAt(_componant.getMatrixV2().getLine(j+(int)diffMap.get(j)).getValueAt(i), j, i+1);
+            }
+        }
+        
+        weightLabel.setText("Kg/h total: " +_componant.getTotalWeight());
+        
+        setEntryTable(_componant);
+    }
+
+    public void setEntryTable(PlantComponant _componant)
+    {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Produits");
+        model.addColumn("Kg/h");
+        model.addColumn("Taux Récupération");
+        model.addColumn("Taux pureté");
+        
+        Map diffMap = new HashMap();
+        int diffIndex = 0;
+        
+        //adding row names
+        for (int i = 0; i < _componant.getMaterialTable().size(); i++)
+        {
+            if (_componant.getMaterialTable().get(i).getQuantity() != 0)
+            {
+                model.addRow(new Object[]{_componant.getMaterialTable().get(i).getType()});
+            }
+            else
+            {
+                diffIndex++;
+            }
+            diffMap.put(i, diffIndex);
+        }
+        entryTable.setModel(model);
+        
+        
+        for (int i = 0; i < _componant.getMaterialTable().size(); i++)
+        {
+            if (_componant.getMaterialTable().get(i).getQuantity() != 0)
+            {
+                entryTable.setValueAt(_componant.getMaterialTable().get(i).getQuantity(), i-(int)diffMap.get(i), 1);
+                
+                //taux de pureté
+                float recup = _componant.getMaterialTable().get(i).getQuantity();
+                recup /= PlantComponant.getTotalMaterial();
+                recup *= 100;
+                String recupCutOff = app.parseTableValue(recup);
+                entryTable.setValueAt(recupCutOff + " %", i-(int)diffMap.get(i), 2);
+                
+                float purityValue = _componant.getPurityPercentage(_componant.getMaterialTable().get(i).getType());
+                String purityEntry = app.parseTableValue(purityValue);
+                entryTable.setValueAt(purityEntry + " %", i-(int)diffMap.get(i), 3);
+            }
+        }
+        
+        app.applyTableToComponant(matrixV2, entryTable);
+    }
     
     public void setContextInfo(String description, Point position, int numberExits, String nom, float capMax, RecoveryMatrix recoveryMatrix, Basket basket, String _weight) 
     {
+        clearMatrixV2();
+        
         this.LabelMatrice.setText("");
         this.imageButton.setVisible(false);
         this.TextFieldDescription.setText(description);
@@ -317,6 +453,14 @@ public void zoom(float _value)
         weightLabel = new javax.swing.JLabel();
         imageButton = new javax.swing.JButton();
         changerCouleurButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        matrixV2 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        entryTable = new javax.swing.JTable();
+        BtnAppliquer = new javax.swing.JButton();
+        btnAddEntry = new javax.swing.JButton();
+        btnRemoveEntry = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         grilleOnOff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         plan1 = new View.Plan();
@@ -510,6 +654,56 @@ public void zoom(float _value)
             }
         });
 
+        matrixV2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(matrixV2);
+
+        entryTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(entryTable);
+
+        BtnAppliquer.setText("Appliquer");
+        BtnAppliquer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAppliquerActionPerformed(evt);
+            }
+        });
+
+        btnAddEntry.setText("Ajouter");
+        btnAddEntry.setEnabled(false);
+        btnAddEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEntryActionPerformed(evt);
+            }
+        });
+
+        btnRemoveEntry.setText("Retirer");
+        btnRemoveEntry.setEnabled(false);
+        btnRemoveEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveEntryActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelInterfaceLayout = new javax.swing.GroupLayout(PanelInterface);
         PanelInterface.setLayout(PanelInterfaceLayout);
         PanelInterfaceLayout.setHorizontalGroup(
@@ -548,22 +742,32 @@ public void zoom(float _value)
                             .addComponent(changerCouleurButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40))))
             .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mousePositionLabel)
+                .addGap(812, 812, 812))
+            .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInterfaceLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mousePositionLabel)
-                            .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                        .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(weightLabel)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
+                        .addComponent(LabelMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(weightLabel)
+                    .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                            .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnAddEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRemoveEntry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(BtnAppliquer)
+                                .addComponent(jButton1)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         PanelInterfaceLayout.setVerticalGroup(
             PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,13 +798,27 @@ public void zoom(float _value)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(LabelMatrice)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(mousePositionLabel)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(LabelMatrice))
+                    .addGroup(PanelInterfaceLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnAppliquer)
+                    .addComponent(btnAddEntry))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mousePositionLabel)
+                    .addComponent(btnRemoveEntry)
+                    .addComponent(jButton1))
+                .addGap(3, 3, 3)
                 .addComponent(weightLabel)
                 .addContainerGap())
         );
@@ -789,13 +1007,6 @@ public void zoom(float _value)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ButtonAnnuler)
-                            .addComponent(ButtonRefaire)
-                            .addComponent(LabelInterface)
-                            .addComponent(jButtonSupprimer))
-                        .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ButtonStation, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ButtonConvoyeur, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ButtonJonction, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -804,7 +1015,15 @@ public void zoom(float _value)
                             .addComponent(grilleOnOff)
                             .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(plan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(plan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ButtonAnnuler)
+                            .addComponent(ButtonRefaire)
+                            .addComponent(LabelInterface)
+                            .addComponent(jButtonSupprimer))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PanelInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1162,6 +1381,27 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
         Graphics g = plan1.getGraphics();
         app.paintPanel(plan1, g);
     }//GEN-LAST:event_changerCouleurButtonActionPerformed
+
+    private void BtnAppliquerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAppliquerActionPerformed
+        app.applyTableToComponant(matrixV2, entryTable);    
+    }//GEN-LAST:event_BtnAppliquerActionPerformed
+
+    private void btnAddEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEntryActionPerformed
+        String name = JOptionPane.showInputDialog("Entrez le type de produit");
+        String quantity = JOptionPane.showInputDialog("Entrez la quantité du produit");
+        app.addEntry(name, quantity);
+        setMatrixV2(app.getFocusComponant());
+    }//GEN-LAST:event_btnAddEntryActionPerformed
+
+    private void btnRemoveEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEntryActionPerformed
+        String name = JOptionPane.showInputDialog("Entrez le type de produit");
+        app.removeEntry(name);
+        setMatrixV2(app.getFocusComponant());
+    }//GEN-LAST:event_btnRemoveEntryActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        app.runTest();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     
     
@@ -1171,6 +1411,7 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAppliquer;
     private javax.swing.JButton ButtonAnnuler;
     private javax.swing.JButton ButtonConvoyeur;
     private javax.swing.JButton ButtonEntree;
@@ -1198,9 +1439,13 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JTextField TextFieldNom;
     private javax.swing.JTextField TextFieldPositionX;
     private javax.swing.JTextField TextFieldPositionY;
+    private javax.swing.JButton btnAddEntry;
+    private javax.swing.JButton btnRemoveEntry;
     private javax.swing.JButton changerCouleurButton;
+    private javax.swing.JTable entryTable;
     private javax.swing.JButton grilleOnOff;
     private javax.swing.JButton imageButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JLabel jLabel1;
@@ -1226,6 +1471,9 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable matrixV2;
     private javax.swing.JLabel mousePositionLabel;
     private View.Plan plan1;
     private javax.swing.JLabel weightLabel;
