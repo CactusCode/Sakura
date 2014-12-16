@@ -8,12 +8,13 @@ package Model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  *
  * @author vincentguillemette
  */
-public class Elbow extends PlantComponant{
+public class Elbow extends PlantComponant implements Serializable{
     private final Convoyeur convoyeur;
     public Elbow(Point start, Point end,Convoyeur convoyeur,int divideFactor){
         this.description = "Coude";
@@ -28,5 +29,10 @@ public class Elbow extends PlantComponant{
      public void setColor(Color newColor)
     {
         this.convoyeur.setColor(newColor);
+    }
+     @Override
+     public void setName(String _name)
+    {
+        this.name = "";
     }
 }

@@ -324,12 +324,15 @@ public class RecyclApp implements java.io.Serializable {
             plantComp.reLinkConvoyeurWithExit();
             plantComp = coude.getConvoyeurAssociated().getEndComponant();
             plantComp.removeEntranceConnection();
-           
-            this.convoyeursList.remove(coude.getConvoyeurAssociated());
+            Convoyeur convoyeur = coude.getConvoyeurAssociated();
+            this.convoyeursList.remove(convoyeur);
+            
+            plantComponantsList.remove(convoyeur.getElbow(1));
+            plantComponantsList.remove(convoyeur.getElbow(2));
         }
-        
-        plantComponantsList.remove(focusIndex);
-        
+        else{
+            plantComponantsList.remove(focusIndex);
+        }
         window.redrawPlan();
     }
 

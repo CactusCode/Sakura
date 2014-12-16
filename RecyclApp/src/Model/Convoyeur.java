@@ -44,7 +44,7 @@ public class Convoyeur implements java.io.Serializable
             return this.elbow1;
         }
         else return this.elbow2;
-        
+       
     }
     public void setExitAssociated(int _exitNumber){
         this.exitAssociated = _exitNumber;
@@ -78,6 +78,7 @@ public class Convoyeur implements java.io.Serializable
         g.drawString("Sortie #"+this.exitAssociated,(elbow1.getPosition().x+(int)(_fakeX*_zoom))-15,(elbow1.getPosition().y+(int)(_fakeY*_zoom))-10);
         this.drawArrow(g, elbow2.getPosition().x+(int)(_fakeX*_zoom),elbow2.getPosition().y+(int)(_fakeY*_zoom),
                    _end.x+(int)(_fakeX*_zoom), _end.y+(int)(_fakeY*_zoom));
+         g.drawString("Sortie #"+this.exitAssociated,(elbow2.getPosition().x+(int)(_fakeX*_zoom))-15,(elbow2.getPosition().y+(int)(_fakeY*_zoom))-10);
         //elbow.draw(g, _fakeX, _fakeY);
     }
      void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
