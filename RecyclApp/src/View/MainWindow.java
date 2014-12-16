@@ -210,45 +210,21 @@ public class MainWindow extends javax.swing.JFrame{
         if("Station".equalsIgnoreCase(description)){
             this.imageButton.setVisible(true);
             this.LabelMatrice.setText("Matrice de récupération");
-            this.MatriceRecup.setVisible(true);
             List<String> col = new ArrayList<>(Arrays.asList("Produits"));
             for (int i = 0;i <numberExits;i++){
                col.add("Sortie " + String.valueOf(i+1));
             }
             
             DefaultTableModel model = new DefaultTableModel(col.toArray(), 2);
-            this.MatriceRecup.setModel(model);
-            this.MatriceRecup.setValueAt("Produit 1", 0, 0);
-            this.MatriceRecup.setValueAt("Produit 2", 1, 0);
-            for (RecoveryMatrix.MatrixLine matrix : recoveryMatrix.getMatrix()) {
-              if(matrix.type==Material.MaterialType.product1){
-                  this.MatriceRecup.setValueAt(matrix.pourcentage, 0, matrix.exitNumber);
-              }
-              if(matrix.type==Material.MaterialType.product2){
-                  this.MatriceRecup.setValueAt(matrix.pourcentage, 1, matrix.exitNumber);
-              }
-            }
         }
         else if("Entrée Usine".equalsIgnoreCase(description)){
             this.LabelMatrice.setText("Panier d'entrée");
-            this.MatriceRecup.setVisible(true);
             List<String> col = new ArrayList<>(Arrays.asList("Produits"));
             col.add("Quantité");
             col.add("Poid");
             col.add("Total Kg/h");
             DefaultTableModel model = new DefaultTableModel(col.toArray(), 2);
-            this.MatriceRecup.setModel(model);
-            this.MatriceRecup.setValueAt("Produit 1", 0, 0);
-            this.MatriceRecup.setValueAt("Produit 2", 1, 0);
-            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getQtyInBasketForMaterialType(Material.MaterialType.product1)), 0,  1);
-            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getQtyInBasketForMaterialType(Material.MaterialType.product2)), 1,  1);
-            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getBasketContents().get(0).material.getWeight()), 0,  2);
-            this.MatriceRecup.setValueAt(String.valueOf((int)basket.getBasketContents().get(1).material.getWeight()), 1,  2);
-            this.MatriceRecup.setValueAt(String.valueOf(Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(0, 1)))*Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(0, 2)))), 0,  3);
-            this.MatriceRecup.setValueAt(String.valueOf(Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(1, 1)))*Float.parseFloat(String.valueOf(MatriceRecup.getValueAt(1, 2)))), 1,  3);
-
         }
-        else this.MatriceRecup.setVisible(false);
     }
 
    
@@ -273,7 +249,6 @@ public class MainWindow extends javax.swing.JFrame{
     public MainWindow() {
         initComponents();
         planStatus = PlanStatus.notWaiting;
-        MatriceRecup.setVisible(false);
         this.imageButton.setVisible(false);
        
     }
@@ -437,8 +412,6 @@ public void zoom(float _value)
         TextFieldDescription = new javax.swing.JTextField();
         TextFieldPositionX = new javax.swing.JTextField();
         TextFieldPositionY = new javax.swing.JTextField();
-        ScrollPaneMatrice = new javax.swing.JScrollPane();
-        MatriceRecup = new javax.swing.JTable();
         LabelMatrice = new javax.swing.JLabel();
         TextFieldNbStation = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -577,36 +550,6 @@ public void zoom(float _value)
         TextFieldPositionX.setEditable(false);
 
         TextFieldPositionY.setEditable(false);
-
-        MatriceRecup.setBackground(new java.awt.Color(240, 240, 240));
-        MatriceRecup.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null}
-            },
-            new String [] {
-                "Produit"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        MatriceRecup.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        MatriceRecup.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                MatriceRecupKeyPressed(evt);
-            }
-        });
-        ScrollPaneMatrice.setViewportView(MatriceRecup);
-        if (MatriceRecup.getColumnModel().getColumnCount() > 0) {
-            MatriceRecup.getColumnModel().getColumn(0).setResizable(false);
-        }
-        MatriceRecup.getAccessibleContext().setAccessibleDescription("");
 
         TextFieldNbStation.setEditable(false);
 
@@ -764,10 +707,6 @@ public void zoom(float _value)
                                 .addComponent(BtnAppliquer)
                                 .addComponent(jButton1)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         PanelInterfaceLayout.setVerticalGroup(
             PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -798,14 +737,12 @@ public void zoom(float _value)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(TextFieldCapMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScrollPaneMatrice, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(PanelInterfaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(59, 59, 59)
                         .addComponent(LabelMatrice))
                     .addGroup(PanelInterfaceLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(40, 40, 40)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1246,46 +1183,6 @@ public void zoom(float _value)
         appsMemorized.add(1,app);
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
-    private void MatriceRecupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MatriceRecupKeyPressed
-if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-           {
-            double posx = Double.parseDouble(TextFieldPositionX.getText());
-            double posy = Double.parseDouble(TextFieldPositionY.getText());
-            
-            
-            for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
-                float pourcentageTotal = 0; 
-                for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
-                      pourcentageTotal = pourcentageTotal + Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
-                }
-                if(pourcentageTotal!=100){
-                    messageToUser("La somme des pourcentages pour les sorties d'un produit doivent être égal 100%");
-                    return;
-                }
-            }
-            app.clearMatrix(posx,posy);    
-            
-            for(int i=0;i< this.MatriceRecup.getModel().getRowCount();i++){
-               for(int y=1;y < this.MatriceRecup.getModel().getColumnCount();y++){
-                       int exitNumber = y;
-                       float pourcentage = Float.parseFloat(String.valueOf(this.MatriceRecup.getValueAt(i, y)));
-                       
-                       
-                       Material.MaterialType type= Material.MaterialType.product1;
-
-                       if(i==1){
-                          type = Material.MaterialType.product2;
-                       }
-                       
-                       app.setMatrix(type,exitNumber,pourcentage,posx,posy);
-                   }  
-                
-                }
-               messageToUser("Matrice mise à jour");
-            
-        }
-    }//GEN-LAST:event_MatriceRecupKeyPressed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         zoom(2);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -1421,7 +1318,6 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JButton ButtonStation;
     private javax.swing.JLabel LabelInterface;
     private javax.swing.JLabel LabelMatrice;
-    private javax.swing.JTable MatriceRecup;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JMenu MenuAide;
     private javax.swing.JMenuItem MenuEnregistrer;
@@ -1432,7 +1328,6 @@ if(evt.getKeyCode() == KeyEvent.VK_ENTER)
     private javax.swing.JMenu MenuVision;
     private javax.swing.JMenuItem OuvrirFichier;
     private javax.swing.JPanel PanelInterface;
-    private javax.swing.JScrollPane ScrollPaneMatrice;
     private javax.swing.JTextField TextFieldCapMax;
     private javax.swing.JTextField TextFieldDescription;
     private javax.swing.JTextField TextFieldNbStation;
