@@ -22,16 +22,21 @@ public class Convoyeur implements java.io.Serializable
   
     private final PlantComponant startPoint;
     private final PlantComponant endPoint;
+    private final Elbow elbow;
     private final int ARR_SIZE = 9;
     private int exitAssociated;
     public Convoyeur(PlantComponant _start,PlantComponant _end)
     {
        this.startPoint = _start;
        this.endPoint = _end;
+       this.elbow = new Elbow(startPoint.getPosition(),endPoint.getPosition(),this);
        this.exitAssociated = 0;
     }   
     public PlantComponant getStartComponant(){
         return this.startPoint;
+    }
+    public Elbow getElbow(){
+        return this.elbow;
     }
     public void setExitAssociated(int _exitNumber){
         this.exitAssociated = _exitNumber;
@@ -50,10 +55,14 @@ public class Convoyeur implements java.io.Serializable
     }
      public void draw(Graphics g, int _fakeX, int _fakeY, float _zoom, Point _start, Point _end) {
         g.setColor(Color.black);
+      
         this.drawArrow(g, _start.x+(int)(_fakeX*_zoom),_start.y+(int)(_fakeY*_zoom),
+                   elbow.getPosition().x+(int)(_fakeX*_zoom), elbow.getPosition().y+(int)(_fakeY*_zoom));
+        elbow.draw(g, _fakeX, _fakeY);
+        g.drawString("Sortie #"+this.exitAssociated,(elbow.getPosition().x+(int)(_fakeX*_zoom))-10,(elbow.getPosition().y+(int)(_fakeY*_zoom))-10);
+        this.drawArrow(g, elbow.getPosition().x+(int)(_fakeX*_zoom),elbow.getPosition().y+(int)(_fakeY*_zoom),
                    _end.x+(int)(_fakeX*_zoom), _end.y+(int)(_fakeY*_zoom));
-        g.drawString("Sortie #"+this.exitAssociated,(_start.x+((_end.x-_start.x)/2))+(int)(_fakeX*_zoom),(_start.y+((_end.y-_start.y)/2))+(int)(_fakeY*_zoom));
-        
+        elbow.draw(g, _fakeX, _fakeY);
     }
      void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
                 Graphics2D g = (Graphics2D) g1.create();

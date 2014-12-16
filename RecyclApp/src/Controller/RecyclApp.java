@@ -152,6 +152,11 @@ public class RecyclApp implements java.io.Serializable {
         }
         else window.messageToUser("Il existe déjà un élément à cet endroit!");
     }
+    public void addElbow(Elbow elbow) {
+        
+            this.plantComponantsList.add(elbow);
+            
+    }
     
     public void addConvoyeur(Point _start,Point _end){
         PlantComponant startComponant = null;
@@ -190,6 +195,7 @@ public class RecyclApp implements java.io.Serializable {
             int exitNumber = startComponant.linkConvoyeurWithExit(convoyeur);
             convoyeur.setExitAssociated(exitNumber);
             this.convoyeursList.add(convoyeur);
+            this.plantComponantsList.add(convoyeur.getElbow());
             if (circuitIsValid())
                 window.messageToUser("Convoyeur Ajouté");
             else
@@ -300,6 +306,10 @@ public class RecyclApp implements java.io.Serializable {
                  //libérer la sortie qui de la station
                 convoyeursList.remove(i);
             }
+        }
+        if("Coude".equals(plantComponantsList.get(focusIndex).getDescription())){
+            Elbow coude = (Elbow)plantComponantsList.get(focusIndex);
+            this.convoyeursList.remove(coude.getConvoyeurAssociated());
         }
         
         plantComponantsList.remove(focusIndex);
