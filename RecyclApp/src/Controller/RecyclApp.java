@@ -554,13 +554,23 @@ public class RecyclApp implements java.io.Serializable {
         {
             print(_identifier);
             print(plantComponantsList.get(i).getPosition());
-            if (plantComponantsList.get(i).getPosition() == _identifier)
+            if (equalPositions(plantComponantsList.get(i).getPosition(), _identifier))
             {
                 plantComponantsList.get(i).receiveMaterialV2(_material, moreToCome);
                 result = true;
                 break;
             }
         }
+        
+        return result;
+    }
+    
+    private boolean equalPositions(Point _pos1, Point _pos2)
+    {
+        boolean result = true;
+        
+        if (_pos1.x != _pos2.x || _pos1.y != _pos2.y)
+            result = false;
         
         return result;
     }
