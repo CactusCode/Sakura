@@ -213,6 +213,7 @@ public class RecyclApp implements java.io.Serializable {
             
             //convoyeurV2 method
             startComponant.addConvoyeurV2(startComponant, endComponant);
+            runTest();
             
             window.redrawPlan();
         }
@@ -644,8 +645,8 @@ public class RecyclApp implements java.io.Serializable {
                 {
                     float matrixValue = Float.parseFloat(matrixV2.getValueAt(j, i).toString());
                     String name = matrixV2.getValueAt(j, 0).toString();
-                    setFocusComponantMatrixLine(j, i, matrixValue);
-                    //setFocusComponantMatrixLineByName(name, i, matrixValue);
+                    //setFocusComponantMatrixLine(j, i, matrixValue);
+                    setFocusComponantMatrixLineByName(name, i, matrixValue);
                 }
             }
         }
@@ -663,6 +664,8 @@ public class RecyclApp implements java.io.Serializable {
                 getFocusComponant().setMaterialQuantity(name, newQuantity);
             }
         }
+        
+        runTest();
     }
     
     public String parseTableValue(float _value)
